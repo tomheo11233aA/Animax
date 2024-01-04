@@ -1,6 +1,7 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Completeness */
@@ -24,6 +25,7 @@
         "@commom/*": ["./src/components/commom/*"],
         "@asyncThunk/*": ["./src/redux/asyncThunk/*"],
         "@helper/*": ["./src/helper/*"],
+        "@fuction/*": ["./src/fuction/*"],
       }
   }
 }
