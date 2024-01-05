@@ -5,13 +5,13 @@
 import {AppRegistry, Text} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
-import store from '@redux/store/store';
+// import store from '@redux/store/store';
 import {Provider} from 'react-redux';
 
 const Root = () => (
-  <Provider store={store}>
+//   <Provider store={store}>
     <App />
-  </Provider>
+//   </Provider>
 );
 
 Text.defaultProps = Text.defaultProps || {}
