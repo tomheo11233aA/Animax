@@ -20,7 +20,7 @@ module.exports = {
           "@lotties": "./src/assets/lotties",
           "@selector": "./src/redux/selector",
           "@navigations": "./src/navigations",
-          "@commom": "./src/components/commom",
+          "@common": "./src/components/common",
           "@asyncThunk": "./src/redux/asyncThunk",
           '@helper': './src/helper',
           '@function': './src/function',
