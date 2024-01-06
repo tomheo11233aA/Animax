@@ -27,7 +27,7 @@ const Started = () => {
           <Text
             style={styles.title}
           >{t('Welcome to Animax')}</Text>
-          <Text style={styles.text}
+          <Text style={[styles.text, {fontWeight: 'normal'}]}
           >{t('The best streaming anime app of the century to entertain you every day.')}</Text>
         </View>
         <TouchableOpacity
@@ -68,15 +68,16 @@ const styles = StyleSheet.create({
     lineHeight: hp('7%'),
     color: '#FFFFFF',
     marginBottom: hp('2%'),
-    fontFamily: fonts.AS,
+    fontFamily: fonts.MAIN,
     textAlign: 'center',
+    fontWeight: '700'
   },
   text: {
     fontSize: hp('2.1%'),
     textAlign: 'center',
-    fontWeight: 'normal',
+    fontWeight: '700',
     color: '#FFFFFF',
-    fontFamily: fonts.MAIN
+    fontFamily: fonts.MAIN,
   },
   button: {
     width: '90%',
