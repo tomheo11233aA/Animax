@@ -8,7 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const Started = () => {
   return (
     <ImageBackground
-      source={require('../../../assets/media/banner1.jpg')}
+      source={require('@images/banner1.jpg')}
       style={styles.backgroundImage}>
       <LinearGradient
         start={{ x: 0, y: 0 }}

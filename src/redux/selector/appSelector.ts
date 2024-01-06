@@ -1,4 +1,5 @@
 import { RootState } from "@redux/store/store";
 
-// example selector
-// export const isLoginUserSelector = (state: RootState) => state.user.isLogin
+export const isLoginUserSelector = (state: RootState) => state.user.isLogin
+
+export const languageUserSelector = (state: RootState) => state.user.language 

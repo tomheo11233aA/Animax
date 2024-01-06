@@ -11,7 +11,7 @@ const Signinsocial = () => {
             <View style={styles.Vimage}>
                 <Image 
                     style={styles.image}
-                source={require('../../../assets/media/viewsignin.jpg')} />
+                source={require('@images/viewsignin.jpg')} />
             </View>
             <View style={styles.content}>
                 <Text>Let's you in</Text>
