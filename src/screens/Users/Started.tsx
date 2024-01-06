@@ -1,11 +1,17 @@
-import { StyleSheet, Text,
+import {
+  StyleSheet, Text,
   ImageBackground,
   TouchableOpacity, View
 } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
+import { fonts } from '@themes/fonts';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { colors } from '@themes/colors';
+import { useTranslation } from 'react-i18next';
 
 const Started = () => {
+  const { t } = useTranslation()
   return (
     <ImageBackground
       source={require('@images/banner1.jpg')}
@@ -20,14 +26,14 @@ const Started = () => {
         <View style={styles.content}>
           <Text
             style={styles.title}
-          >WELCOME TO ANIMAX</Text>
+          >{t('Welcome to Animax')}</Text>
           <Text style={styles.text}
-          >The best streaming anime app of the ...</Text>
+          >{t('The best streaming anime app of the century to entertain you every day.')}</Text>
         </View>
         <TouchableOpacity
           style={styles.button}
         >
-          <Text style={styles.text}>Get Started</Text>
+          <Text style={styles.text}>{t('Get Started')}</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -43,37 +49,41 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover', // Đảm bảo rằng hình nền sẽ tràn màn hình
+    resizeMode: 'cover',
     justifyContent: 'center',
   },
   container: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 50,
+    paddingBottom: hp('8%'),
+    paddingHorizontal: wp('5%')
   },
   content: {
-    alignItems: 'center', // Để căn giữa nội dung
-    marginBottom: 50,
+    alignItems: 'center',
+    marginBottom: hp('8%')
   },
   title: {
-    fontSize: 39,
-    fontWeight: 'bold',
+    fontSize: hp('4.1%'),
+    lineHeight: hp('7%'),
     color: '#FFFFFF',
-    marginBottom: 24,
+    marginBottom: hp('2%'),
+    fontFamily: fonts.AS,
+    textAlign: 'center',
   },
   text: {
-    fontSize: 18,
+    fontSize: hp('2.1%'),
+    textAlign: 'center',
     fontWeight: 'normal',
     color: '#FFFFFF',
+    fontFamily: fonts.MAIN
   },
   button: {
-    paddingHorizontal: 20,
     width: '90%',
-    height: 58,
-    backgroundColor: '#06C149',
+    height: hp('7%'),
+    backgroundColor: colors.mainColor,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 58,
+    borderRadius: hp('3.5%'),
   },
 })

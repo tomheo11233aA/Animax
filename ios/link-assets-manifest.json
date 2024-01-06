@@ -50,6 +50,14 @@
       "sha1": "dd252e03de7ce961ca3c7dbe98736b41f0052bb0"
     },
     {
+      "path": "src/assets/fonts/Urbanist-Bold.ttf",
+      "sha1": "5393e451665e344701f6f250898895ca98dabdbc"
+    },
+    {
+      "path": "src/assets/fonts/Urbanist-ExtraBold.ttf",
+      "sha1": "8456433f5c419161b01f72c0db6d431132b5f74a"
+    },
+    {
       "path": "src/assets/fonts/Urbanist.ttf",
       "sha1": "a417404db6d1af5903e3884eea811ed9e1b5ea1a"
     }

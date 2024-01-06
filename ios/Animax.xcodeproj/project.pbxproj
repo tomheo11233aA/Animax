@@ -27,6 +27,8 @@
 		49D7223D14A44BD1879DDA3C /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85FE5EBAB68A4F8F87614027 /* Roboto-Medium.ttf */; };
 		C307C205EA1F42C392B93892 /* SchibstedGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7E0BD499338479B8A8444D3 /* SchibstedGrotesk-Medium.ttf */; };
 		30F9D8CFBA7649029806E083 /* Urbanist.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 38694AD33015404782B5E6ED /* Urbanist.ttf */; };
+		94D30B1BF9DA4E20B2171A75 /* Urbanist-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55F5622796404C3EA7901DD4 /* Urbanist-Bold.ttf */; };
+		CF31371C271243DC88A901BE /* Urbanist-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A00A5565DC554BCAB1932D42 /* Urbanist-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +72,8 @@
 		85FE5EBAB68A4F8F87614027 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		D7E0BD499338479B8A8444D3 /* SchibstedGrotesk-Medium.ttf */ = {isa = PBXFileReference; name = "SchibstedGrotesk-Medium.ttf"; path = "../src/assets/fonts/SchibstedGrotesk-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		38694AD33015404782B5E6ED /* Urbanist.ttf */ = {isa = PBXFileReference; name = "Urbanist.ttf"; path = "../src/assets/fonts/Urbanist.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		55F5622796404C3EA7901DD4 /* Urbanist-Bold.ttf */ = {isa = PBXFileReference; name = "Urbanist-Bold.ttf"; path = "../src/assets/fonts/Urbanist-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A00A5565DC554BCAB1932D42 /* Urbanist-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Urbanist-ExtraBold.ttf"; path = "../src/assets/fonts/Urbanist-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +195,8 @@
 				85FE5EBAB68A4F8F87614027 /* Roboto-Medium.ttf */,
 				D7E0BD499338479B8A8444D3 /* SchibstedGrotesk-Medium.ttf */,
 				38694AD33015404782B5E6ED /* Urbanist.ttf */,
+				55F5622796404C3EA7901DD4 /* Urbanist-Bold.ttf */,
+				A00A5565DC554BCAB1932D42 /* Urbanist-ExtraBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -304,6 +310,8 @@
 				49D7223D14A44BD1879DDA3C /* Roboto-Medium.ttf in Resources */,
 				C307C205EA1F42C392B93892 /* SchibstedGrotesk-Medium.ttf in Resources */,
 				30F9D8CFBA7649029806E083 /* Urbanist.ttf in Resources */,
+				94D30B1BF9DA4E20B2171A75 /* Urbanist-Bold.ttf in Resources */,
+				CF31371C271243DC88A901BE /* Urbanist-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
