@@ -1,5 +1,4 @@
-import {
-  Button, StyleSheet, Text,
+import { StyleSheet, Text,
   ImageBackground,
   TouchableOpacity, View
 } from 'react-native'
