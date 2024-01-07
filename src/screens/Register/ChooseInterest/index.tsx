@@ -19,5 +19,5 @@ const ChooseInterest = () => {
   )
 }
 
-export default ChooseInterest
+export default React.memo(ChooseInterest)
 

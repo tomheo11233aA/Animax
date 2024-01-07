@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Icon from '@common/Icon'
 import Txt from '@common/Txt'
@@ -43,6 +42,4 @@ const Header = () => {
   )
 }
 
-export default Header
-
-const styles = StyleSheet.create({})
+export default React.memo(Header)

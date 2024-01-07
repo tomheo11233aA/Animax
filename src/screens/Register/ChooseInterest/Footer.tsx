@@ -37,13 +37,13 @@ const Footer = () => {
         shadow
         shadowColor={'#41ab67'}
         elevation={5}
+        onPress={() => navigate(screens.FILL_PROFILE)}
       >
         <Txt
           color={colors.white}
           size={14}
           fontWeight={'bold'}
           fontFamily={fonts.MAIN}
-          onPress={() => navigate(screens.FILL_PROFILE)}
         >
           {t('Continue')}
         </Txt>
@@ -52,4 +52,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default React.memo(Footer)
