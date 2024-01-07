@@ -24,8 +24,8 @@ const Main = () => {
     }, [])
     return (
         <>
-            {/* {isLogin ? <AuthNavigation /> : <UnAuthNavigation />} */}
-            {isLogin ? <AuthNavigation /> : <AuthNavigation />}
+            {isLogin ? <AuthNavigation /> : <UnAuthNavigation />}
+            {/* {isLogin ? <AuthNavigation /> : <AuthNavigation />} */}
 
         </>
     );
