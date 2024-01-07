@@ -6,6 +6,7 @@ export const colors = {
         black: 'white',
     },
     mainColor: '#06C149',
+    lMainColor: '#10cc54',
     shadowColor: '#06c14940',
     black: '#212121',
     black2: '#424242',

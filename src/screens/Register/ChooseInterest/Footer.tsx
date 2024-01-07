@@ -1,14 +1,47 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import Box from '@common/Box';
+import Btn from '@common/Btn';
+import Txt from '@common/Txt';
+import { colors } from '@themes/colors';
+import { fonts } from '@themes/fonts';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
-    <View>
-      <Text>Footer</Text>
-    </View>
+    <Box row justifyCenter style={{ justifyContent: 'space-between' }}>
+      <Btn
+        width={'48%'}
+        padding={wp('4%')}
+        radius={wp('8%')}
+        backgroundColor={colors.shadowColor}
+      >
+        <Txt
+          color={colors.mainColor}
+          size={14}
+          fontWeight={'bold'}
+          fontFamily={fonts.MAIN}
+        >
+          {t('Skip')}
+        </Txt>
+      </Btn>
+      <Btn
+        width={'48%'}
+        radius={wp('8%')}
+        backgroundColor={colors.mainColor}
+      >
+        <Txt
+          color={colors.white}
+          size={14}
+          fontWeight={'bold'}
+          fontFamily={fonts.MAIN}
+        >
+          {t('Continue')}
+        </Txt>
+      </Btn>
+    </Box>
   )
 }
 
 export default Footer
-
-const styles = StyleSheet.create({})
