@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { View } from 'react-native';
 import Box from '@common/Box';
 import Btn from '@common/Btn';
 import Txt from '@common/Txt';
@@ -30,6 +31,9 @@ const Footer = () => {
         width={'48%'}
         radius={wp('8%')}
         backgroundColor={colors.mainColor}
+        shadow
+        shadowColor={'#41ab67'}
+        elevation={5}
       >
         <Txt
           color={colors.white}

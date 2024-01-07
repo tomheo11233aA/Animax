@@ -12,7 +12,8 @@ const interests = [
   'Mecha', 'Romance', 'Science', 'Music', 'School',
   'Seinen', 'Shoujo', 'Fantasy', 'Mystery', 'Family',
   'Vampire', 'Isekai', 'Shounen', 'Television', 'Superheroes',
-  'Magic', 'Game', 'Slice of Life'
+  'Magic', 'Game', 'Slice of Life', 'Horror', 'Thriller',
+  'Supernatural'
 ];
 
 const Form = () => {
@@ -47,7 +48,7 @@ const Form = () => {
           color={selected ? colors.white : colors.mainColor}
           size={14}
           fontWeight={'600'}
-          fontFamily={fonts.MAIN}
+          fontFamily={fonts.MAINB}
         >
           {interest}
         </Txt>
@@ -57,7 +58,7 @@ const Form = () => {
 
   return (
     <Scroll>
-      <Box row wrap marginTop={16}>
+      <Box row wrap marginTop={20}>
         {interests.map(renderInterestButton)}
       </Box>
     </Scroll>

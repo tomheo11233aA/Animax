@@ -22,8 +22,7 @@ const Header = () => {
             size={18} />
         </Btn>
         <Txt
-          fontWeight={'700'}
-          fontFamily={fonts.MAIN}
+          fontFamily={fonts.MAINB}
           size={22}
           color={colors.black}
           marginLeft={16}
