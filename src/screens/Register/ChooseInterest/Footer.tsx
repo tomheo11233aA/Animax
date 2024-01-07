@@ -7,6 +7,8 @@ import { colors } from '@themes/colors';
 import { fonts } from '@themes/fonts';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
+import { navigate } from '@utils/navigationRef';
+import { screens } from '@contants/screens';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -17,6 +19,7 @@ const Footer = () => {
         padding={wp('4%')}
         radius={wp('8%')}
         backgroundColor={colors.shadowColor}
+        onPress={() => navigate(screens.FILL_PROFILE)}
       >
         <Txt
           color={colors.mainColor}
@@ -40,6 +43,7 @@ const Footer = () => {
           size={14}
           fontWeight={'bold'}
           fontFamily={fonts.MAIN}
+          onPress={() => navigate(screens.FILL_PROFILE)}
         >
           {t('Continue')}
         </Txt>

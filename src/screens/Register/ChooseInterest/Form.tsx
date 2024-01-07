@@ -6,6 +6,7 @@ import { colors } from '@themes/colors';
 import { fonts } from '@themes/fonts';
 import Scroll from '@common/Scroll';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useTranslation } from 'react-i18next';
 
 const interests = [
   'Action', 'Drama', 'Comedy', 'Ecchi', 'Adventure',
@@ -17,6 +18,7 @@ const interests = [
 ];
 
 const Form = () => {
+  const { t } = useTranslation();
   const [selectedInterests, setSelectedInterests] = useState(new Set());
 
   const toggleInterest = (interest: any) => {
@@ -36,7 +38,7 @@ const Form = () => {
         key={interest}
         onPress={() => toggleInterest(interest)}
         marginRight={wp('3%')}
-        marginBottom={hp('2.8%')}
+        marginBottom={hp('2.5%')}
         paddingVertical={hp('1%')}
         paddingHorizontal={wp('5%')}
         radius={wp('6%')}
@@ -50,14 +52,16 @@ const Form = () => {
           fontWeight={'600'}
           fontFamily={fonts.MAINB}
         >
-          {interest}
+          {t(interest)}
         </Txt>
       </Btn>
     );
   };
 
   return (
-    <Scroll>
+    <Scroll
+      showsVerticalScrollIndicator={false}
+    >
       <Box row wrap marginTop={20}>
         {interests.map(renderInterestButton)}
       </Box>

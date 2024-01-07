@@ -22,8 +22,6 @@ const Main = () => {
         }
         fetchIsLogin()
     }, [])
-
-    console.log('isLogin', isLogin)
     return (
         <>
             {isLogin ? <AuthNavigation /> : <UnAuthNavigation />}
