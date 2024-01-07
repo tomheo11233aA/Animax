@@ -23,7 +23,11 @@ const Hello = () => {
       i18n.changeLanguage(lng)
       const lngObj = convertLanguage(lng)
       dispatch(setLanguage(lngObj))
+<<<<<<< HEAD
       navigation.replace(screens.SIGNUP)
+=======
+      navigation.replace(screens.MAIN)
+>>>>>>> 5b6adb80f7e25f20c407b0885413eccd2d011f09
     }, 2000)
     return () => clearTimeout(timeOut)
   }, [])

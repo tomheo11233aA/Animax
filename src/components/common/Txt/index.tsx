@@ -47,6 +47,7 @@ const Txt = ({
     relative,
     absolute,
     fontFamily,
+    fontWeight,
     ...textProps
 }: Props) => {
     const textStyle = [
@@ -86,6 +87,7 @@ const Txt = ({
         isNumber(lineHeight) && { lineHeight: getSize.m(lineHeight) },
         { fontSize: getSize.m(size) },
         textDecorationLine && { textDecorationLine },
+        fontWeight && { fontWeight },
         { ...StyleSheet.flatten(style) },
     ];
 
@@ -99,6 +101,7 @@ const Txt = ({
 export default React.memo(Txt);
 
 interface Props {
+    fontWeight?: any,
     onPress?: any,
     numberOfLines?: any,
     flex?: any,
