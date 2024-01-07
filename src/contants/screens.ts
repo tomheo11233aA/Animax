@@ -1,5 +1,7 @@
 export const screens = {
+    MAIN: 'MAIN',
     HELLO: 'HELLO',
     STARTED: 'STARTED',
     SIGNINSOCIAL: 'SIGNINSOCIAL',
+    CHOOSE_INTEREST: 'CHOOSEINTEREST',
 }

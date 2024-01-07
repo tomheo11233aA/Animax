@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: hp('4.1%'),
-    lineHeight: hp('7%'),
     color: '#FFFFFF',
     marginBottom: hp('2%'),
     fontFamily: fonts.MAIN,

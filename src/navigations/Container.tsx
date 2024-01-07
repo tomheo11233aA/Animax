@@ -4,8 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { navigationRef } from '@utils/navigationRef'
 //screens
 import Hello from "@screens/Hello";
-import Started from "@screens/Users/Started";
-import Signinsocial from "@screens/Users/Signinsocial";
+import Main from "./Main";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -13,8 +12,7 @@ const Container = () => {
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={screens.HELLO} component={Hello} />
-                <Stack.Screen name={screens.STARTED} component={Started} />
-                <Stack.Screen name={screens.SIGNINSOCIAL} component={Signinsocial} />
+                <Stack.Screen name={screens.MAIN} component={Main} />
             </Stack.Navigator>
         </NavigationContainer>
     )
