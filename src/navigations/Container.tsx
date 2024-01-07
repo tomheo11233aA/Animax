@@ -6,6 +6,7 @@ import { navigationRef } from '@utils/navigationRef'
 import Hello from "@screens/Hello";
 import Started from "@screens/Users/Started";
 import Signinsocial from "@screens/Users/Signinsocial";
+import Signup from "@screens/Users/Signup";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -14,6 +15,7 @@ const Container = () => {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={screens.HELLO} component={Hello} />
                 <Stack.Screen name={screens.STARTED} component={Started} />
+                <Stack.Screen name={screens.SIGNUP} component={Signup} />
                 <Stack.Screen name={screens.SIGNINSOCIAL} component={Signinsocial} />
             </Stack.Navigator>
         </NavigationContainer>

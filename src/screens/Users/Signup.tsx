@@ -1,11 +1,11 @@
 import {
     StyleSheet, Text, View,
     TouchableOpacity,
-    Image
+    Image, TextInput
 } from 'react-native'
 import React from 'react'
 
-const Signinsocial = () => {
+const Signup = () => {
     return (
         <View style={styles.container}>
             <View style={styles.Vback}>
@@ -16,69 +16,95 @@ const Signinsocial = () => {
             <View style={styles.Vimage}>
                 <Image
                     style={styles.image}
-                    source={require('@images/viewsignin.jpg')} />
+                    source={require('@images/avatar.png')} />
             </View>
             <View style={styles.content}>
                 <Text
                     style={styles.textContent}
-                >Let's you in</Text>
+                >Create Your Account</Text>
             </View>
-            <TouchableOpacity
-                style={styles.buttonSocial}
+
+            <View
+                style={styles.Vinput}
             >
                 <Image
-                    style={{ width: 24, height: 24 }}
-                    source={require('@images/facebook.png')}
+                    style={styles.icon}
+                    source={require('@images/email.png')}
                 />
-                <Text
-                    style={styles.text}
-                >Continue with Facebook</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.buttonSocial}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Tên đăng nhập"
+                    placeholderTextColor="#B4B4B4"
+                />
+
+            </View>
+            <View
+                style={styles.Vinput}
             >
                 <Image
-                    style={{ width: 24, height: 24 }}
-                    source={require('@images/google.png')}
+                    style={styles.icon}
+                    source={require('@images/email.png')}
                 />
-                <Text
-                    style={styles.text}
-                >Continue with Google</Text>
-            </TouchableOpacity>
-            <View style={styles.or}>
-                <View style={styles.line} />
-                <Text style={styles.orText}>or</Text>
-                <View style={styles.line} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Tên đăng nhập"
+                    placeholderTextColor="#B4B4B4"
+                />
+
             </View>
+
             <TouchableOpacity
                 style={styles.buttonSignin}
             >
                 <Text
-                style={styles.text2}
-                >Sign in with password</Text>
+                    style={styles.text2}
+                >Sign up</Text>
             </TouchableOpacity>
+            <View style={styles.or}>
+                <View style={styles.line} />
+                <Text style={styles.orText}>or continue with</Text>
+                <View style={styles.line} />
+            </View>
+            <View style={styles.VButtonSocial}>
+                <TouchableOpacity
+                    style={styles.buttonSocial}
+                >
+                    <Image
+                        style={{ width: 24, height: 24 }}
+                        source={require('@images/google.png')}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonSocial}
+                >
+                    <Image
+                        style={{ width: 24, height: 24 }}
+                        source={require('@images/facebook.png')}
+                    />
+                </TouchableOpacity>
+            </View>
             <View style={styles.signup}>
                 <Text
-                style={styles.text3}
-                >Don't have an account?</Text>
+                    style={styles.text3}
+                >Already have an account?</Text>
                 <TouchableOpacity>
                     <Text
-                    style={styles.textSignup}
-                    >Sign up</Text>
+                        style={styles.textSignup}
+                    >Sign in</Text>
                 </TouchableOpacity>
             </View>
         </View>
     )
 }
 
-export default Signinsocial
+export default Signup
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingBottom: 50,
+        paddingBottom: 30,
         padding: 24,
         backgroundColor: '#ffffff',
     },
@@ -97,25 +123,24 @@ const styles = StyleSheet.create({
     },
     Vimage: {
         width: '100%',
-        height: 250,
+        height: 200,
         borderRadius: 50,
         // backgroundColor: 'red',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 50,
-        marginBottom: 30,
+        marginBottom: 32,
     },
     image: {
-        width: 250,
-        height: 250,
+        width: 200,
+        height: 200,
         borderRadius: 40,
     },
     content: {
         alignItems: 'center',
-        marginBottom: 50,
+        marginBottom: 30,
     },
     textContent: {
-        fontSize: 50,
+        fontSize: 30,
         fontWeight: '500',
         color: '#000',
     },
@@ -125,9 +150,40 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         marginLeft: 16,
     },
-    buttonSocial: {
+    Vinput: {
         width: '100%',
         height: 60,
+        backgroundColor: '#FAFAFA',
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        marginBottom: 16,
+        padding: 8,
+    },
+    icon: {
+        width: 24,
+        height: 24,
+        resizeMode: 'contain',
+        marginRight: 16,
+        marginLeft: 16,
+        tintColor: '#B4B4B4',
+    },
+    input: {
+        height: 60,
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#000000',
+    },
+    VButtonSocial: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    buttonSocial: {
+        width: 85,
+        height: 55,
         backgroundColor: '#fff',
         borderRadius: 13,
         borderWidth: 1,
@@ -138,7 +194,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        marginBottom: 16,
+        marginBottom: 32,
+        marginHorizontal: 8,
     },
     or: {
         flexDirection: 'row',
@@ -164,7 +221,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 16,
         borderRadius: 50,
     },
     text2: {
