@@ -3,11 +3,31 @@ import {
     TouchableOpacity,
     Image, TextInput
 } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
+import CheckBox from '@react-native-community/checkbox';
+
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
 
+
+
 const Signup = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [isChecked, setChecked] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused2, setIsFocused2] = useState(false);
+
+    const handleFocus = (a:any) => {
+        a === 'email' ? setIsFocused(true) : setIsFocused2(true);
+    };
+
+    const handleBlur = (a:any) => {
+        a === 'email' ? setIsFocused(false) : setIsFocused2(false);
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     return (
         <View style={styles.container}>
             <View style={styles.Vback}>
@@ -27,31 +47,76 @@ const Signup = () => {
             </View>
 
             <View
-                style={styles.Vinput}
+                style={[styles.Vinput,
+                { borderColor: isFocused ? '#06C149' : '#FAFAFA' },
+                { backgroundColor: isFocused ? '#EBFAF1' : '#FAFAFA' }
+                ]}
             >
                 <Image
-                    style={styles.icon}
+                    style={[
+                        styles.icon,
+                        { tintColor: isFocused ? '#06C149' : '#B4B4B4' }
+                    ]}
                     source={require('@images/email.png')}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Tên đăng nhập"
+                    placeholder="Email"
                     placeholderTextColor="#B4B4B4"
+                    onFocus={() => handleFocus('email')}
+                    onBlur={() => handleBlur('email')}
                 />
 
             </View>
             <View
-                style={styles.Vinput}
+                style={
+                    [styles.Vinput,
+                    { borderColor: isFocused2 ? '#06C149' : '#FAFAFA' },
+                    { backgroundColor: isFocused2 ? '#EBFAF1' : '#FAFAFA' }
+                    ]
+                }
             >
                 <Image
-                    style={styles.icon}
-                    source={require('@images/email.png')}
+                    style={[
+                        styles.icon,
+                        { tintColor: isFocused2 ? '#06C149' : '#B4B4B4' }
+                    ]}
+                    source={require('@images/padlock.png')}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Tên đăng nhập"
+                    placeholder="Password"
                     placeholderTextColor="#B4B4B4"
+                    secureTextEntry={!showPassword}
+                    onFocus={() => handleFocus('password')}
+                    onBlur={() => handleBlur('password')}
                 />
+                <TouchableOpacity
+                    style={styles.VtoggleIcon}
+                    onPress={togglePasswordVisibility}>
+                    <Image
+                        style={[
+                            styles.toggleIcon,
+                            { tintColor: isFocused2 ? '#06C149' : '#B4B4B4' }
+                        ]}
+                        
+                        source={showPassword ? require('@images/eye.png') : require('@images/hidden.png')}
+                    />
+                </TouchableOpacity>
+
+            </View>
+            <View
+                style={styles.Vcheckbox}
+            >
+                <CheckBox
+                    disabled={false}
+                    value={isChecked}
+                    onValueChange={(newValue) => setChecked(newValue)}
+                    tintColors={{ true: '#06C149', false: '#06C149' }}
+                />
+                <Text
+                    style={styles.text}
+                >Remember me</Text>
 
             </View>
 
@@ -151,13 +216,15 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontSize: 16,
         fontWeight: '500',
-        marginLeft: 16,
+        marginLeft: 8,
     },
     Vinput: {
         width: '100%',
         height: 60,
         backgroundColor: '#FAFAFA',
         borderRadius: 15,
+        borderWidth: 1,
+        borderColor: '#FAFAFA',
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'row',
@@ -174,9 +241,30 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 60,
+        width: '75%',
         fontSize: 16,
         fontWeight: '500',
         color: '#000000',
+        overflow: 'hidden',
+    },
+    toggleIcon: {
+        width: 24,
+        height: 24,
+        marginLeft: 8,
+        tintColor: '#B4B4B4',
+    },
+    VtoggleIcon: {
+        position: 'absolute',
+        right: 16,
+        top: 18,
+        // backgroundColor: 'red',
+    },
+    Vcheckbox: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginBottom: 16,
     },
     VButtonSocial: {
         width: '100%',
