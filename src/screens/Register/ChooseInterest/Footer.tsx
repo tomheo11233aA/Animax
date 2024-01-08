@@ -18,7 +18,7 @@ const Footer = () => {
         width={'48%'}
         padding={wp('4%')}
         radius={wp('8%')}
-        backgroundColor={colors.shadowColor}
+        backgroundColor={colors.lMainColor2}
         onPress={() => navigate(screens.FILL_PROFILE)}
       >
         <Txt
