@@ -1,13 +1,22 @@
 import {
     StyleSheet, Text, View,
     TouchableOpacity,
-    Image
+    Image, ScrollView
 } from 'react-native'
 import React from 'react'
+import Scroll from '@common/Scroll'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
 
 const Signinsocial = () => {
     return (
-        <View style={styles.container}>
+        <Scroll
+            alignCenter
+            justifyCenter
+            backgroundColor={'#ffffff'}
+            padding={24}
+            showsVerticalScrollIndicator={false}
+        >
             <View style={styles.Vback}>
                 <Image
                     style={styles.backicon}
@@ -52,22 +61,24 @@ const Signinsocial = () => {
             </View>
             <TouchableOpacity
                 style={styles.buttonSignin}
+                onPress={() => navigate(screens.CHOOSE_INTEREST)}
             >
                 <Text
-                style={styles.text2}
+                    style={styles.text2}
                 >Sign in with password</Text>
             </TouchableOpacity>
             <View style={styles.signup}>
                 <Text
-                style={styles.text3}
+                    style={styles.text3}
                 >Don't have an account?</Text>
                 <TouchableOpacity>
                     <Text
-                    style={styles.textSignup}
+                        onPress={() => navigate(screens.SIGNUP)}
+                        style={styles.textSignup}
                     >Sign up</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </Scroll>
     )
 }
 

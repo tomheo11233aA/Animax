@@ -9,7 +9,6 @@ const AuthNavigation = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={screens.STARTED} component={Started} />
-            <Stack.Screen name={screens.SIGNINSOCIAL} component={Signinsocial} />
         </Stack.Navigator>
     )
 }

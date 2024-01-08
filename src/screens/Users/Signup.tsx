@@ -4,6 +4,8 @@ import {
     Image, TextInput
 } from 'react-native'
 import React from 'react'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
 
 const Signup = () => {
     return (
@@ -89,6 +91,7 @@ const Signup = () => {
                 >Already have an account?</Text>
                 <TouchableOpacity>
                     <Text
+                        onPress={() => navigate(screens.SIGNINSOCIAL)}
                         style={styles.textSignup}
                     >Sign in</Text>
                 </TouchableOpacity>

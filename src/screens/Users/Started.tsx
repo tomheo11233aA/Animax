@@ -9,6 +9,8 @@ import { fonts } from '@themes/fonts';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { colors } from '@themes/colors';
 import { useTranslation } from 'react-i18next';
+import { navigate } from '@utils/navigationRef';
+import { screens } from '@contants/screens';
 
 const Started = () => {
   const { t } = useTranslation()
@@ -32,6 +34,7 @@ const Started = () => {
         </View>
         <TouchableOpacity
           style={styles.button}
+          onPress={() => navigate(screens.SIGNINSOCIAL)}
         >
           <Text style={styles.text}>{t('Get Started')}</Text>
         </TouchableOpacity>

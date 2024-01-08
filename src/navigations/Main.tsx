@@ -6,6 +6,15 @@ import UnAuthNavigation from "./UnAuthNavigation";
 import { localStorage } from "@utils/localStorage";
 import { setLogin } from "@redux/slice/userSlice";
 import { AppDispatch } from "@redux/store/store";
+import Box from "@common/Box";
+
+interface BoxProps {
+    flex?: number;
+    alignCenter?: boolean;
+    justifyCenter?: boolean;
+    backgroundColor?: string;
+    children?: React.ReactNode;
+}
 
 const Main = () => {
     const dispatch: AppDispatch = useAppDispatch()
@@ -23,11 +32,11 @@ const Main = () => {
         fetchIsLogin()
     }, [])
     return (
-        <>
+        <Box
+            flex={1}
+        >
             {isLogin ? <AuthNavigation /> : <UnAuthNavigation />}
-            {/* {isLogin ? <AuthNavigation /> : <AuthNavigation />} */}
-
-        </>
+        </Box>
     );
 }
 
