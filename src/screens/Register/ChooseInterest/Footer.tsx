@@ -1,5 +1,4 @@
 import React from 'react'
-import { View } from 'react-native';
 import Box from '@common/Box';
 import Btn from '@common/Btn';
 import Txt from '@common/Txt';
