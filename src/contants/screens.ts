@@ -6,4 +6,5 @@ export const screens = {
     SIGNUP: 'SIGNUP',
     CHOOSE_INTEREST: 'CHOOSEINTEREST',
     FILL_PROFILE: 'FILLPROFILE',
+    APPEARANCE: 'APPEARANCE',
 }

@@ -5,7 +5,6 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import CheckBox from '@react-native-community/checkbox';
-
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
 

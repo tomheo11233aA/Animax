@@ -7,23 +7,28 @@ import Btn from '@common/Btn'
 import { useTranslation } from 'react-i18next'
 import { colors } from '@themes/colors'
 import { goBack } from '@utils/navigationRef'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
+import { useTheme } from '@hooks/redux'
+import { useAppSelector } from '@hooks/redux'
+import { themeUserSelector } from '@redux/selector/appSelector'
 
 const Header = () => {
   const { t } = useTranslation()
+  const theme = useTheme()
+  const themeUser = useAppSelector(themeUserSelector)
   return (
     <>
       <Box row alignCenter >
         <Btn
           onPress={() => goBack()}>
           <Icon
-            tintColor={'black'}
             source={require('@images/unAuth/back.png')}
             size={18} />
         </Btn>
         <Txt
           fontFamily={fonts.MAINB}
           size={22}
-          color={colors.black}
           marginLeft={16}
         >
           {t('Choose Your Interest')}
@@ -33,11 +38,45 @@ const Header = () => {
         fontWeight={'500'}
         fontFamily={fonts.MAIN}
         size={16}
-        color={colors.black}
         marginTop={16}
       >
         {t('Choose your interests and get the best anime recommendations. Don’t worry, you can change them later.')}
       </Txt>
+      <Box
+        borderBottomWidth={1}
+        borderColor={theme.line}
+        paddingVertical={10}
+      >
+        <Txt
+          color={'red'}
+          fontFamily={fonts.IBMPM}
+        >
+          {t('Appearance')}
+        </Txt>
+        <Btn
+          onPress={() => navigate(screens.APPEARANCE)}
+          row
+          justifySpaceBetween
+          alignCenter
+          marginTop={20}
+        >
+          <Txt size={13} fontFamily={fonts.SGM} color={theme.black}>
+            Appearance
+          </Txt>
+
+          <Box row alignCenter>
+            <Txt size={13} fontFamily={fonts.SGM} color={'red'}>
+              {themeUser === 'dark' ? t('Dark Mode') : t('Light Mode')}
+            </Txt>
+            <Icon
+              source={require('@images/unAuth/back.png')}
+              size={10}
+              resizeMode={'contain'}
+              marginLeft={10}
+            />
+          </Box>
+        </Btn>
+      </Box>
     </>
   )
 }

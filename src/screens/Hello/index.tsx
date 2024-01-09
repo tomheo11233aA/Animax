@@ -11,6 +11,7 @@ import { colors } from '@themes/colors'
 import { convertLanguage } from '@utils/convert'
 import { width } from '@utils/responsive'
 import { useTranslation } from 'react-i18next'
+import { setTheme } from '@redux/slice/userSlice'
 
 const Hello = () => {
   const dispatch = useAppDispatch()
@@ -23,6 +24,8 @@ const Hello = () => {
       i18n.changeLanguage(lng)
       const lngObj = convertLanguage(lng)
       dispatch(setLanguage(lngObj))
+      const theme = (localStorage.getString(keys.THEME) || 'light') as 'dark' | 'light';
+      dispatch(setTheme(theme));
       // navigation.replace(screens.SIGNUP)
       navigation.replace(screens.MAIN)
     }, 2000)
@@ -32,17 +35,17 @@ const Hello = () => {
 
   return (
     <Box
-    flex={1}
-    alignCenter
-    justifyCenter
-    backgroundColor={colors.white}
-  >
-    <Icon
-      resizeMode={'contain'}
-      source={require('@images/logo.png')}
-      size={width * 40 / 100}
-    />
-  </Box>
+      flex={1}
+      alignCenter
+      justifyCenter
+      backgroundColor={colors.white}
+    >
+      <Icon
+        resizeMode={'contain'}
+        source={require('@images/logo.png')}
+        size={width * 40 / 100}
+      />
+    </Box>
   )
 }
 

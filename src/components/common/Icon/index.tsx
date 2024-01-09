@@ -5,13 +5,12 @@ import { Platform, StatusBar, StyleSheet, View, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { handleMargin, handlePadding, handleRound, handleSquare } from '../shared';
 import styles from '@common/Box/styles';
-import { colors } from '@themes/colors';
-
+import { useTheme } from '@hooks/redux';
 const Icon = ({
     size,
     source,
     resizeMode,
-    tintColor ,
+    tintColor,
     flex,
     flexShrink,
     flexGrow,
@@ -75,7 +74,9 @@ const Icon = ({
     ...rest
 }: Props) => {
     const insets = useSafeAreaInsets();
-
+    const theme = useTheme();
+    const tint = tintColor ? tintColor : theme.black;
+    console.log('tint', tint);
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
         isPaddingIos && {
@@ -105,7 +106,7 @@ const Icon = ({
         alignStart && styles.alignStart,
         alignCenter && styles.alignCenter,
         alignEnd && styles.alignEnd,
-        tintColor && { tintColor },
+        { tintColor: tint },
         justifyCenter && styles.justifyCenter,
         justifyStart && styles.justifyStart,
         justifyEnd && styles.justifyEnd,

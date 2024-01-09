@@ -3,6 +3,7 @@ import React from 'react'
 import Box from '@common/Box'
 import Scroll from '@common/Scroll'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
+import { useTheme } from '@hooks/redux'
 
 interface Props {
     bg?: string,
@@ -19,6 +20,8 @@ const KeyBoardSafe = ({
     paddingBottom,
     paddingHorizontal,
 }: Props) => {
+    const theme = useTheme()
+    const background = bg ? bg : theme.bg
     return (
         <KeyboardAvoidingView
             keyboardVerticalOffset={Platform.OS === 'android' ? -1000 : 0}
@@ -26,7 +29,7 @@ const KeyBoardSafe = ({
             enabled
             style={[{
                 flex: 1,
-                backgroundColor: bg,
+                backgroundColor: background,
             }, styles]}
         >
             <SafeAreaView style={{ flex: 1 }}>
