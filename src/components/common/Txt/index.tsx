@@ -3,6 +3,7 @@ import { isNumber } from 'lodash';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { handleMargin, handlePadding } from '../shared';
+import { useTheme } from '@hooks/redux';
 
 const Txt = ({
     onPress,
@@ -11,7 +12,7 @@ const Txt = ({
     flexShrink,
     flexGrow,
     size = 14,
-    color = 'black',
+    color ,
     center,
     right,
     left,
@@ -50,6 +51,8 @@ const Txt = ({
     fontWeight,
     ...textProps
 }: Props) => {
+    const colors  = useTheme();
+    const textColor = color ? color : colors.black;
     const textStyle = [
         alignSelf && { alignSelf },
         flex && { flex: 1 },
@@ -57,7 +60,8 @@ const Txt = ({
         flexGrow && { flexGrow: 1 },
         fontType && { fontWeight: fontType || 'normal' },
         bold && { fontWeight: 'bold' },
-        { color: color },
+        // { color: color },
+        { color: textColor },
         center && { textAlign: 'center' },
         right && { textAlign: 'right' },
         left && { textAlign: 'left' },

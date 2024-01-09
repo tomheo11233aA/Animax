@@ -9,6 +9,7 @@ const initialState: IUSerSlice = {
         value: "en",
         image: require('@images/unAuth/america.png'),
     },
+    theme: 'light',
 };
 
 const userSlice = createSlice({
@@ -21,12 +22,16 @@ const userSlice = createSlice({
         setLogin: (state, action: PayloadAction<boolean>) => {
             state.isLogin = action.payload;
         },
+        setTheme: (state, action: PayloadAction<'dark' | 'light'>) => {
+            state.theme = action.payload;
+        },
     },
 });
 
 export const {
     setLanguage,
     setLogin,
+    setTheme,
 } = userSlice.actions;
 
 export default userSlice

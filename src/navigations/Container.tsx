@@ -7,6 +7,7 @@ import Hello from "@screens/Hello";
 import Started from "@screens/Users/Started";
 import Signup from "@screens/Users/Signup";
 import Main from "./Main";
+import Appearance from "@screens/Appearance";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -15,6 +16,7 @@ const Container = () => {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={screens.HELLO} component={Hello} />
                 <Stack.Screen name={screens.MAIN} component={Main} />
+                <Stack.Screen name={screens.APPEARANCE} component={Appearance} />
             </Stack.Navigator>
         </NavigationContainer>
     )
