@@ -7,18 +7,13 @@ import { localStorage } from "@utils/localStorage";
 import { setLogin } from "@redux/slice/userSlice";
 import { AppDispatch } from "@redux/store/store";
 import Box from "@common/Box";
-
-interface BoxProps {
-    flex?: number;
-    alignCenter?: boolean;
-    justifyCenter?: boolean;
-    backgroundColor?: string;
-    children?: React.ReactNode;
-}
+import { StatusBarStyle, StatusBar } from "react-native";
+import { themeUserSelector } from "@redux/selector/appSelector";
 
 const Main = () => {
     const dispatch: AppDispatch = useAppDispatch()
     const isLogin = useAppSelector(isLoginUserSelector)
+    const theme = useAppSelector(themeUserSelector)
     useEffect(() => {
         const fetchIsLogin = () => {
             const isLogin = localStorage.getString('isLogin')
@@ -32,11 +27,17 @@ const Main = () => {
         fetchIsLogin()
     }, [])
     return (
-        <Box
-            flex={1}
-        >
-            {isLogin ? <AuthNavigation /> : <UnAuthNavigation />}
-        </Box>
+        <>
+            <StatusBar
+                barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+                backgroundColor={theme === 'dark' ? '#1F222A' : '#fff'}
+            />
+            <Box
+                flex={1}
+            >
+                {isLogin ? <AuthNavigation /> : <UnAuthNavigation />}
+            </Box>
+        </>
     );
 }
 
