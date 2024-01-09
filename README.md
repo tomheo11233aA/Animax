@@ -1,3 +1,65 @@
+# Bee English
+
+Welcome to the Bee English project repository! This project is designed to provide a comprehensive solution for English learning and teaching through a mobile application. Below you will find all the necessary information to get started with the project, understand its structure, and contribute to its development.
+
+## Contents
+
+1. [Technical](#technical)
+2. [Project Scaffolding](#project-scaffolding)
+3. [Alias](#alias)
+4. [Core Component](#core-component)
+5. [Custom Component](#custom-component)
+6. [🚀 Getting Started](#getting-started)
+7. [How to create new Service](#how-to-create-new-service)
+8. [How to create new Flow](#how-to-create-new-flow)
+9. [How to use Lottie Animation](#how-to-use-lottie-animation)
+
+## Technical
+
+This project uses a variety of technologies and libraries to ensure a smooth development process and a high-quality user experience:
+
+- **Package Management:** [Yarn](https://yarnpkg.com/)
+- **State Management:** [Redux](https://redux-toolkit.js.org/introduction/getting-started)
+- **Routing and Navigation:** [React Navigation](https://reactnavigation.org/docs/getting-started) for native mobile
+- **Connect API:** [Axios](https://axios-http.com/docs/intro)
+- **Local Storage:**
+  - [MMKV](https://github.com/mrousavy/react-native-mmkv) for React Native
+  - [Redux Persist](https://github.com/rt2zz/redux-persist)
+- **Animation Handler:**
+  - [Reanimated3](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/)
+  - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/)
+  - [React Native Animated API](https://reactnative.dev/docs/animated)
+  - [Lottie](https://airbnb.io/lottie/#/react-native) for React Native
+
+## Project Scaffolding
+
+The project structure is organized as follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
