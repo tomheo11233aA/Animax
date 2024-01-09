@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Image } from 'react-native';
+import { StyleSheet, View, TextInput, Image, TouchableOpacity, Button } from 'react-native';
 import { colors } from '@themes/colors';
 import { fonts } from '@themes/fonts';
+import { Text } from 'react-native-paper';
 
 interface CardInputProps {
     placeholder: string;
@@ -20,16 +21,50 @@ const CardInput: React.FC<CardInputProps> = ({
 }) => {
     return (
         <View style={styles.inputContainer}>
-            {icon && <Image source={icon} style={styles.iconStyle} />}
-            <TextInput
-                style={styles.input}
-                placeholder={placeholder}
-                placeholderTextColor={colors.black}
-                onChangeText={onChangeText}
-                maxLength={maxLength}
-                value={value}
-            />
+            <View style={styles.inputHeader}>
+            <Text style={styles.headerText}>Fill Your Profile</Text>
+            </View>
+        <View style={styles.avatarContainer}>
+                <Image
+                source={{ uri: '' }}
+                style={styles.avatar}
+                />
+                <TouchableOpacity style={styles.editButton}>
+                <Text style={styles.editButtonText}>+</Text>
+                </TouchableOpacity>
         </View>
+        <TextInput
+        placeholder="Full Name"
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Nickname"
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Email"
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Phone Number"
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Gender"
+        style={styles.input}
+      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Skip"
+          onPress={() => console.log('Skip Pressed')}
+        />
+        <Button
+          title="Continue"
+          onPress={() => console.log('Continue Pressed')}
+          color="#5cb85c"
+        />
+      </View>
+    </View>
     );
 };
 
@@ -48,18 +83,28 @@ const styles = StyleSheet.create({
         marginTop: 10,
         zIndex: -1,
     },
-    iconStyle: {
-        position: 'absolute',
-        width: 20,
-        height: 20,
-        left: 15,
+    inputHeader: {
+
     },
-    input: {
-        flex: 1,
-        height: 45,
-        paddingLeft: 40,
-        color: 'black',
-        fontFamily: fonts.AS,
-        fontSize: 14,
+    headerText:{
+
+    },
+    avatarContainer:{
+
+    },
+    avatar:{
+
+    },
+    editButton:{
+
+    },
+    editButtonText:{
+
+    },
+    input:{
+
+    },
+    buttonContainer:{
+
     },
 });
