@@ -16,7 +16,7 @@ const Started = () => {
   const { t } = useTranslation()
   return (
     <ImageBackground
-      source={require('@images/banner1.jpg')}
+      source={require('@images/background.png')}
       style={styles.backgroundImage}>
       <LinearGradient
         start={{ x: 0, y: 0 }}
@@ -52,15 +52,16 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     justifyContent: 'center',
+    backgroundColor: '#000000',
   },
   container: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingBottom: hp('8%'),
-    paddingHorizontal: wp('5%')
+    paddingHorizontal: wp('5%'),
   },
   content: {
     alignItems: 'center',

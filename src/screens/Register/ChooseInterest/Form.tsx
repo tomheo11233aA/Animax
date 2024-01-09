@@ -7,6 +7,8 @@ import { fonts } from '@themes/fonts';
 import Scroll from '@common/Scroll';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '@hooks/redux';
+import { themeUserSelector } from '@redux/selector/appSelector';
 
 const interests = [
   'Action', 'Drama', 'Comedy', 'Ecchi', 'Adventure',
@@ -19,6 +21,7 @@ const interests = [
 
 const Form = () => {
   const { t } = useTranslation();
+  const theme = useAppSelector(themeUserSelector);
   const [selectedInterests, setSelectedInterests] = useState(new Set());
 
   const toggleInterest = (interest: any) => {
@@ -42,7 +45,7 @@ const Form = () => {
         paddingVertical={hp('1%')}
         paddingHorizontal={wp('5%')}
         radius={wp('6%')}
-        backgroundColor={selected ? colors.lMainColor : colors.white}
+        backgroundColor={selected ? colors.lMainColor : theme === 'light' ? colors.white : 'transparent'}
         borderWidth={1.5}
         borderColor={selected ? '#44d076' : colors.mainColor}
       >

@@ -81,6 +81,7 @@ export const colors = {
     shadowColor: '#06c14940',
     black: '#212121',
     black2: '#424242',
+    black3: '#35383f',
     gray: '#616161',
     white: '#ffffff',
     yellow: '#fdd835',

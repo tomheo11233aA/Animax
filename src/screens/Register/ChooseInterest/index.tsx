@@ -7,7 +7,8 @@ import KeyBoardSafe from '@reuse/KeyBoardSafe'
 
 const ChooseInterest = () => {
   return (
-    <KeyBoardSafe>
+    <KeyBoardSafe
+    >
       <Box
         padding={24}
         flex={1}>

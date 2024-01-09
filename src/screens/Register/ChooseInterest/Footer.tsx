@@ -8,20 +8,23 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useTranslation } from 'react-i18next';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
+import { useAppSelector } from '@hooks/redux';
+import { themeUserSelector } from '@redux/selector/appSelector';
 
 const Footer = () => {
   const { t } = useTranslation();
+  const theme = useAppSelector(themeUserSelector);
   return (
-    <Box row justifyCenter style={{ justifyContent: 'space-between' }}>
+    <Box marginTop={15} row justifyCenter style={{ justifyContent: 'space-between' }}>
       <Btn
         width={'48%'}
         padding={wp('4%')}
         radius={wp('8%')}
-        backgroundColor={colors.lMainColor2}
+        backgroundColor={theme === 'light' ? colors.lMainColor2 : colors.black3}
         onPress={() => navigate(screens.FILL_PROFILE)}
       >
         <Txt
-          color={colors.mainColor}
+          color={theme === 'light' ? colors.mainColor : colors.white}
           size={14}
           fontWeight={'bold'}
           fontFamily={fonts.MAIN}
