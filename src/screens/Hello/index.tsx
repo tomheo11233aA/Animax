@@ -12,6 +12,7 @@ import { convertLanguage } from '@utils/convert'
 import { width } from '@utils/responsive'
 import { useTranslation } from 'react-i18next'
 import { setTheme } from '@redux/slice/userSlice'
+import LottieView from 'lottie-react-native'
 
 const Hello = () => {
   const dispatch = useAppDispatch()
@@ -38,12 +39,22 @@ const Hello = () => {
       flex={1}
       alignCenter
       justifyCenter
-      backgroundColor={colors.white}
+      backgroundColor={'#11181e'}
     >
       <Icon
         resizeMode={'contain'}
         source={require('@images/logo.png')}
-        size={width * 40 / 100}
+        size={width * 30 / 60}
+        tintColor={colors.white}
+      />
+      <LottieView
+        source={require('@lotties/loading.json')}
+        autoPlay
+        loop
+        style={{
+          width: width * 40 / 100,
+          height: width * 40 / 100,
+        }}
       />
     </Box>
   )
