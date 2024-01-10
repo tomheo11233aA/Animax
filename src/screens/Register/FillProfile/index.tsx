@@ -189,9 +189,6 @@ import React from 'react'
 import Header from './Header'
 import Form from './Form'
 import KeyBoardSafe from '@reuse/KeyBoardSafe'
-import Box from '@common/Box'
-import Footer from './Footer'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import Scroll from '@common/Scroll'
 const FillProfile = () => {
   return (

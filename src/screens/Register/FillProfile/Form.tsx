@@ -54,24 +54,26 @@ const Form = () => {
             </Box>
             <Box marginTop={hp(4)}>
                 <Input
+                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
                     radius={wp('4%')}
                     height={hp(7)}
                     width={'100%'}
                     borderWidth={1}
                     hint={'Full name'}
                     font={fonts.MAIN}
-                    hintColor={'#b6bdc7'}
+                    hintColor={'#888888'}
                     onChangeText={(text: string) => setValue('fullName', text)}
                     color={theme === 'light' ? color.black : color.white}
                 />
                 {errors.fullName && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.fullName?.message}</Txt>}
                 <Input
+                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
                     radius={wp('5%')}
                     height={hp(7)}
                     width={'100%'}
                     borderWidth={1}
                     hint={'Nickname'}
-                    hintColor={'#b6bdc7'}
+                    hintColor={'#888888'}
                     marginTop={hp(3)}
                     font={fonts.MAIN}
                     onChangeText={(text: string) => setValue('nickName', text)}
@@ -79,12 +81,13 @@ const Form = () => {
                 />
                 {errors.nickName && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.nickName?.message}</Txt>}
                 <Input
+                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
                     radius={wp('4%')}
                     height={hp(7)}
                     width={'100%'}
                     borderWidth={1}
                     hint={'Email'}
-                    hintColor={'#b6bdc7'}
+                    hintColor={'#888888'}
                     marginTop={hp(3)}
                     font={fonts.MAIN}
                     iconTwo={require('@images/unAuth/mail.png')}
@@ -94,6 +97,7 @@ const Form = () => {
                 />
                 {errors.email && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.email?.message}</Txt>}
                 <Input
+                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
                     radius={wp('4%')}
                     height={hp(7)}
                     width={'100%'}
@@ -101,12 +105,13 @@ const Form = () => {
                     hint={'Phone Number'}
                     marginTop={hp(3)}
                     font={fonts.MAIN}
-                    hintColor={'#b6bdc7'}
+                    hintColor={'#888888'}
                     onChangeText={(text: string) => setValue('phoneNumber', text)}
                     color={theme === 'light' ? color.black : color.white}
                 />
                 {errors.phoneNumber && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.phoneNumber?.message}</Txt>}
                 <Input
+                                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
                     radius={wp('4%')}
                     height={hp(7)}
                     width={'100%'}
@@ -114,7 +119,7 @@ const Form = () => {
                     hint={'Gender'}
                     marginTop={hp(3)}
                     font={fonts.MAIN}
-                    hintColor={'#b6bdc7'}
+                    hintColor={'#888888'}
                     onChangeText={(text: string) => setValue('gender', text)}
                     color={theme === 'light' ? color.black : color.white}
                 />

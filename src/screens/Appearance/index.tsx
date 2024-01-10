@@ -1,6 +1,5 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import RNRestart from 'react-native-restart'
 import { useSelector } from 'react-redux'
 import { useTheme } from '@hooks/redux'
 import { themeUserSelector } from '@redux/selector/appSelector'
@@ -12,22 +11,24 @@ import Txt from '@common/Txt'
 import { fonts } from '@themes/fonts'
 import Btn from '@common/Btn'
 import { colors } from '@themes/colors'
+import { useAppDispatch } from '@hooks/redux'
+import { AppDispatch } from '@redux/store/store'
+import { setTheme } from '@redux/slice/userSlice'
 
 const LIGHT = 'Light Mode'
 const DARK = 'Dark Mode'
 
 const themes = [LIGHT, DARK]
-// Chuyển đổi chế độ dark/light
 const Appearance = () => {
   const color = useTheme()
   const { t } = useTranslation()
   const theme = useSelector(themeUserSelector)
+  const dispatch: AppDispatch = useAppDispatch()
 
-  // Chuyển đổi chế độ dark/light
   const handleChangeTheme = async (value: string) => {
     const payload = value === LIGHT ? 'light' : 'dark'
     localStorage.set(keys.THEME, payload)
-    RNRestart.Restart() // restart lại app
+    dispatch(setTheme(payload))
   }
 
   return (

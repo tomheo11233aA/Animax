@@ -44,7 +44,7 @@ export const colors = {
         black: 'white',
         black2: 'black',
         black3: '#171e24',
-        black4: '#282e3d',
+        black4: 'transparent',
         white: 'white',
         white2: '#29313c',
         white3: '#232935',
