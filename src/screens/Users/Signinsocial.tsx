@@ -15,10 +15,13 @@ import { goBack } from '@utils/navigationRef'
 import { useTranslation } from 'react-i18next'
 import { themeUserSelector } from '@redux/selector/appSelector'
 import { useAppSelector } from '@hooks/redux'
+import { useTheme } from '@hooks/redux' 
 
 const Signinsocial = () => {
     const { t } = useTranslation()
     const theme = useAppSelector(themeUserSelector)
+    const color = useTheme()
+    console.log(theme)
     return (
         <KeyBoardSafe>
             <Scroll
@@ -118,7 +121,7 @@ const Signinsocial = () => {
                     </Btn>
                 </Box>
                 <Box marginVertical={hp('4%')} row alignCenter justifyCenter>
-                    <Box width={wp('38%')} height={1} backgroundColor={'#E0E0E0'} />
+                    <Box width={wp('38%')} height={1} backgroundColor={color.line} />
                     <Txt
                         size={wp('4%')}
                         fontFamily={fonts.MAINB}
@@ -127,7 +130,7 @@ const Signinsocial = () => {
                     >
                         {t('or')}
                     </Txt>
-                    <Box width={wp('38%')} height={1} backgroundColor={'#E0E0E0'} />
+                    <Box width={wp('38%')} height={1} backgroundColor={color.line} />
                 </Box>
                 <Box>
                     <Btn

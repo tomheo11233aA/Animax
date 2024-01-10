@@ -1,5 +1,6 @@
 export const colors = {
     light: {
+        mainColor: '#06C149',
         black: 'black',
         black2: 'white',
         black3: '#f5f5f5',
@@ -39,6 +40,7 @@ export const colors = {
         yellow7: '#fff6d8'
     },
     dark: {
+        mainColor: '#06C149',
         black: 'white',
         black2: 'black',
         black3: '#171e24',

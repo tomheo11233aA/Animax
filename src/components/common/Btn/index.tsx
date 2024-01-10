@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { handleMargin, handlePadding, handleRound, handleSquare } from '@common/shared';
 import styles from '@common/Box/styles';
 import { useTheme } from '@hooks/redux';
+import { colors } from '@themes/colors';
 
 const Btn = ({
     onPress,
@@ -77,9 +78,9 @@ const Btn = ({
     ...rest
 }: Props) => {
     const insets = useSafeAreaInsets();
-    const colors = useTheme();
-    const myBoderColor = borderColor ? borderColor : colors.line;
-    const backgroundColors = backgroundColor ? backgroundColor : colors.black4;
+    const color = useTheme();
+    const myBoderColor = borderColor ? borderColor : color.line;
+    const backgroundColors = backgroundColor ? backgroundColor : color.black4;
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
         isPaddingIos && {

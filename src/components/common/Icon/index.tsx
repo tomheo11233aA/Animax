@@ -76,7 +76,6 @@ const Icon = ({
     const insets = useSafeAreaInsets();
     const theme = useTheme();
     const tint = tintColor ? tintColor : theme.black;
-    console.log('tint', tint);
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
         isPaddingIos && {
