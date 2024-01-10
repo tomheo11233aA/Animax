@@ -1,79 +1,80 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Lưu ý sử dụng trong dự án
 
-# Getting Started
+## Sử dụng `KeyBoardSafe`
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+Trong tất cả các màn hình của ứng dụng, bạn **phải** sử dụng component `KeyBoardSafe` từ `@components/reuse/KeyBoardSafe.tsx`. `KeyBoardSafe` giúp quản lý việc hiển thị bàn phím ảo một cách thông minh, tránh việc che khuất nội dung.
 
-## Step 1: Start the Metro Server
+Ví dụ sử dụng:
+import KeyBoardSafe from '@components/reuse/KeyBoardSafe';
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+const YourScreen = () => {
+return (
+<KeyBoardSafe>
+{/ Nội dung của màn hình /}
+</KeyBoardSafe>
+);
+};
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Sử dụng `Box` từ `@components/common/Box`
 
-```bash
-# using npm
-npm start
+`Box` là một component được tạo ra để thay thế cho `View` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng.
 
-# OR using Yarn
-yarn start
-```
+Cách sử dụng `Box`:
+import Box from '@components/common/Box';
+import { colors } from '@theme/colors';
 
-## Step 2: Start your Application
+const Example = () => {
+return (
+<Box
+flex={1}
+alignCenter
+justifyCenter
+backgroundColor={colors.white}
+// Thêm row nếu bạn muốn flexDirection là 'row'
+// row
+>
+{/ Nội dung bên trong /}
+</Box>
+);
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-### For Android
+Nhớ thêm `row` vào props của `Box` nếu bạn muốn sử dụng `flexDirection: 'row'`.
 
-```bash
-# using npm
-npm run android
+## Custom màu sắc theo Theme
 
-# OR using Yarn
-yarn android
-```
+Khi bạn muốn custom màu sắc cho các màn hình theo theme (sáng/tối), bạn cần sử dụng `themeUserSelector` để lấy thông tin theme hiện tại và `useAppSelector` để kết nối với Redux store.
 
-### For iOS
+Đầu tiên, import các hook từ thư viện Redux:
 
-```bash
-# using npm
-npm run ios
+import { useAppSelector } from '@hooks/redux';
+import { themeUserSelector } from '@redux/selector/appSelector';
 
-# OR using Yarn
-yarn ios
-```
+Sau đó, bạn có thể sử dụng `themeUserSelector` trong component của mình để lấy theme hiện tại:
+const theme = useAppSelector(themeUserSelector);
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Với giá trị `theme` thu được, bạn có thể điều chỉnh màu sắc của các component dựa trên theme. Ví dụ, nếu bạn muốn set màu nền cho `Box`:
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+import Box from '@components/common/Box';
+import { colors } from '@theme/colors';
 
-## Step 3: Modifying your App
+const ExampleComponent = () => {
+const theme = useAppSelector(themeUserSelector);
 
-Now that you have successfully run the app, let's modify it.
+return (
+<Box
+flex={1}
+alignCenter
+justifyCenter
+backgroundColor={theme === 'light' ? colors.lightBackground : colors.darkBackground}
+// Thêm row vào props nếu bạn muốn flexDirection là 'row'
+// row
+>
+{/ Nội dung bên trong /}
+</Box>
+);
+};
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Trong ví dụ trên, `Box` sẽ có màu nền tương ứng với theme sáng hoặc tối. Bạn cần đảm bảo rằng các màu sắc đã được định nghĩa trong `@theme/colors`.
 
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Nhớ rằng, mọi thay đổi màu sắc theo theme cần được áp dụng một cách nhất quán trong toàn bộ ứng dụng để đảm bảo trải nghiệm người dùng tốt nhất.

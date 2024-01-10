@@ -16,7 +16,6 @@ import { screens } from '@contants/screens';
 import { useAppSelector } from '@hooks/redux';
 import { themeUserSelector } from '@redux/selector/appSelector';
 
-
 const FillProfile = () => {
   const { handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(fillProfileSchema)
