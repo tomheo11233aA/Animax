@@ -88,3 +88,96 @@ backgroundColor={theme === 'light' ? colors.lightBackground : colors.darkBackgro
 Trong ví dụ trên, `Box` sẽ có màu nền tương ứng với theme sáng hoặc tối. Bạn cần đảm bảo rằng các màu sắc đã được định nghĩa trong `@theme/colors`.
 
 Nhớ rằng, mọi thay đổi màu sắc theo theme cần được áp dụng một cách nhất quán trong toàn bộ ứng dụng để đảm bảo trải nghiệm người dùng tốt nhất.
+
+## Sử dụng `Txt` từ `@components/common/Txt`
+
+`Txt` là một component được tạo ra để thay thế cho `Text` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng và hỗ trợ theming.
+
+Cách sử dụng `Txt`:
+
+```jsx
+import Txt from '@components/common/Txt';
+
+const ExampleText = () => {
+return (
+<Txt
+size={16}
+color="blue"
+center
+// Các props khác theo nhu cầu
+>
+Đây là văn bản mẫu
+</Txt>
+);
+};
+```
+
+Nhớ thêm các props tùy chỉnh khác vào `Txt` để điều chỉnh theo nhu cầu của bạn.
+
+## Sử dụng `Btn` từ `@components/common/Btn`
+
+`Btn` là một component được tạo ra để thay thế cho `TouchableOpacity` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng và hỗ trợ theming.
+
+Cách sử dụng `Btn`:
+
+```jsx
+import Btn from '@components/common/Btn';
+
+const ExampleButton = () => {
+return (
+<Btn
+onPress={() => console.log('Button pressed')}
+backgroundColor="red"
+padding={10}
+radius={5}
+// Các props khác theo nhu cầu
+>
+Nhấn vào đây
+</Btn>
+);
+};
+```
+Nhớ thêm các props tùy chỉnh khác vào `Btn` để điều chỉnh theo nhu cầu của bạn.
+
+## Sử dụng `Scroll` từ `@components/common/Scroll`
+`Scroll` là một component được tạo ra để thay thế cho `ScrollView` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng.
+
+Cách sử dụng `Scroll`:
+```jsx
+import Scroll from '@components/common/Scroll';
+
+const ExampleScroll = () => {
+return (
+<Scroll
+horizontal
+showsHorizontalScrollIndicator={false}
+// Các props khác theo nhu cầu
+>
+{/ Nội dung bên trong Scroll /}
+</Scroll>
+);
+};
+```
+
+Nhớ thêm các props tùy chỉnh khác vào `Scroll` để điều chỉnh theo nhu cầu của bạn.
+
+## Sử dụng `Input` từ `@components/common/Input`
+
+`Input` là một component được tạo ra để thay thế cho `TextInput` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng và hỗ trợ theming.
+
+Cách sử dụng `Input`:
+```jsx
+import Input from '@components/common/Input';
+
+const ExampleInput = () => {
+return (
+<Input
+value={yourValue}
+onChangeText={yourOnChangeTextFunction}
+hint="Nhập văn bản"
+// Các props khác theo nhu cầu
+/>
+);
+};
+```
+Nhớ thêm các props tùy chỉnh khác vào `Input` để điều chỉnh theo nhu cầu của bạn.
