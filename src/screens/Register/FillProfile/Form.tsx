@@ -16,6 +16,8 @@ import { colors } from '@themes/colors';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
 import { useTheme } from '@hooks/redux'
+import PhoneInput from "react-native-phone-number-input";
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const Form = () => {
     const { t } = useTranslation();
@@ -27,6 +29,19 @@ const Form = () => {
     const handleContinue = () => {
         navigate(screens.FORGOT_PASSWORD)
     }
+    const [phone, setPhone] = React.useState('')
+    const [selectedGender, setSelectedGender] = React.useState('');
+    const gender = [
+        { key: '1', value: t('Male') },
+        { key: '2', value: t('Female') },
+        { key: '3', value: t('Other') },
+    ]
+
+    const handleGenderChange = (item: any) => {
+        setSelectedGender(item.value)
+        setValue('gender', item.value)
+    }
+
     return (
         <Box marginTop={20} relative>
             <Box>
@@ -96,34 +111,61 @@ const Form = () => {
                     color={theme === 'light' ? color.black : color.white}
                 />
                 {errors.email && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.email?.message}</Txt>}
-                <Input
-                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
-                    radius={wp('4%')}
-                    height={hp(7)}
-                    width={'100%'}
-                    borderWidth={1}
-                    hint={'Phone Number'}
-                    marginTop={hp(3)}
-                    font={fonts.MAIN}
-                    hintColor={'#888888'}
-                    onChangeText={(text: string) => setValue('phoneNumber', text)}
-                    color={theme === 'light' ? color.black : color.white}
+                <PhoneInput
+                    defaultCode="VN"
+                    layout="first"
+                    onChangeText={(text: string) => {
+                        setValue('phoneNumber', text);
+                        setPhone(text);
+                    }}
+                    value={phone}
+                    containerStyle={{
+                        backgroundColor: theme === 'light' ? color.black3 : color.black3,
+                        borderRadius: wp('4%'),
+                        width: '100%',
+                        borderWidth: 1,
+                        marginTop: hp(3),
+                        borderColor: theme === 'light' ? color.black3 : color.black3,
+                        height: hp(7),
+                    }}
+                    textInputStyle={{
+                        color: theme === 'light' ? color.black : color.black,
+                        fontFamily: fonts.MAIN,
+                        paddingVertical: 0
+                    }}
+                    textContainerStyle={{
+                        backgroundColor: theme === 'light' ? color.black3 : color.black3,
+                        height: hp(7),
+                    }}
+                    codeTextStyle={{
+                        color: theme === 'light' ? color.black : color.black,
+                        fontFamily: fonts.MAIN,
+                    }}
+                    textInputProps={{
+                        placeholderTextColor: '#888888',
+                    }}
+                    disableArrowIcon
                 />
+
                 {errors.phoneNumber && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.phoneNumber?.message}</Txt>}
-                <Input
-                                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
-                    radius={wp('4%')}
-                    height={hp(7)}
-                    width={'100%'}
-                    borderWidth={1}
-                    hint={'Gender'}
-                    marginTop={hp(3)}
-                    font={fonts.MAIN}
-                    hintColor={'#888888'}
-                    onChangeText={(text: string) => setValue('gender', text)}
-                    color={theme === 'light' ? color.black : color.white}
+                <SelectList
+                    data={gender}
+                    setSelected={(selectedItem: any) => {
+                        setSelectedGender(selectedItem)
+                        setValue('gender', selectedItem)
+                    }}
+                    placeholder='Choose gender'
+                    fontFamily={fonts.MAIN}
+                    boxStyles={{ marginTop: hp(3) }}
+                    inputStyles={{
+                        color: theme === 'light' ? color.black : color.white,
+                    }}
+                    dropdownTextStyles={{
+                        color: theme === 'light' ? color.black : color.white,
+                    }}
+                    search={false}
                 />
-                {errors.gender && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.phoneNumber?.message}</Txt>}
+                {errors.gender && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.gender?.message}</Txt>}
             </Box>
             <Box marginTop={hp(10)}>
                 <Box row justifyCenter style={{ justifyContent: 'space-between' }}>
