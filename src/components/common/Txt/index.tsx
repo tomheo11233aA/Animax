@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { handleMargin, handlePadding } from '../shared';
 import { useTheme } from '@hooks/redux';
+import { fonts } from '@themes/fonts';
 
 const Txt = ({
     onPress,
@@ -47,7 +48,7 @@ const Txt = ({
     alignSelf,
     relative,
     absolute,
-    fontFamily,
+    fontFamily = fonts.MAIN,
     fontWeight,
     ...textProps
 }: Props) => {

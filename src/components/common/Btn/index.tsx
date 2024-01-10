@@ -5,6 +5,7 @@ import { Platform, StatusBar, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { handleMargin, handlePadding, handleRound, handleSquare } from '@common/shared';
 import styles from '@common/Box/styles';
+import { useTheme } from '@hooks/redux';
 
 const Btn = ({
     onPress,
@@ -76,7 +77,9 @@ const Btn = ({
     ...rest
 }: Props) => {
     const insets = useSafeAreaInsets();
-
+    const colors = useTheme();
+    const myBoderColor = borderColor ? borderColor : colors.line;
+    const backgroundColors = backgroundColor ? backgroundColor : colors.black4;
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
         isPaddingIos && {
@@ -98,9 +101,7 @@ const Btn = ({
             elevation: elevation || 3,
         },
         wrap && { flexWrap: 'wrap' },
-        backgroundColor && {
-            backgroundColor: backgroundColor,
-        },
+        { backgroundColor: backgroundColors },
         padding && { ...handlePadding(getSize.m(padding)) },
         margin && { ...handleMargin(getSize.m(margin)) },
         alignStart && styles.alignStart,
@@ -129,9 +130,7 @@ const Btn = ({
         square && { ...handleSquare(getSize.s(square)) },
         round && { ...handleRound(getSize.s(round)) },
         isNumber(opacity) && { opacity: opacity },
-        borderColor && {
-            borderColor: borderColor,
-        },
+        { borderColor: myBoderColor },
         relative && { position: 'relative' },
         absolute && { position: 'absolute' },
         isNumber(top) && { top: getSize.v(top) },

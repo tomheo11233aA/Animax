@@ -1,202 +1,174 @@
-import {
-    StyleSheet, Text, View,
-    TouchableOpacity,
-    Image, ScrollView
-} from 'react-native'
 import React from 'react'
 import Scroll from '@common/Scroll'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
+import Txt from '@common/Txt'
+import KeyBoardSafe from '@reuse/KeyBoardSafe'
+import { fonts } from '@themes/fonts'
+import { colors } from '@themes/colors'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import Box from '@common/Box'
+import Img from '@common/Img'
+import Btn from '@common/Btn'
+import Icon from '@common/Icon'
+import { goBack } from '@utils/navigationRef'
+import { useTranslation } from 'react-i18next'
+import { themeUserSelector } from '@redux/selector/appSelector'
+import { useAppSelector } from '@hooks/redux'
 
 const Signinsocial = () => {
+    const { t } = useTranslation()
+    const theme = useAppSelector(themeUserSelector)
     return (
-        <Scroll
-            alignCenter
-            justifyCenter
-            backgroundColor={'#ffffff'}
-            padding={24}
-            showsVerticalScrollIndicator={false}
-        >
-            <View style={styles.Vback}>
-                <Image
-                    style={styles.backicon}
-                    source={require('@images/back.png')} />
-            </View>
-            <View style={styles.Vimage}>
-                <Image
-                    style={styles.image}
-                    source={require('@images/viewsignin.jpg')} />
-            </View>
-            <View style={styles.content}>
-                <Text
-                    style={styles.textContent}
-                >Let's you in</Text>
-            </View>
-            <TouchableOpacity
-                style={styles.buttonSocial}
-            >
-                <Image
-                    style={{ width: 24, height: 24 }}
-                    source={require('@images/facebook.png')}
-                />
-                <Text
-                    style={styles.text}
-                >Continue with Facebook</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.buttonSocial}
-            >
-                <Image
-                    style={{ width: 24, height: 24 }}
-                    source={require('@images/google.png')}
-                />
-                <Text
-                    style={styles.text}
-                >Continue with Google</Text>
-            </TouchableOpacity>
-            <View style={styles.or}>
-                <View style={styles.line} />
-                <Text style={styles.orText}>or</Text>
-                <View style={styles.line} />
-            </View>
-            <TouchableOpacity
-                style={styles.buttonSignin}
-                onPress={() => navigate(screens.CHOOSE_INTEREST)}
-            >
-                <Text
-                    style={styles.text2}
-                >Sign in with password</Text>
-            </TouchableOpacity>
-            <View style={styles.signup}>
-                <Text
-                    style={styles.text3}
-                >Don't have an account?</Text>
-                <TouchableOpacity>
-                    <Text
+        <KeyBoardSafe>
+            <Scroll
+                padding={24}
+                showsVerticalScrollIndicator={false}>
+                <Btn alignSelf={'flex-start'}
+                    onPress={() => goBack()}
+                >
+                    <Icon size={16} source={require('@images/back.png')} />
+                </Btn>
+                <Box alignCenter marginTop={hp('3%')}>
+                    <Img
+                        width={wp('60%')}
+                        height={wp('60%')}
+                        source={require('@images/viewsignin.jpg')}
+                    />
+                </Box>
+                <Box alignCenter marginTop={hp('3%')}>
+                    <Txt
+                        size={wp('13%')}
+                        fontFamily={fonts.MAINB}
+                    >
+                        {t('Let\'s you in')}
+                    </Txt>
+                </Box>
+                <Box marginTop={hp('4%')}>
+                    <Btn
+                        width={wp('90%')}
+                        height={hp('6%')}
+                        radius={wp('4%')}
+                        row
+                        alignCenter
+                        justifyCenter
+                        borderWidth={1}
+                    >
+                        <Img
+                            width={wp('5%')}
+                            height={wp('5%')}
+                            source={require('@images/facebook.png')}
+                        />
+                        <Txt
+                            size={wp('4%')}
+                            fontFamily={fonts.MAINB}
+                            marginLeft={wp('4%')}
+                        >
+                            {t('Continue with Facebook')}
+                        </Txt>
+                    </Btn>
+                </Box>
+                <Box marginTop={hp('3%')}>
+                    <Btn
+                        width={wp('90%')}
+                        height={hp('6%')}
+                        radius={wp('4%')}
+                        row
+                        alignCenter
+                        justifyCenter
+                        borderWidth={1}
+                    >
+                        <Img
+                            width={wp('5%')}
+                            height={wp('5%')}
+                            source={require('@images/google.png')}
+                        />
+                        <Txt
+                            size={wp('4%')}
+                            fontFamily={fonts.MAINB}
+                            marginLeft={wp('4%')}
+                        >
+                            {t('Continue with Google')}
+                        </Txt>
+                    </Btn>
+                </Box>
+                <Box marginTop={hp('3%')}>
+                    <Btn
+                        width={wp('90%')}
+                        height={hp('6%')}
+                        radius={wp('4%')}
+                        row
+                        alignCenter
+                        justifyCenter
+                        borderWidth={1}
+                    >
+                        <Img
+                            width={wp('5%')}
+                            height={wp('5%')}
+                            source={require('@images/unAuth/apple.png')}
+                            tintColor={theme === 'light' ? colors.black : colors.white}
+                        />
+                        <Txt
+                            size={wp('4%')}
+                            fontFamily={fonts.MAINB}
+                            marginLeft={wp('4%')}
+                        >
+                            {t('Continue with Apple')}
+                        </Txt>
+                    </Btn>
+                </Box>
+                <Box marginVertical={hp('4%')} row alignCenter justifyCenter>
+                    <Box width={wp('38%')} height={1} backgroundColor={'#E0E0E0'} />
+                    <Txt
+                        size={wp('4%')}
+                        fontFamily={fonts.MAINB}
+                        marginLeft={wp('4%')}
+                        marginRight={wp('4%')}
+                    >
+                        {t('or')}
+                    </Txt>
+                    <Box width={wp('38%')} height={1} backgroundColor={'#E0E0E0'} />
+                </Box>
+                <Box>
+                    <Btn
+                        width={wp('90%')}
+                        height={hp('6%')}
+                        radius={wp('10%')}
+                        row
+                        alignCenter
+                        justifyCenter
+                        backgroundColor={colors.mainColor}
+                        onPress={() => navigate(screens.CHOOSE_INTEREST)}
+                    >
+                        <Txt
+                            size={wp('4%')}
+                            fontFamily={fonts.MAINB}
+                            color={colors.white}
+                        >
+                            {t('Sign in with password')}
+                        </Txt>
+                    </Btn>
+                </Box>
+                <Box marginTop={hp('3%')} row alignCenter justifyCenter>
+                    <Txt
+                        size={wp('4%')}
+                    >
+                        {t('Don\'t have an account?')}
+                    </Txt>
+                    <Txt
                         onPress={() => navigate(screens.SIGNUP)}
-                        style={styles.textSignup}
-                    >Sign up</Text>
-                </TouchableOpacity>
-            </View>
-        </Scroll>
+                        size={wp('4%')}
+                        fontFamily={fonts.MAINB}
+                        color={colors.mainColor}
+                        marginLeft={wp('2%')}
+                    >
+                        {t('Sign up')}
+                    </Txt>
+
+                </Box>
+            </Scroll>
+        </KeyBoardSafe>
     )
 }
 
-export default Signinsocial
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        paddingBottom: 50,
-        padding: 24,
-        backgroundColor: '#ffffff',
-    },
-    Vback: {
-        position: 'absolute',
-        top: 24,
-        left: 24,
-        width: 24,
-        height: 24,
-    },
-    backicon: {
-        flex: 1,
-        width: null,
-        height: null,
-        resizeMode: 'cover',
-    },
-    Vimage: {
-        width: '100%',
-        height: 250,
-        borderRadius: 50,
-        // backgroundColor: 'red',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 50,
-        marginBottom: 30,
-    },
-    image: {
-        width: 250,
-        height: 250,
-        borderRadius: 40,
-    },
-    content: {
-        alignItems: 'center',
-        marginBottom: 50,
-    },
-    textContent: {
-        fontSize: 50,
-        fontWeight: '500',
-        color: '#000',
-    },
-    text: {
-        color: '#000000',
-        fontSize: 16,
-        fontWeight: '500',
-        marginLeft: 16,
-    },
-    buttonSocial: {
-        width: '100%',
-        height: 60,
-        backgroundColor: '#fff',
-        borderRadius: 13,
-        borderWidth: 1,
-        borderColor: '#CCCCCC',
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginBottom: 16,
-    },
-    or: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 32,
-        marginTop: 16,
-    },
-    line: {
-        flex: 1,
-        height: 1,
-        backgroundColor: '#DDDDDD',
-        marginHorizontal: 8,
-    },
-    orText: {
-        color: '#000000',
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    buttonSignin: {
-        width: '100%',
-        height: 60,
-        backgroundColor: '#06C149',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        marginBottom: 20,
-        borderRadius: 50,
-    },
-    text2: {
-        color: '#ffffff',
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    signup: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text3: {
-        color: '#bbbbbb',
-        fontSize: 16,
-        fontWeight: '400',
-    },
-    textSignup: {
-        color: '#06C149',
-        fontSize: 16,
-        fontWeight: '500',
-        marginLeft: 8,
-    },
-})
+export default React.memo(Signinsocial)
