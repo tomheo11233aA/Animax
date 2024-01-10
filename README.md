@@ -82,7 +82,7 @@ backgroundColor={theme === 'light' ? colors.lightBackground : colors.darkBackgro
 </Box>
 );
 };
-``
+```
 
 
 Trong ví dụ trên, `Box` sẽ có màu nền tương ứng với theme sáng hoặc tối. Bạn cần đảm bảo rằng các màu sắc đã được định nghĩa trong `@theme/colors`.
