@@ -5,7 +5,7 @@
 Trong tất cả các màn hình của ứng dụng, bạn **phải** sử dụng component `KeyBoardSafe` từ `@components/reuse/KeyBoardSafe.tsx`. `KeyBoardSafe` giúp quản lý việc hiển thị bàn phím ảo một cách thông minh, tránh việc che khuất nội dung.
 
 Ví dụ sử dụng:
-jsx
+```jsx
 import KeyBoardSafe from '@components/reuse/KeyBoardSafe';
 
 const YourScreen = () => {
@@ -15,13 +15,14 @@ return (
 </KeyBoardSafe>
 );
 };
+```
 
 ## Sử dụng `Box` từ `@components/common/Box`
 
 `Box` là một component được tạo ra để thay thế cho `View` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng.
 
 Cách sử dụng `Box`:
-jsx
+```jsx
 import Box from '@components/common/Box';
 import { colors } from '@theme/colors';
 
@@ -39,6 +40,7 @@ backgroundColor={colors.white}
 </Box>
 );
 };
+```
 
 
 Nhớ thêm `row` vào props của `Box` nếu bạn muốn sử dụng `flexDirection: 'row'`.
@@ -57,8 +59,8 @@ const theme = useAppSelector(themeUserSelector);
 
 Với giá trị `theme` thu được, bạn có thể điều chỉnh màu sắc của các component dựa trên theme. Ví dụ, nếu bạn muốn set màu nền cho `Box`:
 
+```jsx
 import Box from '@components/common/Box';
-jsx
 import { useAppSelector } from '@hooks/redux';
 import { themeUserSelector } from '@redux/selector/appSelector';
 import Box from '@components/common/Box';
@@ -80,7 +82,7 @@ backgroundColor={theme === 'light' ? colors.lightBackground : colors.darkBackgro
 </Box>
 );
 };
-
+``
 
 
 Trong ví dụ trên, `Box` sẽ có màu nền tương ứng với theme sáng hoặc tối. Bạn cần đảm bảo rằng các màu sắc đã được định nghĩa trong `@theme/colors`.
