@@ -9,6 +9,7 @@ import Box from '@common/Box';
 import Btn from '@common/Btn';
 import Img from '@common/Img';
 import Txt from '@common/Txt';
+import { useTheme } from '@hooks/redux';
 
 const Input = ({
     readonly,
@@ -99,7 +100,9 @@ const Input = ({
     ...rest
 }: Props) => {
     const insets = useSafeAreaInsets();
-
+    const myColor = useTheme();
+    const myBoderColor = borderColor ? borderColor : myColor.black4;
+    const backgroundColors = backgroundColor ? backgroundColor : myColor.black4;
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
         isPaddingIos && {
@@ -124,9 +127,7 @@ const Input = ({
             elevation: elevation || 3,
         },
         wrap && { flexWrap: 'wrap' },
-        backgroundColor && {
-            backgroundColor: backgroundColor,
-        },
+        { backgroundColor: backgroundColors },
         padding && { ...handlePadding(getSize.m(padding)) },
         margin && { ...handleMargin(getSize.m(margin)) },
         alignStart && styles.alignStart,
@@ -143,7 +144,6 @@ const Input = ({
         paddingBottom && { paddingBottom: getSize.m(paddingBottom) },
         paddingLeft && { paddingLeft: getSize.m(paddingLeft) },
         marginBottom && { marginBottom: getSize.m(marginBottom) },
-        // marginTop && { marginTop: getSize.m(marginTop) },
         marginRight && { marginRight: getSize.m(marginRight) },
         marginLeft && { marginLeft: getSize.m(marginLeft) },
         paddingHorizontal && { paddingHorizontal: getSize.m(paddingHorizontal) },
@@ -155,9 +155,7 @@ const Input = ({
         square && { ...handleSquare(getSize.s(square)) },
         round && { ...handleRound(getSize.s(round)) },
         isNumber(opacity) && { opacity: opacity },
-        borderColor && {
-            borderColor: borderColor,
-        },
+        { borderColor: myBoderColor },
         relative && { position: 'relative' },
         absolute && { position: 'absolute' },
         isNumber(top) && { top: getSize.v(top) },
@@ -206,10 +204,11 @@ const Input = ({
             <TextInput
                 style={{
                     flex: 1,
-                    color: 'black',
+                    color: color,
                     fontSize: fontSize,
                     marginHorizontal: 10,
                     fontWeight: fontWeight,
+                    fontFamily: font,
                 }}
                 value={value}
                 onChangeText={onChangeText}
