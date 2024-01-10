@@ -5,6 +5,7 @@
 Trong tất cả các màn hình của ứng dụng, bạn **phải** sử dụng component `KeyBoardSafe` từ `@components/reuse/KeyBoardSafe.tsx`. `KeyBoardSafe` giúp quản lý việc hiển thị bàn phím ảo một cách thông minh, tránh việc che khuất nội dung.
 
 Ví dụ sử dụng:
+jsx
 import KeyBoardSafe from '@components/reuse/KeyBoardSafe';
 
 const YourScreen = () => {
@@ -20,6 +21,7 @@ return (
 `Box` là một component được tạo ra để thay thế cho `View` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng.
 
 Cách sử dụng `Box`:
+jsx
 import Box from '@components/common/Box';
 import { colors } from '@theme/colors';
 
@@ -30,12 +32,13 @@ flex={1}
 alignCenter
 justifyCenter
 backgroundColor={colors.white}
-// Thêm row nếu bạn muốn flexDirection là 'row'
+// Thêm row để set flexDirection là 'row'
 // row
 >
 {/ Nội dung bên trong /}
 </Box>
 );
+};
 
 
 Nhớ thêm `row` vào props của `Box` nếu bạn muốn sử dụng `flexDirection: 'row'`.
@@ -55,6 +58,10 @@ const theme = useAppSelector(themeUserSelector);
 Với giá trị `theme` thu được, bạn có thể điều chỉnh màu sắc của các component dựa trên theme. Ví dụ, nếu bạn muốn set màu nền cho `Box`:
 
 import Box from '@components/common/Box';
+jsx
+import { useAppSelector } from '@hooks/redux';
+import { themeUserSelector } from '@redux/selector/appSelector';
+import Box from '@components/common/Box';
 import { colors } from '@theme/colors';
 
 const ExampleComponent = () => {
@@ -66,13 +73,14 @@ flex={1}
 alignCenter
 justifyCenter
 backgroundColor={theme === 'light' ? colors.lightBackground : colors.darkBackground}
-// Thêm row vào props nếu bạn muốn flexDirection là 'row'
+// Thêm row nếu muốn flexDirection là 'row'
 // row
 >
 {/ Nội dung bên trong /}
 </Box>
 );
 };
+
 
 
 Trong ví dụ trên, `Box` sẽ có màu nền tương ứng với theme sáng hoặc tối. Bạn cần đảm bảo rằng các màu sắc đã được định nghĩa trong `@theme/colors`.
