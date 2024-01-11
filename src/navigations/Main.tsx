@@ -18,7 +18,7 @@ const Main = () => {
     const [isUseBiometric, setIsUseBiometric] = useState(false);
     useEffect(() => {
         const isUseBiometric = localStorage.getString('isUseBiometric');
-        // localStorage.set('isUseBiometric', 'true');
+        localStorage.set('isUseBiometric', 'true');
         if (isUseBiometric === 'true') {
             setIsUseBiometric(true);
         }
