@@ -46,6 +46,7 @@ const Biometric = () => {
     if (isUseBiometric === TRUE) {
       setIsUseBiometric(true);
       const canAuthenticate = await RNBiometrics.canAuthenticate();
+
       if (canAuthenticate) {
         try {
           await RNBiometrics.requestBioAuth(t('Authentication Required'), t('Please authenticate to proceed.'));
