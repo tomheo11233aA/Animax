@@ -37,11 +37,6 @@ const Form = () => {
         { key: '3', value: t('Other') },
     ]
 
-    const handleGenderChange = (item: any) => {
-        setSelectedGender(item.value)
-        setValue('gender', item.value)
-    }
-
     return (
         <Box marginTop={20} relative>
             <Box>
@@ -205,7 +200,7 @@ const Form = () => {
                     </Btn>
                 </Box>
             </Box>
-        </Box>
+        </Box >
     )
 }
 

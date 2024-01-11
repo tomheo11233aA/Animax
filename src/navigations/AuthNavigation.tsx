@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 //screens
 import Started from "@screens/Users/Started";
 import Signinsocial from "@screens/Users/Signinsocial";
+import Hello from '@screens/Hello';
 
 const Stack = createNativeStackNavigator()
 const AuthNavigation = () => {

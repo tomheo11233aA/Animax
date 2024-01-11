@@ -21,7 +21,6 @@ const Signinsocial = () => {
     const { t } = useTranslation()
     const theme = useAppSelector(themeUserSelector)
     const color = useTheme()
-    console.log(theme)
     return (
         <KeyBoardSafe>
             <Scroll
