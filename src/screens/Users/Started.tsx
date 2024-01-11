@@ -1,20 +1,19 @@
+import React from 'react';
 import {
-  StyleSheet, Text,
-  ImageBackground,
+  StyleSheet, Text, ImageBackground,
   TouchableOpacity, View
-} from 'react-native'
-import React from 'react'
-import LinearGradient from 'react-native-linear-gradient';
-import { fonts } from '@themes/fonts';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { colors } from '@themes/colors';
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
+import LinearGradient from 'react-native-linear-gradient';
+import Carousel from 'react-native-reanimated-carousel';
+import Animated, { Extrapolation, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import { useSharedValue, interpolateColor } from 'react-native-reanimated';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+import { fonts } from '@themes/fonts';
+import { colors } from '@themes/colors';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
-import Carousel from 'react-native-reanimated-carousel';
-import { useSharedValue } from 'react-native-reanimated';
-import Animated, { Extrapolation, interpolate, useAnimatedStyle } from 'react-native-reanimated';
-import { interpolateColor } from 'react-native-reanimated';
 
 const images = [
   { id: 1, image: require('@images/background.png') },
@@ -126,7 +125,7 @@ const PaginationItem: React.FC<{
   return (
     <Animated.View
       style={[
-        { 
+        {
           width: width,
           height: width,
           borderRadius: 50,
