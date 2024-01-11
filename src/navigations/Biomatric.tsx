@@ -1,14 +1,16 @@
-import { screens } from '@contants/screens'
+import { screens } from "@contants/screens";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 //screens
-import Home from '@screens/Home'
+import Biometric from "@screens/Biometric";
+
 
 const Stack = createNativeStackNavigator()
-const AuthNavigation = () => {
+const BiometricStack = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name={screens.HOME} component={Home} />
+            <Stack.Screen name={screens.BIOMETRIC} component={Biometric} />
         </Stack.Navigator>
     )
 }
-export default AuthNavigation
+
+export default BiometricStack

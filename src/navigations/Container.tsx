@@ -4,10 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { navigationRef } from '@utils/navigationRef'
 //screens
 import Hello from "@screens/Hello";
-import Started from "@screens/Users/Started";
-import Signup from "@screens/Users/Signup";
 import Main from "./Main";
 import Appearance from "@screens/Appearance";
+import UnAuthNavigation from "./UnAuthNavigation";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -17,6 +16,7 @@ const Container = () => {
                 <Stack.Screen name={screens.HELLO} component={Hello} />
                 <Stack.Screen name={screens.MAIN} component={Main} />
                 <Stack.Screen name={screens.APPEARANCE} component={Appearance} />
+                <Stack.Screen name={screens.STACK_UNAUTH} component={UnAuthNavigation} />
             </Stack.Navigator>
         </NavigationContainer>
     )

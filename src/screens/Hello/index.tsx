@@ -27,7 +27,6 @@ const Hello = () => {
       dispatch(setLanguage(lngObj))
       const theme = (localStorage.getString(keys.THEME) || 'light') as 'dark' | 'light';
       dispatch(setTheme(theme));
-      // navigation.replace(screens.SIGNUP)
       navigation.replace(screens.MAIN)
     }, 2000)
     return () => clearTimeout(timeOut)
