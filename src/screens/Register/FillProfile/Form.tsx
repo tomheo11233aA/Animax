@@ -200,9 +200,13 @@ const Form = () => {
                     }}
                     placeholder='Choose gender'
                     fontFamily={fonts.MAIN}
-                    boxStyles={{ marginTop: hp(3) }}
+                    boxStyles={{ marginTop: hp(3), borderWidth: 0,
+                        backgroundColor: theme === 'light' ? color.black3 : color.black3,
+                        height: hp(7), borderRadius: wp('4%'), borderColor: theme === 'light' ? color.black3 : color.black3,
+                    }}
                     inputStyles={{
                         color: theme === 'light' ? color.black : color.white,
+                        alignSelf: 'center',
                     }}
                     dropdownTextStyles={{
                         color: theme === 'light' ? color.black : color.white,
