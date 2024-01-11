@@ -18,6 +18,8 @@ import { screens } from '@contants/screens';
 import { useTheme } from '@hooks/redux'
 import PhoneInput from "react-native-phone-number-input";
 import { SelectList } from 'react-native-dropdown-select-list'
+import * as ImagePicker from 'react-native-image-picker';
+import { ActivityIndicator } from 'react-native'
 
 const Form = () => {
     const { t } = useTranslation();
@@ -30,37 +32,75 @@ const Form = () => {
         navigate(screens.FORGOT_PASSWORD)
     }
     const [phone, setPhone] = React.useState('')
+    const [loading, setLoading] = React.useState(false);
     const [selectedGender, setSelectedGender] = React.useState('');
+    const [selectedImage, setSelectedImage] = React.useState('');
+    const [email, setEmail] = React.useState('');
     const gender = [
         { key: '1', value: t('Male') },
         { key: '2', value: t('Female') },
         { key: '3', value: t('Other') },
     ]
 
+    const handleChoosePhoto = () => {
+        setLoading(true);
+        ImagePicker.launchImageLibrary(
+            {
+                mediaType: 'photo',
+                includeBase64: false,
+                maxHeight: 200,
+                maxWidth: 200,
+            },
+            (response) => {
+                setLoading(false);
+                if (response.didCancel) {
+                } else if (response.errorCode) {
+                } else {
+                    const source = { uri: response?.assets?.[0]?.uri ?? 'Anh bi null' };
+                    setSelectedImage(source.uri);
+                }
+            },
+        );
+    }
+
     return (
         <Box marginTop={20} relative>
             <Box>
                 <Img
-                    source={require('@images/unAuth/user.png')}
+                    source={selectedImage ? { uri: selectedImage } : require('@images/unAuth/user.png')}
                     alignSelf={'center'}
                     width={wp('30%')}
                     height={hp('15%')}
                     radius={wp('50%') / 2}
                 />
-                <Btn onPress={() => { }}>
-                    <Img
-                        source={require('@images/unAuth/edit.png')}
-                        absolute
-                        bottom={0}
-                        right={0}
-                        radius={wp('50%') / 2}
-                        width={32}
-                        height={32}
+                {loading ? (
+                    <ActivityIndicator
+                        size="small"
+                        color={colors.mainColor}
                         style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            right: 0,
                             marginRight: wp('28%')
                         }}
                     />
-                </Btn>
+                ) : (
+                    <Btn onPress={handleChoosePhoto}>
+                        <Img
+                            source={require('@images/unAuth/edit.png')}
+                            absolute
+                            bottom={0}
+                            right={0}
+                            radius={wp('50%') / 2}
+                            width={32}
+                            height={32}
+                            style={{
+                                marginRight: wp('28%')
+                            }}
+                        />
+                    </Btn>
+                )}
+
             </Box>
             <Box marginTop={hp(4)}>
                 <Input
@@ -102,8 +142,16 @@ const Form = () => {
                     font={fonts.MAIN}
                     iconTwo={require('@images/unAuth/mail.png')}
                     sizeIcon={18}
-                    onChangeText={(text: string) => setValue('email', text)}
+                    onChangeText={(text: string) => {
+                        setValue('email', text);
+                        setEmail(text);
+                    }}
                     color={theme === 'light' ? color.black : color.white}
+                    tintColor={
+                        theme === 'light' && email.length > 0 ? color.black :
+                            theme === 'dark' && email.length > 0 ? color.white :
+                                theme === 'light' ? color.tintLight : color.tintLight
+                    }
                 />
                 {errors.email && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.email?.message}</Txt>}
                 <PhoneInput
@@ -131,6 +179,7 @@ const Form = () => {
                     textContainerStyle={{
                         backgroundColor: theme === 'light' ? color.black3 : color.black3,
                         height: hp(7),
+                        borderRadius: wp('4%'),
                     }}
                     codeTextStyle={{
                         color: theme === 'light' ? color.black : color.black,
@@ -159,6 +208,24 @@ const Form = () => {
                         color: theme === 'light' ? color.black : color.white,
                     }}
                     search={false}
+                    arrowicon={theme === 'light' ?
+                        <Img
+                            source={require('@images/unAuth/down_black.png')}
+                            width={wp('3%')}
+                            height={hp('1.5%')}
+                            style={{
+                                alignSelf: 'center'
+                            }}
+                        />
+                        :
+                        <Img
+                            source={require('@images/unAuth/down_white.png')}
+                            width={wp('3%')}
+                            height={hp('1.5%')}
+                            style={{
+                                alignSelf: 'center'
+                            }}
+                        />}
                 />
                 {errors.gender && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.gender?.message}</Txt>}
             </Box>

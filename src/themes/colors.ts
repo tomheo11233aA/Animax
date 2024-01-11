@@ -37,7 +37,8 @@ export const colors = {
         yellow4: '#faf7f0',
         yellow5: '#faf7f0',
         yellow6: '#f9f2d6',
-        yellow7: '#fff6d8'
+        yellow7: '#fff6d8',
+        tintLight: '#d9d4d4',
     },
     dark: {
         mainColor: '#06C149',
@@ -77,7 +78,8 @@ export const colors = {
         yellow4: '#313433',
         yellow5: '#36352f',
         yellow6: '#293240',
-        yellow7: '#36352f'
+        yellow7: '#36352f',
+        tintLight: '#474d57',
     },
     mainColor: '#06C149',
     lMainColor: '#10cc54',
