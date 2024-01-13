@@ -1,166 +1,222 @@
 import {
-    StyleSheet, Text, View,
-    TouchableOpacity,
-    Image, TextInput
+    StyleSheet
 } from 'react-native'
-import React, { useState } from 'react'
+import React, {
+    useState,
+    useEffect
+} from 'react'
 import CheckBox from '@react-native-community/checkbox';
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import CommonComponents from '@common/CommonComponents';
+import { useTranslation } from 'react-i18next'
+import { themeUserSelector } from '@redux/selector/appSelector'
+import { useAppSelector } from '@hooks/redux'
+import { useTheme } from '@hooks/redux'
+import KeyBoardSafe from '@reuse/KeyBoardSafe'
+import { goBack } from '@utils/navigationRef'
+import { fonts } from '@themes/fonts'
+import { use } from 'i18next';
+
+const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
 
 
 const Signup = () => {
+    const { t } = useTranslation()
+    const theme = useAppSelector(themeUserSelector)
+    const color = useTheme()
+
     const [showPassword, setShowPassword] = useState(false);
     const [isChecked, setChecked] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [isFocused2, setIsFocused2] = useState(false);
+    const [colorOption, setColorOption] = useState(1); // 1: light, 2: dark
 
-    const handleFocus = (a:any) => {
+    const handleFocus = (a: any) => {
         a === 'email' ? setIsFocused(true) : setIsFocused2(true);
     };
 
-    const handleBlur = (a:any) => {
+    const handleBlur = (a: any) => {
         a === 'email' ? setIsFocused(false) : setIsFocused2(false);
     };
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    useEffect(() => {
+        if (theme === 'light') {
+            setColorOption(1);
+        } else {
+            setColorOption(2);
+        }
+    }, [theme]);
+
+    // Xác định màu sắc dựa trên các điều kiện
+    let focustColor;
+    switch (colorOption) {
+        case 1:
+            focustColor = '#EBFAF1';
+            break;
+        case 2:
+            focustColor = '#162723';
+            break;
+        default:
+            focustColor = 'red';
+    }
+
+
     return (
-        <View style={styles.container}>
-            <View style={styles.Vback}>
-                <Image
-                    style={styles.backicon}
-                    source={require('@images/back.png')} />
-            </View>
-            <View style={styles.Vimage}>
-                <Image
-                    style={styles.image}
-                    source={require('@images/avatar.png')} />
-            </View>
-            <View style={styles.content}>
-                <Text
-                    style={styles.textContent}
-                >Create Your Account</Text>
-            </View>
+        <KeyBoardSafe>
+            <Box style={styles.container}>
+                <Box style={styles.Vback}>
+                    <Btn
+                        onPress={() => goBack()}
+                    >
+                        <Icon size={24} source={require('@images/back.png')} />
+                    </Btn>
+                </Box>
 
-            <View
-                style={[styles.Vinput,
-                { borderColor: isFocused ? '#06C149' : '#FAFAFA' },
-                { backgroundColor: isFocused ? '#EBFAF1' : '#FAFAFA' }
-                ]}
-            >
-                <Image
-                    style={[
-                        styles.icon,
-                        { tintColor: isFocused ? '#06C149' : '#B4B4B4' }
-                    ]}
-                    source={require('@images/email.png')}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Email"
-                    placeholderTextColor="#B4B4B4"
-                    onFocus={() => handleFocus('email')}
-                    onBlur={() => handleBlur('email')}
-                />
+                <Box style={styles.VImg}>
+                    <Img
+                        style={styles.Img}
+                        source={require('@images/avatar.png')} />
+                </Box>
+                <Box style={styles.content}>
+                    <Txt
+                        // style={styles.TxtContent}
+                        size={wp('7%')}
+                        fontFamily={fonts.MAINB}
+                    >{t('Create Your Account')}</Txt>
+                </Box>
 
-            </View>
-            <View
-                style={
-                    [styles.Vinput,
-                    { borderColor: isFocused2 ? '#06C149' : '#FAFAFA' },
-                    { backgroundColor: isFocused2 ? '#EBFAF1' : '#FAFAFA' }
-                    ]
-                }
-            >
-                <Image
-                    style={[
-                        styles.icon,
-                        { tintColor: isFocused2 ? '#06C149' : '#B4B4B4' }
+                <Box
+                    style={[styles.Vinput,
+                    { borderColor: isFocused ? color.mainColor : color.bg },
+                        // { backgroundColor: isFocused ? '#EBFAF1' : '#FAFAFA' }
                     ]}
-                    source={require('@images/padlock.png')}
-                />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor="#B4B4B4"
-                    secureTextEntry={!showPassword}
-                    onFocus={() => handleFocus('password')}
-                    onBlur={() => handleBlur('password')}
-                />
-                <TouchableOpacity
-                    style={styles.VtoggleIcon}
-                    onPress={togglePasswordVisibility}>
-                    <Image
+                    backgroundColor={isFocused ? focustColor : theme === 'light' ? color.input : color.input}
+                >
+                    <Img
                         style={[
-                            styles.toggleIcon,
+                            styles.icon,
+                            { tintColor: isFocused ? '#06C149' : '#B4B4B4' }
+                        ]}
+                        source={require('@images/email.png')}
+                    />
+                    <Input
+                        style={styles.input}
+                        hint="Email"
+                        hintColor="#B4B4B4"
+                        onFocus={() => handleFocus('email')}
+                        onBlur={() => handleBlur('email')}
+                        color={theme === 'light' ? color.black : color.white}
+                        font={fonts.MAIN}
+                    />
+
+                </Box>
+                <Box
+                    style={
+                        [styles.Vinput,
+                        { borderColor: isFocused2 ? color.mainColor : color.bg },
+                            // { backgroundColor: isFocused2 ? '#EBFAF1' : '#FAFAFA' }
+                        ]
+                    }
+                    backgroundColor={isFocused2 ? focustColor : theme === 'light' ? color.input : color.input}
+                >
+                    <Img
+                        style={[
+                            styles.icon,
                             { tintColor: isFocused2 ? '#06C149' : '#B4B4B4' }
                         ]}
-                        
-                        source={showPassword ? require('@images/eye.png') : require('@images/hidden.png')}
+                        source={require('@images/padlock.png')}
                     />
-                </TouchableOpacity>
+                    <Input
+                        style={styles.input}
+                        hint="Password"
+                        hintColor="#B4B4B4"
+                        security={!showPassword}
+                        onFocus={() => handleFocus('password')}
+                        onBlur={() => handleBlur('password')}
+                        color={theme === 'light' ? color.black : color.white}
+                        font={fonts.MAIN}
+                    />
+                    <Btn
+                        style={styles.VtoggleIcon}
+                        onPress={togglePasswordVisibility}>
+                        <Img
+                            style={[
+                                styles.toggleIcon,
+                                { tintColor: isFocused2 ? '#06C149' : '#B4B4B4' }
+                            ]}
 
-            </View>
-            <View
-                style={styles.Vcheckbox}
-            >
-                <CheckBox
-                    disabled={false}
-                    value={isChecked}
-                    onValueChange={(newValue) => setChecked(newValue)}
-                    tintColors={{ true: '#06C149', false: '#06C149' }}
-                />
-                <Text
-                    style={styles.text}
-                >Remember me</Text>
+                            source={showPassword ? require('@images/eye.png') : require('@images/hidden.png')}
+                        />
+                    </Btn>
 
-            </View>
-
-            <TouchableOpacity
-                style={styles.buttonSignin}
-            >
-                <Text
-                    style={styles.text2}
-                >Sign up</Text>
-            </TouchableOpacity>
-            <View style={styles.or}>
-                <View style={styles.line} />
-                <Text style={styles.orText}>or continue with</Text>
-                <View style={styles.line} />
-            </View>
-            <View style={styles.VButtonSocial}>
-                <TouchableOpacity
-                    style={styles.buttonSocial}
+                </Box>
+                <Box
+                    style={styles.Vcheckbox}
                 >
-                    <Image
-                        style={{ width: 24, height: 24 }}
-                        source={require('@images/google.png')}
+                    <CheckBox
+                        disabled={false}
+                        value={isChecked}
+                        onValueChange={(newValue) => setChecked(newValue)}
+                        tintColors={{ true: '#06C149', false: '#06C149' }}
                     />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.buttonSocial}
+                    <Txt
+                        style={styles.Txt}
+                    >{t('Remember me')}</Txt>
+
+                </Box>
+
+                <Btn
+                    style={styles.buttonSignin}
                 >
-                    <Image
-                        style={{ width: 24, height: 24 }}
-                        source={require('@images/facebook.png')}
-                    />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.signup}>
-                <Text
-                    style={styles.text3}
-                >Already have an account?</Text>
-                <TouchableOpacity>
-                    <Text
-                        onPress={() => navigate(screens.SIGNINSOCIAL)}
-                        style={styles.textSignup}
-                    >Sign in</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                    <Txt
+                        style={styles.Txt2}
+                    >{t('Sign up')} </Txt>
+                </Btn>
+                <Box style={styles.or}>
+                    <Box style={styles.line} />
+                    <Txt style={styles.orTxt}>
+                        {t('or continue with')}
+                    </Txt>
+                    <Box style={styles.line} />
+                </Box>
+                <Box style={styles.VButtonSocial}>
+                    <Btn
+                        style={styles.buttonSocial}
+                    >
+                        <Img
+                            style={{ width: 24, height: 24 }}
+                            source={require('@images/google.png')}
+                        />
+                    </Btn>
+                    <Btn
+                        style={styles.buttonSocial}
+                    >
+                        <Img
+                            style={{ width: 24, height: 24 }}
+                            source={require('@images/facebook.png')}
+                        />
+                    </Btn>
+                </Box>
+                <Box style={styles.signup}>
+                    <Txt
+                        style={styles.Txt3}
+                    >{t('Already have an account?')}</Txt>
+                    <Btn>
+                        <Txt
+                            onPress={() => navigate(screens.SIGNINSOCIAL)}
+                            style={styles.TxtSignup}
+                        >{t('Sign in')}</Txt>
+                    </Btn>
+                </Box>
+            </Box>
+        </KeyBoardSafe>
     )
 }
 
@@ -173,7 +229,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 30,
         padding: 24,
-        backgroundColor: '#ffffff',
     },
     Vback: {
         position: 'absolute',
@@ -188,7 +243,7 @@ const styles = StyleSheet.create({
         height: null,
         resizeMode: 'cover',
     },
-    Vimage: {
+    VImg: {
         width: '100%',
         height: 200,
         borderRadius: 50,
@@ -197,7 +252,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 32,
     },
-    image: {
+    Img: {
         width: 200,
         height: 200,
         borderRadius: 40,
@@ -206,12 +261,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
     },
-    textContent: {
+    TxtContent: {
         fontSize: 30,
         fontWeight: '500',
         color: '#000',
     },
-    text: {
+    Txt: {
         color: '#000000',
         fontSize: 16,
         fontWeight: '500',
@@ -220,10 +275,10 @@ const styles = StyleSheet.create({
     Vinput: {
         width: '100%',
         height: 60,
-        backgroundColor: '#FAFAFA',
+        // backgroundColor: '#FAFAFA',
         borderRadius: 15,
         borderWidth: 1,
-        borderColor: '#FAFAFA',
+        // borderColor: '#FAFAFA',
         alignItems: 'center',
         justifyContent: 'flex-start',
         flexDirection: 'row',
@@ -241,9 +296,6 @@ const styles = StyleSheet.create({
     input: {
         height: 60,
         width: '75%',
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#000000',
         overflow: 'hidden',
     },
     toggleIcon: {
@@ -299,7 +351,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#DDDDDD',
         marginHorizontal: 8,
     },
-    orText: {
+    orTxt: {
         color: '#000000',
         fontSize: 16,
         fontWeight: '500',
@@ -314,7 +366,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         borderRadius: 50,
     },
-    text2: {
+    Txt2: {
         color: '#ffffff',
         fontSize: 16,
         fontWeight: '500',
@@ -324,12 +376,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    text3: {
+    Txt3: {
         color: '#bbbbbb',
         fontSize: 16,
         fontWeight: '400',
     },
-    textSignup: {
+    TxtSignup: {
         color: '#06C149',
         fontSize: 16,
         fontWeight: '500',

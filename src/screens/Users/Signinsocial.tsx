@@ -29,7 +29,7 @@ const Signinsocial = () => {
                 <Btn alignSelf={'flex-start'}
                     onPress={() => goBack()}
                 >
-                    <Icon size={16} source={require('@images/back.png')} />
+                    <Icon size={24} source={require('@images/back.png')} />
                 </Btn>
                 <Box alignCenter marginTop={hp('3%')}>
                     <Img
