@@ -164,10 +164,17 @@ const Signup = () => {
                         disabled={false}
                         value={isChecked}
                         onValueChange={(newValue) => setChecked(newValue)}
-                        tintColors={{ true: '#06C149', false: '#06C149' }}
+                        tintColors={
+                            {
+                                true: color.mainColor,
+                                false: color.mainColor
+                            }
+                        }
                     />
                     <Txt
-                        style={styles.Txt}
+                        size={wp('3%')}
+                        fontFamily={fonts.MAIN}
+                        color={color.white}
                     >{t('Remember me')}</Txt>
 
                 </Box>
@@ -176,19 +183,39 @@ const Signup = () => {
                     style={styles.buttonSignin}
                 >
                     <Txt
-                        style={styles.Txt2}
+                        size={wp('4%')}
+                        fontFamily={fonts.MAINB}
+                        color={color.white}
                     >{t('Sign up')} </Txt>
                 </Btn>
                 <Box style={styles.or}>
-                    <Box style={styles.line} />
-                    <Txt style={styles.orTxt}>
+                    <Box
+                        backgroundColor={
+                            theme === 'light' ? '#f5f5f5' : '#24272E'
+                        }
+                        style={styles.line} />
+                    <Txt
+                        size={wp('3.5%')}
+                        fontFamily={fonts.MAIN}
+                        color={color.white}
+                    >
                         {t('or continue with')}
                     </Txt>
-                    <Box style={styles.line} />
+                    <Box
+                        backgroundColor={
+                            theme === 'light' ? '#f5f5f5' : '#24272E'
+                        }
+                        style={styles.line} />
                 </Box>
                 <Box style={styles.VButtonSocial}>
                     <Btn
                         style={styles.buttonSocial}
+                        backgroundColor={
+                            theme === 'light' ? '#fff' : color.input
+                        }
+                        borderColor={
+                            theme === 'light' ? '#F0F0F0' : '#2F3239'
+                        }
                     >
                         <Img
                             style={{ width: 24, height: 24 }}
@@ -197,6 +224,12 @@ const Signup = () => {
                     </Btn>
                     <Btn
                         style={styles.buttonSocial}
+                        backgroundColor={
+                            theme === 'light' ? '#ffffff' : color.input
+                        }
+                        borderColor={
+                            theme === 'light' ? '#F0F0F0' : '#2F3239'
+                        }
                     >
                         <Img
                             style={{ width: 24, height: 24 }}
@@ -206,12 +239,17 @@ const Signup = () => {
                 </Box>
                 <Box style={styles.signup}>
                     <Txt
-                        style={styles.Txt3}
+                        size={wp('3.5%')}
+                        fontFamily={fonts.MAIN}
+                        color={color.white}
                     >{t('Already have an account?')}</Txt>
                     <Btn>
                         <Txt
                             onPress={() => navigate(screens.SIGNINSOCIAL)}
-                            style={styles.TxtSignup}
+                            marginLeft={8}
+                            size={wp('3.5%')}
+                            fontFamily={fonts.MAIN}
+                            color={color.mainColor}
                         >{t('Sign in')}</Txt>
                     </Btn>
                 </Box>
@@ -267,7 +305,7 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     Txt: {
-        color: '#000000',
+        // color: '#000000',
         fontSize: 16,
         fontWeight: '500',
         marginLeft: 8,
@@ -326,10 +364,10 @@ const styles = StyleSheet.create({
     buttonSocial: {
         width: 85,
         height: 55,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         borderRadius: 13,
         borderWidth: 1,
-        borderColor: '#CCCCCC',
+        // borderColor: '#CCCCCC',
         shadowOffset: { width: 2, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
@@ -348,7 +386,7 @@ const styles = StyleSheet.create({
     line: {
         flex: 1,
         height: 1,
-        backgroundColor: '#DDDDDD',
+        // backgroundColor: '#f5f5f5',
         marginHorizontal: 8,
     },
     orTxt: {
