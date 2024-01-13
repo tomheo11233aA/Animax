@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Scroll from '@common/Scroll'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
@@ -15,12 +15,48 @@ import { goBack } from '@utils/navigationRef'
 import { useTranslation } from 'react-i18next'
 import { themeUserSelector } from '@redux/selector/appSelector'
 import { useAppSelector } from '@hooks/redux'
-import { useTheme } from '@hooks/redux' 
+import { useTheme } from '@hooks/redux'
+//google, facebook
+import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+
 
 const Signinsocial = () => {
     const { t } = useTranslation()
     const theme = useAppSelector(themeUserSelector)
     const color = useTheme()
+
+    useEffect(() => {
+        GoogleSignin.configure();
+    }, [])
+
+    const signInGoogle = useCallback(async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            await GoogleSignin.signOut();
+            const userInfo = await GoogleSignin.signIn();
+            console.log('google login userInfo:', userInfo)
+            //   setState({ userInfo });
+        } catch (error: any) {
+            switch (error.code) {
+                case statusCodes.SIGN_IN_CANCELLED:
+                  console.log('SIGN_IN_CANCELLED')
+                  // sign in was cancelled
+                  break;
+                case statusCodes.IN_PROGRESS:
+                  console.log('IN_PROGRESS')
+                  // operation (e.g. sign in) already in progress
+                  break;
+                case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+                  console.log('PLAY_SERVICES_NOT_AVAILABLE')
+                  // android only
+                  break;
+                default:
+                  // some other error happened
+                  console.error('signInGoogle', error);
+              }
+        }
+    }, [])
+
     return (
         <KeyBoardSafe>
             <Scroll
@@ -79,6 +115,7 @@ const Signinsocial = () => {
                         alignCenter
                         justifyCenter
                         borderWidth={1}
+                        onPress={signInGoogle}
                     >
                         <Img
                             width={wp('5%')}
