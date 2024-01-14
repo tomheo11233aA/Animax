@@ -17,12 +17,12 @@ import { useTheme } from '@hooks/redux'
 import KeyBoardSafe from '@reuse/KeyBoardSafe'
 import { goBack } from '@utils/navigationRef'
 import { fonts } from '@themes/fonts'
-import { use } from 'i18next';
+import { useAppDispatch } from '@hooks/redux';
+import { AppDispatch } from '@redux/store/store';
+import { setLogin } from '@redux/slice/userSlice';
+
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
-
-
-
 const Signup = () => {
     const { t } = useTranslation()
     const theme = useAppSelector(themeUserSelector)
@@ -34,6 +34,10 @@ const Signup = () => {
     const [isFocused2, setIsFocused2] = useState(false);
     const [colorOption, setColorOption] = useState(1); // 1: light, 2: dark
 
+    const dispatch: AppDispatch = useAppDispatch()
+    const handlePress = () => {
+        dispatch(setLogin(true))
+    }
     const handleFocus = (a: any) => {
         a === 'email' ? setIsFocused(true) : setIsFocused2(true);
     };
@@ -181,6 +185,7 @@ const Signup = () => {
 
                 <Btn
                     style={styles.buttonSignin}
+                    onPress={handlePress}
                 >
                     <Txt
                         size={wp('4%')}

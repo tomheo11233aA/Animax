@@ -14,6 +14,7 @@ import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
+import { StatusBar } from 'react-native';
 
 const images = [
   { id: 1, image: require('@images/background.png') },
@@ -25,7 +26,7 @@ const Started = () => {
   const { t } = useTranslation()
   const progressValue = useSharedValue<number>(0);
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <Carousel
         data={images}
         renderItem={({ item }) => (
@@ -76,7 +77,7 @@ const Started = () => {
         </TouchableOpacity>
       </View>
 
-    </>
+    </View>
   )
 }
 
