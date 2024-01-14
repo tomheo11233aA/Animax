@@ -93,7 +93,7 @@ const AuthNavigation = () => {
                                 return (
                                     <Box alignCenter>
                                         <Icon
-                                            tintColor={focused ? colors.mainColor : 'black'}
+                                            tintColor={focused ? colors.mainColor : 'gray'}
                                             marginBottom={5}
                                             size={tab.sizeIcon}
                                             source={focused ? tab.icon : tab.icon2}
