@@ -14,7 +14,7 @@ import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
-import { StatusBar } from 'react-native';
+import Box from '@common/Box';
 
 const images = [
   { id: 1, image: require('@images/background.png') },
@@ -26,7 +26,8 @@ const Started = () => {
   const { t } = useTranslation()
   const progressValue = useSharedValue<number>(0);
   return (
-    <View style={{ flex: 1 }}>
+    // <View style={{ flex: 1 }}>
+    <Box flex={1} backgroundColor={'#000000'}>
       <Carousel
         data={images}
         renderItem={({ item }) => (
@@ -39,7 +40,6 @@ const Started = () => {
               colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
               style={styles.backgroundGradient}
             />
-
           </ImageBackground>
         )}
         width={wp('100%')}
@@ -49,7 +49,6 @@ const Started = () => {
           (progressValue.value = absoluteProgress)
         }
       />
-
       <View style={styles.container}>
         <View style={styles.content}>
           <Text
@@ -76,8 +75,7 @@ const Started = () => {
           <Text style={styles.text}>{t('Get Started')}</Text>
         </TouchableOpacity>
       </View>
-
-    </View>
+    </Box>
   )
 }
 

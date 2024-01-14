@@ -6,9 +6,17 @@ import { StatusBar } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { colors } from '@themes/colors';
 import VideoControl from './VideoControl';
+import { themeUserSelector } from "@redux/selector/appSelector";
+import { useAppSelector } from "@hooks/redux";
 
 const MediaPlayer = () => {
-    changeNavigationBarColor('transparent', true);
+    const theme = useAppSelector(themeUserSelector)
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        return () => {
+            StatusBar.setHidden(false);
+        };
+    }, []);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
     const [showControls, setShowControls] = useState(false);
@@ -67,7 +75,7 @@ const MediaPlayer = () => {
 
     return (
         <View style={styles.container}>
-            <StatusBar hidden />
+            {/* <StatusBar hidden /> */}
             <TouchableOpacity
                 style={{ width: '100%', height: '100%' }}
                 onPress={handlePress}
