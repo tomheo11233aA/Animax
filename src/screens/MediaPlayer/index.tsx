@@ -3,14 +3,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation-locker';
 import { StatusBar } from 'react-native';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { colors } from '@themes/colors';
 import VideoControl from './VideoControl';
-import { themeUserSelector } from "@redux/selector/appSelector";
-import { useAppSelector } from "@hooks/redux";
 
 const MediaPlayer = () => {
-    const theme = useAppSelector(themeUserSelector)
     useEffect(() => {
         StatusBar.setHidden(true);
         return () => {

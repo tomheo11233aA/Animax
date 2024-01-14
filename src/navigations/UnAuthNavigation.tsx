@@ -8,7 +8,9 @@ import Started from '@screens/Users/Started'
 import Signup from '@screens/Users/Signup'
 import ForgotPassword from '@screens/AccountSetup/FogotPassword'
 import MediaPlayer from '@screens/MediaPlayer'
+import { showNavigationBar } from 'react-native-navigation-bar-color'
 
+showNavigationBar()
 const Stack = createNativeStackNavigator()
 const UnAuthNavigation = () => {
     return (

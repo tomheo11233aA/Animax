@@ -11,7 +11,6 @@ import i18n from './src/language/i18n'
 import React from 'react';
 
 const Root = () => {
-
     return (
         <Provider store={store}>
             <App />

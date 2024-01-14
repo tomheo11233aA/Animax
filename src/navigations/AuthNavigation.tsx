@@ -7,6 +7,7 @@ import { colors } from '@themes/colors'
 import Txt from '@common/Txt'
 import { useTranslation } from 'react-i18next'
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import changeNavigationBarColor from 'react-native-navigation-bar-color'
 //screens
 import Home from '@screens/Home'
 import HomeStack from './HomeStack'
@@ -17,6 +18,7 @@ import ReleaseCalendarStack from './ReleaseCalendarStack'
 
 const Tab = createBottomTabNavigator()
 const AuthNavigation = () => {
+    changeNavigationBarColor('transparent', true, true)
     const { t } = useTranslation()
     const formatTitle = (name: string): string => {
         if (name.length > 15) {
