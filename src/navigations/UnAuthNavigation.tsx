@@ -7,6 +7,7 @@ import Signinsocial from '@screens/Users/Signinsocial'
 import Started from '@screens/Users/Started'
 import Signup from '@screens/Users/Signup'
 import ForgotPassword from '@screens/Register/FogotPassword'
+import MediaPlayer from '@screens/MediaPlayer'
 
 const Stack = createNativeStackNavigator()
 const UnAuthNavigation = () => {
@@ -17,7 +18,8 @@ const UnAuthNavigation = () => {
             <Stack.Screen name={screens.SIGNUP} component={Signup} />
             <Stack.Screen name={screens.CHOOSE_INTEREST} component={ChooseInterest} />
             <Stack.Screen name={screens.FILL_PROFILE} component={FillProfile} />
-            <Stack.Screen name={screens.FORGOT_PASSWORD} component={ForgotPassword} />
+            {/* <Stack.Screen name={screens.FORGOT_PASSWORD} component={ForgotPassword} /> */}
+            <Stack.Screen name={screens.MEDIA_PLAYER} component={MediaPlayer} />            
         </Stack.Navigator>
     )
 }

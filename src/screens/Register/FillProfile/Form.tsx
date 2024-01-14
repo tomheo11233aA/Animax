@@ -29,7 +29,7 @@ const Form = () => {
         resolver: yupResolver(fillProfileSchema)
     });
     const handleContinue = () => {
-        navigate(screens.FORGOT_PASSWORD)
+        navigate(screens.MEDIA_PLAYER)
     }
     const [phone, setPhone] = React.useState('')
     const [loading, setLoading] = React.useState(false);

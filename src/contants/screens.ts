@@ -11,4 +11,5 @@ export const screens = {
     HOME: 'HOME',
     BIOMETRIC: 'BIOMETRIC',
     STACK_UNAUTH: 'STACKUNAUTH',
+    MEDIA_PLAYER: 'MEDIAPLAYER',
 }
