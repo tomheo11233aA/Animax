@@ -1,12 +1,12 @@
 import { screens } from '@contants/screens'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 //screens
-import ChooseInterest from '@screens/Register/ChooseInterest'
-import FillProfile from '@screens/Register/FillProfile'
+import ChooseInterest from '@screens/AccountSetup/ChooseInterest'
+import FillProfile from '@screens/AccountSetup/FillProfile'
 import Signinsocial from '@screens/Users/Signinsocial'
 import Started from '@screens/Users/Started'
 import Signup from '@screens/Users/Signup'
-import ForgotPassword from '@screens/Register/FogotPassword'
+import ForgotPassword from '@screens/AccountSetup/FogotPassword'
 import MediaPlayer from '@screens/MediaPlayer'
 
 const Stack = createNativeStackNavigator()
