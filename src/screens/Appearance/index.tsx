@@ -14,6 +14,9 @@ import { colors } from '@themes/colors'
 import { useAppDispatch } from '@hooks/redux'
 import { AppDispatch } from '@redux/store/store'
 import { setTheme } from '@redux/slice/userSlice'
+import LottieView from 'lottie-react-native'
+import { Modal, Portal } from 'react-native-paper'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 
 const LIGHT = 'Light Mode'
 const DARK = 'Dark Mode'
@@ -24,11 +27,16 @@ const Appearance = () => {
   const { t } = useTranslation()
   const theme = useSelector(themeUserSelector)
   const dispatch: AppDispatch = useAppDispatch()
+  const [fakeLoading, setFakeLoading] = React.useState(false)
 
   const handleChangeTheme = async (value: string) => {
-    const payload = value === LIGHT ? 'light' : 'dark'
-    localStorage.set(keys.THEME, payload)
-    dispatch(setTheme(payload))
+    setFakeLoading(true)
+    setTimeout(() => {
+      const payload = value === LIGHT ? 'light' : 'dark'
+      localStorage.set(keys.THEME, payload)
+      dispatch(setTheme(payload))
+      setFakeLoading(false)
+    }, 3000)
   }
 
   return (
@@ -36,7 +44,7 @@ const Appearance = () => {
       <Box padding={15}>
         <Txt
           size={18}
-          fontFamily={fonts.AS}
+          fontFamily={fonts.MAINB}
           marginTop={18}
           marginBottom={20}
           color={color.black}
@@ -53,6 +61,55 @@ const Appearance = () => {
             onChangeTheme={handleChangeTheme}
           />
         )}
+        <Portal>
+          <Modal
+            visible={fakeLoading}
+            dismissable={false}
+            contentContainerStyle={{
+              backgroundColor: color.white,
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '80%',
+              alignSelf: 'center',
+              height: '30%',
+              borderRadius: 10,
+            }}
+          >
+            <LottieView
+              source={require('@lotties/loading_2.json')}
+              autoPlay
+              loop
+              style={{ width: wp("50%"), height: hp("20%"), position: 'absolute', top: 0, alignSelf: 'center' }}
+            />
+            <Txt
+              size={18}
+              fontFamily={fonts.MAINB}
+              color={theme === 'light' ? 'white' : 'black'}
+              absolute
+              style={{
+                bottom: hp("10%"),
+              }}
+              width={wp("60%")}
+              center
+            >
+              {t('Please wait...')}
+            </Txt>
+            <Txt
+              size={16}
+              fontFamily={fonts.MAIN}
+              color={theme === 'light' ? 'white' : 'black'}
+              absolute
+              style={{
+                bottom: 0,
+                marginBottom: 20,
+              }}
+              width={wp("60%")}
+              center
+            >
+              {t('Application theme will be changing in a few seconds...')}
+            </Txt>
+          </Modal>
+        </Portal>
       </Box>
     </KeyBoardSafe>
   )
@@ -82,11 +139,11 @@ const Item = ({
       justifySpaceBetween
       onPress={() => onChangeTheme(item)}
     >
-      <Txt size={12} fontFamily={fonts.SGM} color={color.black}>
+      <Txt size={16} fontFamily={fonts.MAIN} color={color.black}>
         {t(item)}
       </Txt>
       {THEME === item &&
-        <Txt size={14} bold color={colors.yellow}>✓</Txt>
+        <Txt size={18} bold color={colors.yellow}>✓</Txt>
       }
     </Btn>
   )
