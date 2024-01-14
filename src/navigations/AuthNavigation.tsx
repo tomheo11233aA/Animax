@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next'
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
 //screens
-import Home from '@screens/Home'
 import HomeStack from './HomeStack'
 import DownloadStack from './DownloadStack'
 import MyListStack from './MyListStack'
@@ -37,11 +36,11 @@ const AuthNavigation = () => {
         },
         {
             sizeIcon: 18,
-            title: 'Download',
-            component: DownloadStack,
-            name: screens.DOWNLOAD_STACK,
-            icon: require('@images/auth/download.png'),
-            icon2: require('@images/auth/download.png'),
+            title: 'Release Calendar',
+            component: ReleaseCalendarStack,
+            name: screens.RELEASE_CALENDAR_STACK,
+            icon: require('@images/auth/calendar.png'),
+            icon2: require('@images/auth/calendar.png'),
         },
         {
             sizeIcon: 18,
@@ -53,11 +52,11 @@ const AuthNavigation = () => {
         },
         {
             sizeIcon: 18,
-            title: 'Release Calendar',
-            component: ReleaseCalendarStack,
-            name: screens.RELEASE_CALENDAR_STACK,
-            icon: require('@images/auth/calendar.png'),
-            icon2: require('@images/auth/calendar.png'),
+            title: 'Download',
+            component: DownloadStack,
+            name: screens.DOWNLOAD_STACK,
+            icon: require('@images/auth/download.png'),
+            icon2: require('@images/auth/download.png'),
         },
         {
             sizeIcon: 18,

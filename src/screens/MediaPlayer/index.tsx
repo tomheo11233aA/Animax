@@ -71,7 +71,6 @@ const MediaPlayer = () => {
 
     return (
         <View style={styles.container}>
-            {/* <StatusBar hidden /> */}
             <TouchableOpacity
                 style={{ width: '100%', height: '100%' }}
                 onPress={handlePress}
