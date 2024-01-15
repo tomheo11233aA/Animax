@@ -32,7 +32,7 @@ const AuthNavigation = () => {
             component: HomeStack,
             name: screens.HOME_STACK,
             icon: require('@images/auth/home.png'),
-            icon2: require('@images/auth/home.png'),
+            icon2: require('@images/auth/home2.png'),
         },
         {
             sizeIcon: 18,
@@ -40,7 +40,7 @@ const AuthNavigation = () => {
             component: ReleaseCalendarStack,
             name: screens.RELEASE_CALENDAR_STACK,
             icon: require('@images/auth/calendar.png'),
-            icon2: require('@images/auth/calendar.png'),
+            icon2: require('@images/auth/calendar2.png'),
         },
         {
             sizeIcon: 18,
@@ -48,7 +48,7 @@ const AuthNavigation = () => {
             component: MyListStack,
             name: screens.MY_LIST_STACK,
             icon: require('@images/auth/mark.png'),
-            icon2: require('@images/auth/mark.png'),
+            icon2: require('@images/auth/mark2.png'),
         },
         {
             sizeIcon: 18,
@@ -56,7 +56,7 @@ const AuthNavigation = () => {
             component: DownloadStack,
             name: screens.DOWNLOAD_STACK,
             icon: require('@images/auth/download.png'),
-            icon2: require('@images/auth/download.png'),
+            icon2: require('@images/auth/download2.png'),
         },
         {
             sizeIcon: 18,
@@ -64,7 +64,7 @@ const AuthNavigation = () => {
             component: ProfileStack,
             name: screens.PROFILE_STACK,
             icon: require('@images/auth/profile.png'),
-            icon2: require('@images/auth/profile.png'),
+            icon2: require('@images/auth/profile2.png'),
         },
     ]
     return (
@@ -97,7 +97,7 @@ const AuthNavigation = () => {
                                             tintColor={focused ? colors.mainColor : 'gray'}
                                             marginBottom={5}
                                             size={tab.sizeIcon}
-                                            source={focused ? tab.icon : tab.icon2}
+                                            source={focused ? tab.icon2 : tab.icon}
                                             resizeMode={'contain'}
                                         />
                                         <Txt
