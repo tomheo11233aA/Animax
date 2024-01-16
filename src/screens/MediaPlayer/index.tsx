@@ -8,6 +8,7 @@ import VideoControl from './VideoControl';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { NativeModules } from 'react-native';
 import Txt from '@common/Txt';
+import { AppState } from 'react-native';
 
 const { PipModule } = NativeModules;
 
@@ -22,6 +23,14 @@ const MediaPlayer = () => {
             StatusBar.setHidden(false);
             changeNavigationBarColor('white', true);
         };
+    }, []);
+    useEffect(() => {
+        const handleAppStateChange = (nextAppState: any) => {
+            if (nextAppState === 'background') {
+                enterPiPMode();
+            }
+        };
+        AppState.addEventListener('change', handleAppStateChange);
     }, []);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
