@@ -6,8 +6,15 @@ import { StatusBar } from 'react-native';
 import { colors } from '@themes/colors';
 import VideoControl from './VideoControl';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import { NativeModules } from 'react-native';
+import Txt from '@common/Txt';
+
+const { PipModule } = NativeModules;
 
 const MediaPlayer = () => {
+    const enterPiPMode = () => {
+        PipModule.enterPipMode();
+    };
     useEffect(() => {
         StatusBar.setHidden(true);
         changeNavigationBarColor('transparent', true);
@@ -90,7 +97,7 @@ const MediaPlayer = () => {
                     style={{ width: '100%', height: '100%', backgroundColor: 'black' }}
                     resizeMode="contain"
                     muted={isMutted}
-                    pictureInPicture={true}
+                    playInBackground={true}
                 />
                 {isLoading && (
                     <View
@@ -121,6 +128,21 @@ const MediaPlayer = () => {
                         handleNextVideo={handleNextVideo}
                     />
                 )}
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={enterPiPMode}
+                style={{
+                    position: 'absolute',
+                    top: 10,
+                    right: 10,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: 'white',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                <Txt style={{ fontSize: 12 }}>PiP</Txt>
             </TouchableOpacity>
         </View>
     );
