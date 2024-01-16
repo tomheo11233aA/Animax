@@ -4,6 +4,7 @@ import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Slider from '@react-native-community/slider';
+import { goBack } from '@utils/navigationRef';
 
 interface Props {
     formatName: (name: string) => string;
@@ -55,7 +56,7 @@ const VideoControl: React.FC<Props> = ({
             }}>
                 <TouchableOpacity
                     onPress={() => {
-                        console.log('click');
+                        goBack();
                     }}>
                     <Image
                         source={require('@images/video/back.png')}

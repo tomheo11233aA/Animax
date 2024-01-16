@@ -25,12 +25,15 @@ const MediaPlayer = () => {
         };
     }, []);
     useEffect(() => {
-        const handleAppStateChange = (nextAppState: any) => {
+        const subscription = AppState.addEventListener('change', (nextAppState) => {
             if (nextAppState === 'background') {
                 enterPiPMode();
             }
+        });
+
+        return () => {
+            subscription.remove();
         };
-        AppState.addEventListener('change', handleAppStateChange);
     }, []);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
