@@ -5,12 +5,15 @@ import Orientation from 'react-native-orientation-locker';
 import { StatusBar } from 'react-native';
 import { colors } from '@themes/colors';
 import VideoControl from './VideoControl';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 const MediaPlayer = () => {
     useEffect(() => {
         StatusBar.setHidden(true);
+        changeNavigationBarColor('transparent', true);
         return () => {
             StatusBar.setHidden(false);
+            changeNavigationBarColor('white', true);
         };
     }, []);
     const [paused, setPaused] = useState(false);
@@ -87,6 +90,7 @@ const MediaPlayer = () => {
                     style={{ width: '100%', height: '100%', backgroundColor: 'black' }}
                     resizeMode="contain"
                     muted={isMutted}
+                    pictureInPicture={true}
                 />
                 {isLoading && (
                     <View
