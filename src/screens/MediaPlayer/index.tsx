@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation-locker';
