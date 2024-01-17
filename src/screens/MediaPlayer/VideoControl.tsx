@@ -5,6 +5,8 @@ import { colors } from '@themes/colors';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Slider from '@react-native-community/slider';
 import { goBack } from '@utils/navigationRef';
+import Box from '@common/Box';
+import Txt from '@common/Txt';
 
 interface Props {
     formatName: (name: string) => string;
@@ -20,6 +22,7 @@ interface Props {
     setPaused: (value: boolean) => void;
     handlePreviousVideo: () => void;
     handleNextVideo: () => void;
+    handlePictureInPicture: () => void;
 }
 
 const VideoControl: React.FC<Props> = ({
@@ -35,7 +38,8 @@ const VideoControl: React.FC<Props> = ({
     paused,
     setPaused,
     handlePreviousVideo,
-    handleNextVideo
+    handleNextVideo,
+    handlePictureInPicture
 }) => {
     return (
         <View style={{
@@ -69,57 +73,27 @@ const VideoControl: React.FC<Props> = ({
                 </Text>
             </View>
 
-            {/* top right control */}
+            {/* Top right control */}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'absolute',
                 top: hp('4%'),
-                right: 20,
+                right: wp('5%'),
             }}>
                 <TouchableOpacity
-                    onPress={() => {
-                        console.log('click');
-                    }}>
+                    onPress={handlePictureInPicture}>
                     <Image
-                        source={require('@images/video/speed.png')}
-                        style={{ width: 20, height: 20, marginRight: 20 }}
+                        source={require('@images/video/pip.png')}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        console.log('click');
+                        console.log('ở đây sẽ làm hiện một cái drawer chứa các tập phim')
                     }}>
                     <Image
-                        source={require('@images/video/stopwatch.png')}
-                        style={{ width: 20, height: 20, marginRight: 20 }}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        console.log('click');
-                    }}>
-                    <Image
-                        source={require('@images/video/caption.png')}
-                        style={{ width: 20, height: 20, marginRight: 20 }}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        console.log('click');
-                    }}>
-                    <Image
-                        source={require('@images/video/layers.png')}
-                        style={{ width: 20, height: 20, marginRight: 20, tintColor: 'white' }}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        console.log('click');
-                    }}>
-                    <Image
-                        source={require('@images/video/dots.png')}
-                        style={{ width: 20, height: 20 }}
+                        source={require('@images/video/stack.png')}
+                        style={{ width: 25, height: 25, marginLeft: 20 }}
                     />
                 </TouchableOpacity>
             </View>
@@ -152,35 +126,6 @@ const VideoControl: React.FC<Props> = ({
                 <Text style={{ color: 'white', fontFamily: fonts.MAIN }}>
                     {format(progress.seekableDuration)}
                 </Text>
-            </View>
-
-            {/* Bottom left control */}
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                position: 'absolute',
-                bottom: hp('5.5%'),
-                left: 20,
-            }}>
-                <TouchableOpacity
-                    onPress={() => {
-                        console.log('click');
-                    }}>
-                    <Image
-                        source={require('@images/video/lock.png')}
-                        style={{ width: 20, height: 20 }}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        setIsMutted(!isMutted);
-                        console.log('click');
-                    }}>
-                    <Image
-                        source={isMutted ? require('@images/video/mute.png') : require('@images/video/volume.png')}
-                        style={{ width: 20, height: 20, marginLeft: 20 }}
-                    />
-                </TouchableOpacity>
             </View>
 
             {/* main control */}
@@ -226,16 +171,6 @@ const VideoControl: React.FC<Props> = ({
                         style={{ marginHorizontal: 35, width: 30, height: 30 }}
                     />
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                    onPress={handleNextVideo}
-                    disabled={currentVideoIndex === data.length - 1}
-                    style={{ opacity: currentVideoIndex === data.length - 1 ? 0.3 : 1 }}
-                >
-                    <Image
-                        source={require('@images/video/next.png')}
-                        style={{ width: 16, height: 16 }}
-                    />
-                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => {
                         videoRef?.current?.seek(progress.currentTime + 10);
@@ -251,34 +186,91 @@ const VideoControl: React.FC<Props> = ({
                 </TouchableOpacity>
             </View>
 
-            {/* Bottom right control */}
+            {/* bottom control */}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'absolute',
+                justifyContent: 'space-around',
                 bottom: hp('5.5%'),
-                right: 20,
+                width: '100%',
             }}>
                 <TouchableOpacity
-                    onPress={() => {
-                        console.log('click');
-                    }}>
-                    <Image
-                        source={require('@images/video/download.png')}
-                        style={{ width: 20, height: 20 }}
-                    />
+                    onPress={handlePreviousVideo}
+                    disabled={currentVideoIndex === 0}
+                    style={{ opacity: currentVideoIndex === 0 ? 0.3 : 1 }}
+                >
+                    <Box row alignCenter>
+                        <Image
+                            source={require('@images/video/previous.png')}
+                            style={{
+                                width: 20,
+                                height: 20,
+                            }}
+                        />
+                        <Txt color={'white'} size={12} marginLeft={5}>{`Previous Ep.`}</Txt>
+                    </Box>
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
-                        console.log('click');
                     }}>
-                    <Image
-                        source={require('@images/video/stopwatch.png')}
-                        style={{ width: 20, height: 20, marginLeft: 20 }}
-                    />
+                    <Box row alignCenter>
+                        <Image
+                            source={require('@images/video/speed.png')}
+                            style={{
+                                width: 28,
+                                height: 28,
+                            }}
+                        />
+                        <Txt color={'white'} size={12} marginLeft={5}>{`Speed (1x)`}</Txt>
+                    </Box>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                    }}>
+                    <Box row alignCenter>
+                        <Image
+                            source={require('@images/video/lock.png')}
+                            style={{
+                                width: 28,
+                                height: 28,
+                            }}
+                        />
+                        <Txt color={'white'} size={12} marginLeft={5}>{`Lock`}</Txt>
+                    </Box>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                    }}>
+                    <Box row alignCenter>
+                        <Image
+                            source={require('@images/video/download.png')}
+                            style={{
+                                width: 25,
+                                height: 25,
+                            }}
+                        />
+                        <Txt color={'white'} size={12} marginLeft={5}>{`Episodes`}</Txt>
+                    </Box>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={handlePreviousVideo}
+                    disabled={currentVideoIndex === 0}
+                    style={{ opacity: currentVideoIndex === 0 ? 0.3 : 1 }}
+                    >
+                    <Box row alignCenter>
+                        <Image
+                            source={require('@images/video/next.png')}
+                            style={{
+                                width: 20,
+                                height: 20,
+                            }}
+                        />
+                        <Txt color={'white'} size={12} marginLeft={5}>{`Next Ep.`}</Txt>
+                    </Box>
                 </TouchableOpacity>
             </View>
-
         </View>
     )
 }

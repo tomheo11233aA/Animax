@@ -139,23 +139,9 @@ const MediaPlayer = () => {
                         setPaused={setPaused}
                         handlePreviousVideo={handlePreviousVideo}
                         handleNextVideo={handleNextVideo}
+                        handlePictureInPicture={enterPiPMode}
                     />
                 )}
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={enterPiPMode}
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    right: 10,
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    backgroundColor: 'white',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                <Txt style={{ fontSize: 12 }}>PiP</Txt>
             </TouchableOpacity>
         </View>
     );
