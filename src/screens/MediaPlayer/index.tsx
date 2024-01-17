@@ -10,13 +10,27 @@ import { NativeModules } from 'react-native';
 import Txt from '@common/Txt';
 import { AppState } from 'react-native';
 
-const { PipModule } = NativeModules;
+const { PipModule, AudioFocusModule } = NativeModules;
 
 const MediaPlayer = () => {
     const enterPiPMode = () => {
         setShowControls(false);
         PipModule.enterPipMode();
     };
+    const requestAudioFocus = () => {
+        AudioFocusModule.requestAudioFocus().then((res: any) => {
+            console.log('requestAudioFocus', res);
+        });
+    };
+    const abandonAudioFocus = () => {
+        AudioFocusModule.abandonAudioFocus();
+    };
+    useEffect(() => {
+        requestAudioFocus();
+        return () => {
+            abandonAudioFocus();
+        };
+    }, []);
     useEffect(() => {
         StatusBar.setHidden(true);
         changeNavigationBarColor('transparent', true);
@@ -140,6 +154,8 @@ const MediaPlayer = () => {
                         handlePreviousVideo={handlePreviousVideo}
                         handleNextVideo={handleNextVideo}
                         handlePictureInPicture={enterPiPMode}
+                        requestAudioFocus={requestAudioFocus}
+                        abandonAudioFocus={abandonAudioFocus}
                     />
                 )}
             </TouchableOpacity>

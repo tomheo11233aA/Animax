@@ -23,6 +23,8 @@ interface Props {
     handlePreviousVideo: () => void;
     handleNextVideo: () => void;
     handlePictureInPicture: () => void;
+    requestAudioFocus: () => void;
+    abandonAudioFocus: () => void;
 }
 
 const VideoControl: React.FC<Props> = ({
@@ -39,7 +41,9 @@ const VideoControl: React.FC<Props> = ({
     setPaused,
     handlePreviousVideo,
     handleNextVideo,
-    handlePictureInPicture
+    handlePictureInPicture,
+    requestAudioFocus,
+    abandonAudioFocus
 }) => {
     return (
         <View style={{
@@ -148,19 +152,14 @@ const VideoControl: React.FC<Props> = ({
                         }}
                     />
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                    onPress={handlePreviousVideo}
-                    disabled={currentVideoIndex === 0}
-                    style={{ opacity: currentVideoIndex === 0 ? 0.3 : 1 }}
-                >
-                    <Image
-                        source={require('@images/video/previous.png')}
-                        style={{ width: 16, height: 16 }}
-                    />
-                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => {
                         setPaused(!paused);
+                        if (paused) {
+                            requestAudioFocus();
+                        } else {
+                            abandonAudioFocus();
+                        }
                     }}>
                     <Image
                         source={
@@ -171,6 +170,7 @@ const VideoControl: React.FC<Props> = ({
                         style={{ marginHorizontal: 35, width: 30, height: 30 }}
                     />
                 </TouchableOpacity>
+
                 <TouchableOpacity
                     onPress={() => {
                         videoRef?.current?.seek(progress.currentTime + 10);
@@ -255,9 +255,9 @@ const VideoControl: React.FC<Props> = ({
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={handlePreviousVideo}
-                    disabled={currentVideoIndex === 0}
-                    style={{ opacity: currentVideoIndex === 0 ? 0.3 : 1 }}
+                    onPress={handleNextVideo}
+                    disabled={currentVideoIndex === data.length - 1}
+                    style={{ opacity: currentVideoIndex === data.length - 1 ? 0.3 : 1 }}
                     >
                     <Box row alignCenter>
                         <Image
