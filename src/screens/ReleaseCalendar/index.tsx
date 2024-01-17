@@ -205,7 +205,30 @@ const toggleSelected = (itemId: number, selectedArray: number[],
   setSelectedArray(newArray);
 };
 
+const getCurrentMonthDays = () => {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
 
+  // Tính số ngày trong tháng hiện tại
+  const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  // Tạo mảng chứa thông tin về các ngày trong tháng
+  const daysInMonth = [];
+  for (let day = 1; day <= lastDayOfMonth; day++) {
+    const date = new Date(currentYear, currentMonth, day);
+    const dayInfo = {
+      id: day,
+      name: date.toLocaleDateString('en-US', { weekday: 'short' }), // Lấy tên ngày (vd: Mon, Tue, ...)
+      date: day.toString(), // Lấy ngày trong tháng
+    };
+    daysInMonth.push(dayInfo);
+  }
+
+  return daysInMonth;
+};
+
+const DATA = getCurrentMonthDays();
 
 
 
@@ -399,7 +422,7 @@ const ReleaseCalendar = () => {
 export default React.memo(ReleaseCalendar)
 
 //fake data
-const DATA: ItemData[] = [
+const DATA1: ItemData[] = [
   {
     id: 1,
     name: 'Sun',
