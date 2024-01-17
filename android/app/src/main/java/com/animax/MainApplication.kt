@@ -17,12 +17,9 @@ class MainApplication : Application(), ReactApplication {
     override val reactNativeHost: ReactNativeHost =
         object : DefaultReactNativeHost(this) {
             override fun getPackages(): List<ReactPackage> {
-                // Packages that cannot be autolinked yet can be added manually here, for example:
-                // packages.add(new MyReactNativePackage());
                 val packages = PackageList(this).packages
                 packages.add(PipPackage())
-//          packages.add(PipModule(this.applicationContext))
-//          return PackageList(this).packages
+                packages.add(AudioFocusPackage())
                 return packages
             }
 
