@@ -14,6 +14,7 @@ const { PipModule } = NativeModules;
 
 const MediaPlayer = () => {
     const enterPiPMode = () => {
+        setShowControls(false);
         PipModule.enterPipMode();
     };
     useEffect(() => {
@@ -73,9 +74,9 @@ const MediaPlayer = () => {
             setShowControls(false);
         } else {
             setShowControls(true);
-            setTimeout(() => {
-                setShowControls(false);
-            }, 5000);
+            // setTimeout(() => {
+            //     setShowControls(false);
+            // }, 5000);
         }
     };
     const formatName = (name: string) => {

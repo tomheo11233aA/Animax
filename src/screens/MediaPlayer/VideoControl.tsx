@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Slider from '@react-native-community/slider';
 import { goBack } from '@utils/navigationRef';
 
@@ -109,7 +109,7 @@ const VideoControl: React.FC<Props> = ({
                         console.log('click');
                     }}>
                     <Image
-                        source={require('@images/video/episodes.png')}
+                        source={require('@images/video/layers.png')}
                         style={{ width: 20, height: 20, marginRight: 20, tintColor: 'white' }}
                     />
                 </TouchableOpacity>
@@ -132,9 +132,8 @@ const VideoControl: React.FC<Props> = ({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     position: 'absolute',
-                    bottom: hp('10%'),
-                    paddingLeft: 20,
-                    paddingRight: 20,
+                    bottom: hp('15%'),
+                    paddingHorizontal: wp('5%'),
                     alignItems: 'center'
                 }}>
                 <Text style={{ color: 'white', fontFamily: fonts.MAIN }}>
@@ -155,7 +154,7 @@ const VideoControl: React.FC<Props> = ({
                 </Text>
             </View>
 
-            {/* left control */}
+            {/* Bottom left control */}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -189,7 +188,7 @@ const VideoControl: React.FC<Props> = ({
                 flexDirection: 'row',
                 alignItems: 'center',
                 position: 'absolute',
-                bottom: hp('5.5%'),
+                justifyContent: 'center',
             }}>
                 <TouchableOpacity
                     onPress={() => {
@@ -197,10 +196,14 @@ const VideoControl: React.FC<Props> = ({
                     }}>
                     <Image
                         source={require('@images/video/back10s.png')}
-                        style={{ width: 28, height: 28, marginRight: 35 }}
+                        style={{
+                            width: 28,
+                            height: 28,
+                            marginRight: wp('5%')
+                        }}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={handlePreviousVideo}
                     disabled={currentVideoIndex === 0}
                     style={{ opacity: currentVideoIndex === 0 ? 0.3 : 1 }}
@@ -209,7 +212,7 @@ const VideoControl: React.FC<Props> = ({
                         source={require('@images/video/previous.png')}
                         style={{ width: 16, height: 16 }}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => {
                         setPaused(!paused);
@@ -223,7 +226,7 @@ const VideoControl: React.FC<Props> = ({
                         style={{ marginHorizontal: 35, width: 30, height: 30 }}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     onPress={handleNextVideo}
                     disabled={currentVideoIndex === data.length - 1}
                     style={{ opacity: currentVideoIndex === data.length - 1 ? 0.3 : 1 }}
@@ -232,19 +235,23 @@ const VideoControl: React.FC<Props> = ({
                         source={require('@images/video/next.png')}
                         style={{ width: 16, height: 16 }}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                     onPress={() => {
                         videoRef?.current?.seek(progress.currentTime + 10);
                     }}>
                     <Image
                         source={require('@images/video/next10s.png')}
-                        style={{ width: 28, height: 28, marginLeft: 35 }}
+                        style={{
+                            width: 28,
+                            height: 28,
+                            marginLeft: wp('5%')
+                        }}
                     />
                 </TouchableOpacity>
             </View>
 
-            {/* right control */}
+            {/* Bottom right control */}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
