@@ -19,6 +19,7 @@ import { fonts } from '@themes/fonts'
 import { useAppDispatch } from '@hooks/redux';
 import { AppDispatch } from '@redux/store/store';
 import { colors } from '@themes/colors'
+import { set } from 'lodash'
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -93,6 +94,7 @@ const ItemVideo = ({ item, onPress, backgroundColor,
 (
   <Box
     marginBottom={16}
+  // backgroundColor={'red'}
   >
     <Box
       row={true}
@@ -119,7 +121,7 @@ const ItemVideo = ({ item, onPress, backgroundColor,
       row={true}
       alignCenter={true}
       justifySpaceBetween={true}
-    // backgroundColor={theme === 'dark' ? '#181A20' : color.white5}
+    // backgroundColor={'red'}
     >
       <Img
         source={{
@@ -135,7 +137,7 @@ const ItemVideo = ({ item, onPress, backgroundColor,
         justifySpaceBetween={true}
         height={wp(30)}
         width={wp(45)}
-      // backgroundColor={theme === 'dark' ? '#181A20' : color.white5}
+      // backgroundColor={"red"}
       >
         <Txt
           fontFamily={fonts.MAIN}
@@ -190,7 +192,7 @@ const ItemVideo = ({ item, onPress, backgroundColor,
 
 const toggleSelected = (itemId: number, selectedArray: number[],
   setSelectedArray: React.Dispatch<React.SetStateAction<number[]>>) => {
-    //React.Dispatch<React.SetStateAction<number[]> là kiểu dữ liệu của setSelectedArray
+  //React.Dispatch<React.SetStateAction<number[]> là kiểu dữ liệu của setSelectedArray
   const index = selectedArray.indexOf(itemId);
   let newArray = [...selectedArray];
 
@@ -211,6 +213,38 @@ const ReleaseCalendar = () => {
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
   const color = useTheme()
+
+  const [currentTime, setCurrentTime] = useState<Date>(new Date()); // khởi tạo giá trị ban đầu cho state currentTime
+  const [formatTime, setFormatTime] = useState<string>('');
+
+  const [dataBeforeCurrentTime, setDataBeforeCurrentTime] = useState<itemDataVideo[]>([]);
+  const [dataAfterCurrentTime, setDataAfterCurrentTime] = useState<itemDataVideo[]>([]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      // const seconds = now.getSeconds().toString().padStart(2, '0');
+      setCurrentTime(now);
+      setFormatTime(`${hours}:${minutes}`);
+      // console.log(new Date(currentTime));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  //lọc dữ liệu trước currentTime và sau currentTime
+  useEffect(() => {
+    const filteredData = DATA_VIDEO.filter((item) => {
+      const videoTime = new Date(item.time);
+      // console.log(videoTime);
+      return videoTime < currentTime;
+    });
+
+    setDataBeforeCurrentTime(filteredData);
+
+    setDataAfterCurrentTime(DATA_VIDEO.filter((item) => !filteredData.includes(item)));
+  }, [currentTime]);
 
   const [isSelected, setIsSelected] = useState<number>()
   // const [isCheck, setIsCheck] = useState<number>()
@@ -310,15 +344,53 @@ const ReleaseCalendar = () => {
             showsHorizontalScrollIndicator={false}
           />
         </Box>
+        {/* dữ liệu trước currentTime */}
         <Box>
           <FlatList
-            data={DATA_VIDEO}
+            data={dataBeforeCurrentTime}
             renderItem={renderItemVideo}
             keyExtractor={item => item.id.toString()}
             showsVerticalScrollIndicator={false}
           />
         </Box>
-        <Box></Box>
+        <Box
+          row={true}
+          alignCenter={true}
+          marginBottom={16}
+        >
+          <Box
+            height={2}
+            flex={1}
+            backgroundColor={color.mainColor}
+            marginRight={8}
+            radius={2}
+          />
+          <Txt
+            fontFamily={fonts.MAIN}
+            size={14}
+            fontWeight={'400'}
+            color={theme === 'dark' ? color.white : color.black}
+          >
+            {t('Current Time -')} {formatTime}
+          </Txt>
+          <Box
+            height={2}
+            flex={1}
+            backgroundColor={color.mainColor}
+            marginLeft={8}
+            radius={2}
+          />
+        </Box>
+        {/* dữ liệu sau currentTime */}
+        <Box>
+          <FlatList
+            data={dataAfterCurrentTime}
+            renderItem={renderItemVideo}
+            keyExtractor={item => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+          />
+        </Box>
+        <Box height={wp(10)} />
       </Box>
     </KeyBoardSafe>
   )
@@ -370,7 +442,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '12:00',
+    time: '2024-01-16 22:40',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -378,7 +450,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '12:00',
+    time: '2024-01-16 22:40',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -386,7 +458,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '12:00',
+    time: '2024-01-16 21:00',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -394,7 +466,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '12:00',
+    time: '2024-01-17 22:00',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -402,7 +474,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '12:00',
+    time: '2024-02-16 23:00',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   }
 ]
