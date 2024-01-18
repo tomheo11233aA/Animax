@@ -7,6 +7,7 @@ import Slider from '@react-native-community/slider';
 import { goBack } from '@utils/navigationRef';
 import Box from '@common/Box';
 import Txt from '@common/Txt';
+import { CastButton } from 'react-native-google-cast';
 
 interface Props {
     formatName: (name: string) => string;
@@ -100,6 +101,7 @@ const VideoControl: React.FC<Props> = ({
                         style={{ width: 25, height: 25, marginLeft: 20 }}
                     />
                 </TouchableOpacity>
+                <CastButton style={{ width: 25, height: 25, marginLeft: 20 }} />
             </View>
 
             {/* Bottom */}

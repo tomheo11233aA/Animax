@@ -4,7 +4,8 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
-
+import android.os.Bundle
+import com.google.android.gms.cast.framework.CastContext
 class MainActivity : ReactActivity() {
 
   /**
@@ -19,4 +20,13 @@ class MainActivity : ReactActivity() {
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        try {
+            // lazy load Google Cast context
+            CastContext.getSharedInstance(this)
+        } catch (e: Exception) {
+            // cast framework not supported
+        }
+    }
 }
