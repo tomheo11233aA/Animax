@@ -100,9 +100,9 @@ const VideoControl: React.FC<Props> = ({
                         style={{ width: 25, height: 25, marginLeft: 20 }}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <CastButton style={{ width: 25, height: 25, marginLeft: 20 }} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
 
             {/* Bottom */}
