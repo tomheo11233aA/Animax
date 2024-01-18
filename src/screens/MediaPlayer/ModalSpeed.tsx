@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ModalSpeed: React.FC<Props> = ({ isVisible, onClose, onSpeedChange }) => {
-    const speeds = [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+    const speeds = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
     const { t } = useTranslation();
     return (
         <Portal>

@@ -14,9 +14,18 @@ import ModalSpeed from './ModalSpeed';
 const { PipModule, AudioFocusModule } = NativeModules;
 
 const MediaPlayer = () => {
+    const [isPipMode, setIsPipMode] = useState(false);
+    const checkPipMode = () => {
+        PipModule.isInPipMode().then((isInPipMode: any) => {
+            setIsPipMode(isInPipMode);
+        }).catch((error: any) => {
+            console.error(error);
+        });
+    }
     const enterPiPMode = () => {
         setShowControls(false);
         PipModule.enterPipMode();
+        checkPipMode();
     };
     const requestAudioFocus = () => {
         AudioFocusModule.requestAudioFocus().then((res: any) => {
@@ -42,13 +51,22 @@ const MediaPlayer = () => {
     useEffect(() => {
         const subscription = AppState.addEventListener('change', (nextAppState) => {
             if (nextAppState === 'background') {
+                checkPipMode();
                 enterPiPMode();
             }
         });
-
         return () => {
             subscription.remove();
         };
+    }, []);
+    useEffect(() => {
+        Orientation.addOrientationListener((orientation) => {
+            if (orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT') {
+                setFullScreen(true);
+            } else {
+                setFullScreen(false);
+            }
+        });
     }, []);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
@@ -79,12 +97,15 @@ const MediaPlayer = () => {
         let secs = Math.floor(seconds % 60).toString().padStart(2, '0');
         return `${mins}:${secs}`;
     };
-    useEffect(() => {
-        Orientation.lockToLandscape();
-        return () => {
-            Orientation.unlockAllOrientations();
-        };
-    }, []);
+    const [fullScreen, setFullScreen] = useState(false);
+    const toggleFullScreen = () => {
+        if (fullScreen) {
+            Orientation.lockToPortrait();
+        } else {
+            Orientation.lockToLandscape();
+        }
+        setFullScreen(!fullScreen);
+    };
     const handlePress = () => {
         if (showControls) {
             setShowControls(false);
@@ -102,7 +123,6 @@ const MediaPlayer = () => {
             return name;
         }
     };
-
     const onSliderValueChange = (value: any) => {
         setProgress({ ...progress, currentTime: value });
         videoRef.current?.seek(value);
@@ -131,7 +151,11 @@ const MediaPlayer = () => {
                     onBuffer={handleBuffer}
                     onLoadStart={() => setIsLoading(true)}
                     onLoad={() => setIsLoading(false)}
-                    style={{ width: '100%', height: '100%', backgroundColor: 'black' }}
+                    style={{
+                        width: '100%',
+                        height: fullScreen ? '100%' : isPipMode ? '100%' : 200,
+                        backgroundColor: 'black'
+                    }}
                     resizeMode="contain"
                     muted={isMutted}
                     playInBackground={true}
@@ -141,7 +165,8 @@ const MediaPlayer = () => {
                     <View
                         style={{
                             width: '100%',
-                            height: '100%',
+                            backgroundColor: 'rgba(0,0,0,.5)',
+                            height: fullScreen ? '100%' : 200,
                             position: 'absolute',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -168,6 +193,9 @@ const MediaPlayer = () => {
                         requestAudioFocus={requestAudioFocus}
                         abandonAudioFocus={abandonAudioFocus}
                         showSpeedSelector={() => setIsSpeedSelectorVisible(true)}
+                        playbackRate={playbackRate}
+                        fullScreen={fullScreen}
+                        handleFullScreen={toggleFullScreen}
                     />
                 )}
             </TouchableOpacity>
