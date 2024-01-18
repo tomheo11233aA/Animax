@@ -26,6 +26,7 @@ interface Props {
     handlePictureInPicture: () => void;
     requestAudioFocus: () => void;
     abandonAudioFocus: () => void;
+    showSpeedSelector: () => void;
 }
 
 const VideoControl: React.FC<Props> = ({
@@ -44,7 +45,8 @@ const VideoControl: React.FC<Props> = ({
     handleNextVideo,
     handlePictureInPicture,
     requestAudioFocus,
-    abandonAudioFocus
+    abandonAudioFocus,
+    showSpeedSelector,
 }) => {
     return (
         <View style={{
@@ -167,8 +169,8 @@ const VideoControl: React.FC<Props> = ({
                     <Image
                         source={
                             paused
-                                ? require('@images/video/pause.png')
-                                : require('@images/video/play.png')
+                                ? require('@images/video/play.png')
+                                : require('@images/video/pause.png')
                         }
                         style={{ marginHorizontal: 35, width: 30, height: 30 }}
                     />
@@ -216,6 +218,7 @@ const VideoControl: React.FC<Props> = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
+                        showSpeedSelector();
                     }}>
                     <Box row alignCenter>
                         <Image

@@ -9,6 +9,7 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { NativeModules } from 'react-native';
 import Txt from '@common/Txt';
 import { AppState } from 'react-native';
+import ModalSpeed from './ModalSpeed';
 
 const { PipModule, AudioFocusModule } = NativeModules;
 
@@ -19,7 +20,6 @@ const MediaPlayer = () => {
     };
     const requestAudioFocus = () => {
         AudioFocusModule.requestAudioFocus().then((res: any) => {
-            console.log('requestAudioFocus', res);
         });
     };
     const abandonAudioFocus = () => {
@@ -57,6 +57,8 @@ const MediaPlayer = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isMutted, setIsMutted] = useState(false);
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+    const [playbackRate, setPlaybackRate] = useState(1);
+    const [isSpeedSelectorVisible, setIsSpeedSelectorVisible] = useState(false);
 
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -108,6 +110,14 @@ const MediaPlayer = () => {
 
     return (
         <View style={styles.container}>
+            <ModalSpeed
+                isVisible={isSpeedSelectorVisible}
+                onClose={() => setIsSpeedSelectorVisible(false)}
+                onSpeedChange={(speed) => {
+                    setPlaybackRate(speed);
+                    setIsSpeedSelectorVisible(false);
+                }}
+            />
             <TouchableOpacity
                 style={{ width: '100%', height: '100%' }}
                 onPress={handlePress}
@@ -125,6 +135,7 @@ const MediaPlayer = () => {
                     resizeMode="contain"
                     muted={isMutted}
                     playInBackground={true}
+                    rate={playbackRate}
                 />
                 {isLoading && (
                     <View
@@ -156,6 +167,7 @@ const MediaPlayer = () => {
                         handlePictureInPicture={enterPiPMode}
                         requestAudioFocus={requestAudioFocus}
                         abandonAudioFocus={abandonAudioFocus}
+                        showSpeedSelector={() => setIsSpeedSelectorVisible(true)}
                     />
                 )}
             </TouchableOpacity>
