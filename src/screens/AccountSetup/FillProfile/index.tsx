@@ -20,4 +20,4 @@ const FillProfile = () => {
   )
 }
 
-export default FillProfile
+export default React.memo(FillProfile)

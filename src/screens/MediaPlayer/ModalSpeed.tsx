@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Portal, Modal, List } from 'react-native-paper';
 import { fonts } from '@themes/fonts';
 import { FlatList } from 'react-native';
@@ -50,4 +50,4 @@ const ModalSpeed: React.FC<Props> = ({ isVisible, onClose, onSpeedChange }) => {
     )
 }
 
-export default ModalSpeed
+export default memo(ModalSpeed)

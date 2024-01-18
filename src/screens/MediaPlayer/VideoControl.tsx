@@ -1,13 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { fonts } from '@themes/fonts';
-import { colors } from '@themes/colors';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import Slider from '@react-native-community/slider';
 import { goBack } from '@utils/navigationRef';
-import Box from '@common/Box';
-import Txt from '@common/Txt';
-import { CastButton } from 'react-native-google-cast';
 import FullScreenMode from './FullScreenMode';
 
 interface Props {
@@ -112,4 +107,4 @@ const VideoControl: React.FC<Props> = ({
     )
 }
 
-export default VideoControl;
+export default memo(VideoControl);

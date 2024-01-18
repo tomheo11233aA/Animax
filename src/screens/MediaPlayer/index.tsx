@@ -7,33 +7,14 @@ import { colors } from '@themes/colors';
 import VideoControl from './VideoControl';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { NativeModules } from 'react-native';
-import Txt from '@common/Txt';
 import { AppState } from 'react-native';
 import ModalSpeed from './ModalSpeed';
 
 const { PipModule, AudioFocusModule } = NativeModules;
 
+const MAX_NAME_LENGTH = 30;
 const MediaPlayer = () => {
-    const [isPipMode, setIsPipMode] = useState(false);
-    const checkPipMode = () => {
-        PipModule.isInPipMode().then((isInPipMode: any) => {
-            setIsPipMode(isInPipMode);
-        }).catch((error: any) => {
-            console.error(error);
-        });
-    }
-    const enterPiPMode = () => {
-        setShowControls(false);
-        PipModule.enterPipMode();
-        checkPipMode();
-    };
-    const requestAudioFocus = () => {
-        AudioFocusModule.requestAudioFocus().then((res: any) => {
-        });
-    };
-    const abandonAudioFocus = () => {
-        AudioFocusModule.abandonAudioFocus();
-    };
+
     useEffect(() => {
         requestAudioFocus();
         return () => {
@@ -51,7 +32,6 @@ const MediaPlayer = () => {
     useEffect(() => {
         const subscription = AppState.addEventListener('change', (nextAppState) => {
             if (nextAppState === 'background') {
-                checkPipMode();
                 enterPiPMode();
             }
         });
@@ -68,6 +48,14 @@ const MediaPlayer = () => {
             }
         });
     }, []);
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', handleAppStateChange);
+        return () => {
+            subscription.remove();
+        }
+    }, []);
+
+    const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
     const [showControls, setShowControls] = useState(false);
@@ -77,6 +65,7 @@ const MediaPlayer = () => {
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
     const [playbackRate, setPlaybackRate] = useState(1);
     const [isSpeedSelectorVisible, setIsSpeedSelectorVisible] = useState(false);
+    const [fullScreen, setFullScreen] = useState(false);
 
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -97,7 +86,6 @@ const MediaPlayer = () => {
         let secs = Math.floor(seconds % 60).toString().padStart(2, '0');
         return `${mins}:${secs}`;
     };
-    const [fullScreen, setFullScreen] = useState(false);
     const toggleFullScreen = () => {
         if (fullScreen) {
             Orientation.lockToPortrait();
@@ -117,7 +105,7 @@ const MediaPlayer = () => {
         }
     };
     const formatName = (name: string) => {
-        if (name.length > 30) {
+        if (name.length > MAX_NAME_LENGTH) {
             return name.slice(0, 30) + '...';
         } else {
             return name;
@@ -126,6 +114,33 @@ const MediaPlayer = () => {
     const onSliderValueChange = (value: any) => {
         setProgress({ ...progress, currentTime: value });
         videoRef.current?.seek(value);
+    };
+
+    const checkPipMode = () => {
+        PipModule.isInPipMode().then((isInPipMode: any) => {
+            console.log('isInPipMode', isInPipMode);
+            setIsPipMode(isInPipMode);
+        }).catch((error: any) => {
+            console.error(error);
+        });
+    }
+    const handleAppStateChange = (nextAppState: any) => {
+        if (nextAppState === 'active') {
+            checkPipMode();
+        }
+    }
+    const enterPiPMode = () => {
+        setShowControls(false);
+        PipModule.enterPipMode();
+    };
+    const requestAudioFocus = () => {
+        AudioFocusModule.requestAudioFocus().then((res: any) => {
+        }).catch((error: any) => {
+            console.error(error);
+        });
+    };
+    const abandonAudioFocus = () => {
+        AudioFocusModule.abandonAudioFocus();
     };
 
     return (
@@ -153,7 +168,7 @@ const MediaPlayer = () => {
                     onLoad={() => setIsLoading(false)}
                     style={{
                         width: '100%',
-                        height: fullScreen ? '100%' : isPipMode ? '100%' : 200,
+                        height: isPipMode ? '100%' : fullScreen ? '100%' : 200,
                         backgroundColor: 'black'
                     }}
                     resizeMode="contain"
@@ -166,7 +181,7 @@ const MediaPlayer = () => {
                         style={{
                             width: '100%',
                             backgroundColor: 'rgba(0,0,0,.5)',
-                            height: fullScreen ? '100%' : 200,
+                            height: isPipMode ? '100%' : fullScreen ? '100%' : 200,
                             position: 'absolute',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -208,7 +223,7 @@ export default MediaPlayer;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
+    },     
 });
 
 var data = [

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
@@ -249,4 +249,4 @@ const FullScreenMode: React.FC<Props> = ({
     )
 }
 
-export default FullScreenMode
+export default memo(FullScreenMode);
