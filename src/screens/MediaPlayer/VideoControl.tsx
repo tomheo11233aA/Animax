@@ -73,7 +73,6 @@ const VideoControl: React.FC<Props> = ({
                     />
                 </TouchableOpacity>
                 <Text style={{ color: 'white', fontFamily: fonts.MAINB, fontSize: 16 }}>
-                    {/* {formatName('Shadow Of The Sun - Professor Green')} */}
                     {formatName(data[currentVideoIndex].name)}
                 </Text>
             </View>
@@ -101,7 +100,9 @@ const VideoControl: React.FC<Props> = ({
                         style={{ width: 25, height: 25, marginLeft: 20 }}
                     />
                 </TouchableOpacity>
-                <CastButton style={{ width: 25, height: 25, marginLeft: 20 }} />
+                <TouchableOpacity>
+                    <CastButton style={{ width: 25, height: 25, marginLeft: 20 }} />
+                </TouchableOpacity>
             </View>
 
             {/* Bottom */}
@@ -112,7 +113,7 @@ const VideoControl: React.FC<Props> = ({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     position: 'absolute',
-                    bottom: hp('10%'),
+                    bottom: hp('15%'),
                     paddingHorizontal: wp('5%'),
                     alignItems: 'center'
                 }}>
@@ -260,7 +261,7 @@ const VideoControl: React.FC<Props> = ({
                     onPress={handleNextVideo}
                     disabled={currentVideoIndex === data.length - 1}
                     style={{ opacity: currentVideoIndex === data.length - 1 ? 0.3 : 1 }}
-                    >
+                >
                     <Box row alignCenter>
                         <Image
                             source={require('@images/video/next.png')}
