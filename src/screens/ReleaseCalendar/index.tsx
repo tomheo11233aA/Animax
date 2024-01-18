@@ -3,6 +3,7 @@ import React,
 {
   useState,
   useEffect,
+  useRef,
 }
   from 'react'
 import { navigate } from '@utils/navigationRef'
@@ -20,13 +21,14 @@ import { useAppDispatch } from '@hooks/redux';
 import { AppDispatch } from '@redux/store/store';
 import { colors } from '@themes/colors'
 import { set } from 'lodash'
+import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
 type ItemData = {
   id: number,
   name: string,
-  date: string
+  date: Date
 }
 
 type ItemProps = {
@@ -64,7 +66,7 @@ const ItemDay = ({ item, onPress, backgroundColor, textColor }: ItemProps) =>
       fontWeight={700}
       color={textColor}
       marginBottom={16}
-    >{item.date}</Txt>
+    >{item.id}</Txt>
   </Btn>
 )
 
@@ -114,7 +116,9 @@ const ItemVideo = ({ item, onPress, backgroundColor,
         fontWeight={'100'}
         color={textColor}
       >
-        {item.time}
+        {/* // convert time to hh:mm */}
+        {(new Date(item.time)).getHours().toString().padStart(2, '0')}
+        :{(new Date(item.time)).getMinutes().toString().padStart(2, '0')}
       </Txt>
     </Box>
     <Box
@@ -220,7 +224,7 @@ const getCurrentMonthDays = () => {
     const dayInfo = {
       id: day,
       name: date.toLocaleDateString('en-US', { weekday: 'short' }), // Lấy tên ngày (vd: Mon, Tue, ...)
-      date: day.toString(), // Lấy ngày trong tháng
+      date: date, // Lấy ngày trong tháng
     };
     daysInMonth.push(dayInfo);
   }
@@ -232,10 +236,27 @@ const DATA = getCurrentMonthDays();
 
 
 
+
+
 const ReleaseCalendar = () => {
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
   const color = useTheme()
+  const flatListRef = useRef<FlatList<ItemData>>(null);
+
+
+  useEffect(() => {
+    const index = new Date().getDate() - 1;
+    const dataLength = DATA.length;
+
+    // kiểm tra index có nằm trong khoảng của data hay không
+    if (flatListRef.current && index >= 0 && index < dataLength) {
+      flatListRef.current.scrollToIndex({ index: index, animated: true });
+    } else {
+      // console.log('Index out of range');
+    }
+  }, []);
+
 
   const [currentTime, setCurrentTime] = useState<Date>(new Date()); // khởi tạo giá trị ban đầu cho state currentTime
   const [formatTime, setFormatTime] = useState<string>('');
@@ -269,12 +290,13 @@ const ReleaseCalendar = () => {
     setDataAfterCurrentTime(DATA_VIDEO.filter((item) => !filteredData.includes(item)));
   }, [currentTime]);
 
-  const [isSelected, setIsSelected] = useState<number>()
-  // const [isCheck, setIsCheck] = useState<number>()
+  const [isSelected, setIsSelected] = useState<number>(currentTime.getDate());
   const [isCheck, setIsCheck] = useState<number[]>([]);
+  const [daySelected, setDaySelected] = useState<Date>(new Date());
 
 
   const renderItemDay = ({ item }: { item: ItemData }) => {
+
     const backgroundColor = item.id === isSelected ? color.mainColor
       : theme === 'dark' ? '#181A20' : color.white5;
     const textColor = item.id === isSelected ? '#ffffff'
@@ -283,7 +305,11 @@ const ReleaseCalendar = () => {
     return (
       <ItemDay
         item={item}
-        onPress={() => setIsSelected(item.id)}
+        onPress={() => {
+          setIsSelected(item.id)
+          setDaySelected(item.date)
+        }
+        }
         backgroundColor={backgroundColor}
         textColor={textColor}
       />
@@ -291,6 +317,20 @@ const ReleaseCalendar = () => {
   }
 
   const renderItemVideo = ({ item }: { item: itemDataVideo }) => {
+    const daySelectedDate = daySelected.getDate();
+    const daySelectedItemDate = new Date(item.time).getDate();
+
+    const daySelectedMonth = daySelected.getMonth();
+    const daySelectedItemMonth = new Date(item.time).getMonth();
+
+    const daySelectedYear = daySelected.getFullYear();
+    const daySelectedItemYear = new Date(item.time).getFullYear();
+
+    if (daySelectedDate !== daySelectedItemDate ||
+      daySelectedMonth !== daySelectedItemMonth ||
+      daySelectedYear !== daySelectedItemYear) {
+      return null;
+    }
 
     const isCheckItem = isCheck.includes(item.id);
 
@@ -317,12 +357,48 @@ const ReleaseCalendar = () => {
     );
   }
 
+  const HeaderComponent = () => (
+    <Box
+      row={true}
+      alignCenter={true}
+      marginBottom={16}
+    >
+      <Box
+        height={2}
+        flex={1}
+        backgroundColor={color.mainColor}
+        marginRight={8}
+        radius={2}
+      />
+      <Txt
+        fontFamily={fonts.MAIN}
+        size={14}
+        fontWeight={'400'}
+        color={theme === 'dark' ? color.white : color.black}
+      >
+        {t('Current Time -')} {formatTime}
+      </Txt>
+      <Box
+        height={2}
+        flex={1}
+        backgroundColor={color.mainColor}
+        marginLeft={8}
+        radius={2}
+      />
+    </Box>
+  );
+
 
   return (
-    <KeyBoardSafe>
+    // <KeyBoardSafe>
+    <Box
+      flex={1}
+      backgroundColor={theme === 'dark' ? color.bg : color.bg}
+    >
       <Box
         flex={1}
         padding={24}
+
       >
         <Box
           row={true}
@@ -360,112 +436,60 @@ const ReleaseCalendar = () => {
           marginLeft={-24}
         >
           <FlatList
+            ref={flatListRef}
             data={DATA}
             renderItem={renderItemDay}
             keyExtractor={item => item.id.toString()}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-          />
-        </Box>
-        {/* dữ liệu trước currentTime */}
-        <Box>
-          <FlatList
-            data={dataBeforeCurrentTime}
-            renderItem={renderItemVideo}
-            keyExtractor={item => item.id.toString()}
-            showsVerticalScrollIndicator={false}
+            getItemLayout={(data, index) => (
+              { length: 66, offset: 66 * index, index }
+            )}
+          //thiết lập chiều dài (theo chiều cuộn flatlist) của mỗi item là 66
+          // để khi cuộn flatlist thì item sẽ cuộn theo
+          // offset là khoảng cách từ item đầu tiên đến item hiện tại
+          // index là vị trí của item hiện tại
+          // hàm này giúp cho flatlist cuộn đến vị trí item hiện tại
           />
         </Box>
         <Box
-          row={true}
-          alignCenter={true}
-          marginBottom={16}
+          flex={1}
+          marginBottom={BOTTOM_TAB_HEIGHT}
         >
-          <Box
-            height={2}
-            flex={1}
-            backgroundColor={color.mainColor}
-            marginRight={8}
-            radius={2}
-          />
-          <Txt
-            fontFamily={fonts.MAIN}
-            size={14}
-            fontWeight={'400'}
-            color={theme === 'dark' ? color.white : color.black}
-          >
-            {t('Current Time -')} {formatTime}
-          </Txt>
-          <Box
-            height={2}
-            flex={1}
-            backgroundColor={color.mainColor}
-            marginLeft={8}
-            radius={2}
-          />
-        </Box>
-        {/* dữ liệu sau currentTime */}
-        <Box>
+          {/* dữ liệu sau currentTime */}
           <FlatList
             data={dataAfterCurrentTime}
             renderItem={renderItemVideo}
             keyExtractor={item => item.id.toString()}
             showsVerticalScrollIndicator={false}
+            ListHeaderComponent={(
+              <>
+                {/* dữ liệu trước currentTime */}
+                <FlatList
+                  data={dataBeforeCurrentTime}
+                  renderItem={renderItemVideo}
+                  keyExtractor={item => item.id.toString()}
+                  showsVerticalScrollIndicator={false} />
+                <HeaderComponent />
+              </>
+            )}
           />
         </Box>
-        <Box height={wp(10)} />
       </Box>
-    </KeyBoardSafe>
+    </Box>
   )
 }
 
 export default React.memo(ReleaseCalendar)
 
 //fake data
-const DATA1: ItemData[] = [
-  {
-    id: 1,
-    name: 'Sun',
-    date: '19'
-  },
-  {
-    id: 2,
-    name: 'Mon',
-    date: '20'
-  },
-  {
-    id: 3,
-    name: 'Tue',
-    date: '21'
-  },
-  {
-    id: 4,
-    name: 'Wed',
-    date: '22'
-  },
-  {
-    id: 5,
-    name: 'Thu',
-    date: '23'
-  },
-  {
-    id: 6,
-    name: 'Fri',
-    date: '24'
-  },
-  {
-    id: 7,
-    name: 'Sat',
-    date: '25'
-  },
-]
 const DATA_VIDEO: itemDataVideo[] = [
   {
     id: 1,
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-16 22:40',
+    time: '2024-01-19 22:40',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -473,7 +497,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-16 22:40',
+    time: '2024-01-19 22:40',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -489,7 +513,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-17 22:00',
+    time: '2024-01-19 20:00',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -497,8 +521,42 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-02-16 23:00',
+    time: '2024-02-16 19:00',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
-  }
+  },
+  {
+    id: 6,
+    name: 'The Falcon and the Winter Soldier',
+    image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
+    Episodes: 6,
+    time: '2024-01-19 00:00',
+    showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
+  },
+  {
+    id: 7,
+    name: 'The Falcon and the Winter Soldier',
+    image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
+    Episodes: 6,
+    time: '2024-01-19 17:00',
+    showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
+  },
+  {
+    id: 8,
+    name: 'The Falcon and the Winter Soldier',
+    image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
+    Episodes: 6,
+    time: '2024-01-16 16:00',
+    showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
+
+  },
+  {
+    id: 9,
+    name: 'The Falcon and the Winter Soldier',
+    image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
+    Episodes: 6,
+    time: '2024-01-16 15:00',
+    showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
+
+  },
 ]
 const styles = StyleSheet.create({})
