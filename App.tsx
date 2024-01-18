@@ -5,7 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { PaperProvider } from 'react-native-paper'
 import { localStorage } from '@utils/localStorage'
 import Orientation from 'react-native-orientation-locker';
-Orientation.lockToPortrait()
+// Orientation.lockToPortrait()
 
 const App = () => {
   return (

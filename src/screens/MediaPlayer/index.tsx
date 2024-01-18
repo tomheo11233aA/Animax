@@ -7,24 +7,14 @@ import { colors } from '@themes/colors';
 import VideoControl from './VideoControl';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { NativeModules } from 'react-native';
-import Txt from '@common/Txt';
 import { AppState } from 'react-native';
+import ModalSpeed from './ModalSpeed';
 
 const { PipModule, AudioFocusModule } = NativeModules;
 
+const MAX_NAME_LENGTH = 30;
 const MediaPlayer = () => {
-    const enterPiPMode = () => {
-        setShowControls(false);
-        PipModule.enterPipMode();
-    };
-    const requestAudioFocus = () => {
-        AudioFocusModule.requestAudioFocus().then((res: any) => {
-            console.log('requestAudioFocus', res);
-        });
-    };
-    const abandonAudioFocus = () => {
-        AudioFocusModule.abandonAudioFocus();
-    };
+
     useEffect(() => {
         requestAudioFocus();
         return () => {
@@ -45,11 +35,27 @@ const MediaPlayer = () => {
                 enterPiPMode();
             }
         });
-
         return () => {
             subscription.remove();
         };
     }, []);
+    useEffect(() => {
+        Orientation.addOrientationListener((orientation) => {
+            if (orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT') {
+                setFullScreen(true);
+            } else {
+                setFullScreen(false);
+            }
+        });
+    }, []);
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', handleAppStateChange);
+        return () => {
+            subscription.remove();
+        }
+    }, []);
+
+    const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
     const [showControls, setShowControls] = useState(false);
@@ -57,6 +63,9 @@ const MediaPlayer = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isMutted, setIsMutted] = useState(false);
     const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+    const [playbackRate, setPlaybackRate] = useState(1);
+    const [isSpeedSelectorVisible, setIsSpeedSelectorVisible] = useState(false);
+    const [fullScreen, setFullScreen] = useState(false);
 
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -77,12 +86,14 @@ const MediaPlayer = () => {
         let secs = Math.floor(seconds % 60).toString().padStart(2, '0');
         return `${mins}:${secs}`;
     };
-    useEffect(() => {
-        Orientation.lockToLandscape();
-        return () => {
-            Orientation.unlockAllOrientations();
-        };
-    }, []);
+    const toggleFullScreen = () => {
+        if (fullScreen) {
+            Orientation.lockToPortrait();
+        } else {
+            Orientation.lockToLandscape();
+        }
+        setFullScreen(!fullScreen);
+    };
     const handlePress = () => {
         if (showControls) {
             setShowControls(false);
@@ -94,20 +105,54 @@ const MediaPlayer = () => {
         }
     };
     const formatName = (name: string) => {
-        if (name.length > 30) {
+        if (name.length > MAX_NAME_LENGTH) {
             return name.slice(0, 30) + '...';
         } else {
             return name;
         }
     };
-
     const onSliderValueChange = (value: any) => {
         setProgress({ ...progress, currentTime: value });
         videoRef.current?.seek(value);
     };
 
+    const checkPipMode = () => {
+        PipModule.isInPipMode().then((isInPipMode: any) => {
+            console.log('isInPipMode', isInPipMode);
+            setIsPipMode(isInPipMode);
+        }).catch((error: any) => {
+            console.error(error);
+        });
+    }
+    const handleAppStateChange = (nextAppState: any) => {
+        if (nextAppState === 'active') {
+            checkPipMode();
+        }
+    }
+    const enterPiPMode = () => {
+        setShowControls(false);
+        PipModule.enterPipMode();
+    };
+    const requestAudioFocus = () => {
+        AudioFocusModule.requestAudioFocus().then((res: any) => {
+        }).catch((error: any) => {
+            console.error(error);
+        });
+    };
+    const abandonAudioFocus = () => {
+        AudioFocusModule.abandonAudioFocus();
+    };
+
     return (
         <View style={styles.container}>
+            <ModalSpeed
+                isVisible={isSpeedSelectorVisible}
+                onClose={() => setIsSpeedSelectorVisible(false)}
+                onSpeedChange={(speed) => {
+                    setPlaybackRate(speed);
+                    setIsSpeedSelectorVisible(false);
+                }}
+            />
             <TouchableOpacity
                 style={{ width: '100%', height: '100%' }}
                 onPress={handlePress}
@@ -121,16 +166,22 @@ const MediaPlayer = () => {
                     onBuffer={handleBuffer}
                     onLoadStart={() => setIsLoading(true)}
                     onLoad={() => setIsLoading(false)}
-                    style={{ width: '100%', height: '100%', backgroundColor: 'black' }}
+                    style={{
+                        width: '100%',
+                        height: isPipMode ? '100%' : fullScreen ? '100%' : 200,
+                        backgroundColor: 'black'
+                    }}
                     resizeMode="contain"
                     muted={isMutted}
                     playInBackground={true}
+                    rate={playbackRate}
                 />
                 {isLoading && (
                     <View
                         style={{
                             width: '100%',
-                            height: '100%',
+                            backgroundColor: 'rgba(0,0,0,.5)',
+                            height: isPipMode ? '100%' : fullScreen ? '100%' : 200,
                             position: 'absolute',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -156,6 +207,10 @@ const MediaPlayer = () => {
                         handlePictureInPicture={enterPiPMode}
                         requestAudioFocus={requestAudioFocus}
                         abandonAudioFocus={abandonAudioFocus}
+                        showSpeedSelector={() => setIsSpeedSelectorVisible(true)}
+                        playbackRate={playbackRate}
+                        fullScreen={fullScreen}
+                        handleFullScreen={toggleFullScreen}
                     />
                 )}
             </TouchableOpacity>
@@ -168,7 +223,7 @@ export default MediaPlayer;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
+    },     
 });
 
 var data = [
