@@ -110,7 +110,7 @@ const VideoControl: React.FC<Props> = ({
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     position: 'absolute',
-                    bottom: hp('15%'),
+                    bottom: hp('10%'),
                     paddingHorizontal: wp('5%'),
                     alignItems: 'center'
                 }}>
