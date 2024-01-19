@@ -60,26 +60,7 @@ const VideoControl: React.FC<Props> = ({
             alignItems: 'center',
         }}>
             {/* top left control */}
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                position: 'absolute',
-                top: hp('4%'),
-                left: 20,
-            }}>
-                <TouchableOpacity
-                    onPress={() => {
-                        goBack();
-                    }}>
-                    <Image
-                        source={require('@images/video/back.png')}
-                        style={{ width: 25, height: 25, marginRight: 20 }}
-                    />
-                </TouchableOpacity>
-                <Text style={{ color: 'white', fontFamily: fonts.MAINB, fontSize: 16 }}>
-                    {formatName(data[currentVideoIndex].name)}
-                </Text>
-            </View>
+            
 
             {fullScreen === true && (
                 <FullScreenMode

@@ -6,6 +6,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import Slider from '@react-native-community/slider';
 import Box from '@common/Box';
 import Txt from '@common/Txt';
+import { goBack } from '@utils/navigationRef';
 
 interface Props {
     formatName: (name: string) => string;
@@ -28,6 +29,7 @@ interface Props {
 }
 
 const FullScreenMode: React.FC<Props> = ({
+    formatName,
     data,
     currentVideoIndex,
     progress,
@@ -47,6 +49,26 @@ const FullScreenMode: React.FC<Props> = ({
 }) => {
     return (
         <>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                position: 'absolute',
+                top: hp('4%'),
+                left: 20,
+            }}>
+                <TouchableOpacity
+                    onPress={() => {
+                        goBack();
+                    }}>
+                    <Image
+                        source={require('@images/video/back.png')}
+                        style={{ width: 25, height: 25, marginRight: 20 }}
+                    />
+                </TouchableOpacity>
+                <Text style={{ color: 'white', fontFamily: fonts.MAINB, fontSize: 16 }}>
+                    {formatName(data[currentVideoIndex].name)}
+                </Text>
+            </View>
             {/* Top right control */}
             <View style={{
                 flexDirection: 'row',
