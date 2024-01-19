@@ -61,7 +61,6 @@ const Biometric = () => {
           setIsShowModal(false);
         }
       } else {
-        console.log('Biometric authentication is not supported on this device.');
       }
     }
     setIsShowModal(false);
