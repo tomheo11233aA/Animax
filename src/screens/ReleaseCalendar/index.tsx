@@ -82,6 +82,7 @@ type itemDataVideo = {
 type itemVideoProps = {
   item: itemDataVideo
   onPress: () => void
+  onPressDetail: () => void
   backgroundColor: string
   textColor: string
   backgroundColorBtn: string
@@ -90,7 +91,7 @@ type itemVideoProps = {
   check: boolean
 }
 
-const ItemVideo = ({ item, onPress, backgroundColor,
+const ItemVideo = ({ item, onPress, backgroundColor,onPressDetail,
   textColor, borderColor, check, backgroundColorBtn, textColorBtn
 }: itemVideoProps) =>
 (
@@ -127,15 +128,20 @@ const ItemVideo = ({ item, onPress, backgroundColor,
       justifySpaceBetween={true}
     // backgroundColor={'red'}
     >
-      <Img
-        source={{
-          uri: item.image
-        }}
-        width={wp(40)}
-        height={wp(30)}
-        radius={10}
-        resizeMode='stretch'
-      />
+      <Btn
+        onPress={onPressDetail}
+      >
+        <Img
+          source={{
+            uri: item.image
+          }}
+          width={wp(40)}
+          height={wp(30)}
+          radius={10}
+          resizeMode='stretch'
+
+        />
+      </Btn>
       <Box
         column={true}
         justifySpaceBetween={true}
@@ -308,8 +314,7 @@ const ReleaseCalendar = () => {
         onPress={() => {
           setIsSelected(item.id)
           setDaySelected(item.date)
-        }
-        }
+        }}
         backgroundColor={backgroundColor}
         textColor={textColor}
       />
@@ -347,6 +352,7 @@ const ReleaseCalendar = () => {
       <ItemVideo
         item={item}
         onPress={() => toggleSelected(item.id, isCheck, setIsCheck)}
+        onPressDetail={() => navigate(screens.DETAIL)} //chuyển sang màn hình detail. truyền id của item qua màn hình detail
         backgroundColor={backgroundColor}
         textColor={textColor}
         borderColor={borderColor}
@@ -489,7 +495,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-19 22:40',
+    time: '2024-01-19 22:41',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {

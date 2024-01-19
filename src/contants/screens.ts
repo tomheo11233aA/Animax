@@ -21,4 +21,5 @@ export const screens = {
     MY_LIST: 'MYLIST',
     RELEASE_CALENDAR: 'RELEASECALENDAR',
     PROFILE: 'PROFILE',
+    DETAIL: 'DETAIL',
 }
