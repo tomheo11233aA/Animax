@@ -60,9 +60,6 @@ const VideoControl: React.FC<Props> = ({
             justifyContent: 'center',
             alignItems: 'center',
         }}>
-            {/* top left control */}
-            
-
             {fullScreen === true && (
                 <FullScreenMode
                     formatName={formatName}
