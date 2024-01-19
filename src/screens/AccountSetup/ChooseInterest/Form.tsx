@@ -1,14 +1,10 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import Box from '@common/Box';
-import Btn from '@common/Btn';
 import Txt from '@common/Txt';
-import { colors } from '@themes/colors';
-import { fonts } from '@themes/fonts';
 import Scroll from '@common/Scroll';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '@hooks/redux';
 import { themeUserSelector } from '@redux/selector/appSelector';
+import InterestButton from './InterestButton';
 
 const Form = () => {
   const interests = useMemo(() => [
@@ -19,10 +15,8 @@ const Form = () => {
     'Magic', 'Game', 'Slice of Life', 'Horror', 'Thriller',
     'Supernatural'
   ], []);
-  const { t } = useTranslation();
   const theme = useAppSelector(themeUserSelector);
   const [selectedInterests, setSelectedInterests] = useState(new Set());
-
   const toggleInterest = useCallback((interest: any) => {
     const newSelectedInterests = new Set(selectedInterests);
     if (newSelectedInterests.has(interest)) {
@@ -36,27 +30,13 @@ const Form = () => {
   const renderInterestButton = useCallback((interest: any) => {
     const selected = selectedInterests.has(interest);
     return (
-      <Btn
+      <InterestButton
         key={interest}
         onPress={() => toggleInterest(interest)}
-        marginRight={wp('3%')}
-        marginBottom={hp('2.5%')}
-        paddingVertical={hp('1%')}
-        paddingHorizontal={wp('5%')}
-        radius={wp('6%')}
-        backgroundColor={selected ? colors.lMainColor : theme === 'light' ? colors.white : 'transparent'}
-        borderWidth={1.5}
-        borderColor={selected ? '#44d076' : colors.mainColor}
-      >
-        <Txt
-          color={selected ? colors.white : colors.mainColor}
-          size={14}
-          fontWeight={'600'}
-          fontFamily={fonts.MAINB}
-        >
-          {t(interest)}
-        </Txt>
-      </Btn>
+        selected={selected}
+        theme={theme}
+        interest={interest}
+      />
     );
   }, [selectedInterests, toggleInterest]);
 
