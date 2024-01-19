@@ -145,19 +145,24 @@ const MediaPlayer = () => {
 
     return (
         <View style={styles.container}>
-            <ModalSpeed
-                isVisible={isSpeedSelectorVisible}
-                onClose={() => setIsSpeedSelectorVisible(false)}
-                onSpeedChange={(speed) => {
-                    setPlaybackRate(speed);
-                    setIsSpeedSelectorVisible(false);
-                }}
-            />
+
             <TouchableOpacity
-                style={{ width: '100%', height: '100%' }}
+                style={{
+                    width: '100%',
+                    height: '100%'
+                }}
                 onPress={handlePress}
                 activeOpacity={0.94}
             >
+                <ModalSpeed
+                    isVisible={isSpeedSelectorVisible}
+                    onClose={() => setIsSpeedSelectorVisible(false)}
+                    onSpeedChange={(speed) => {
+                        setPlaybackRate(speed);
+                        setIsSpeedSelectorVisible(false);
+                    }}
+                    currentSpeed={playbackRate}
+                />
                 <Video
                     paused={paused}
                     source={{ uri: data[currentVideoIndex].link }}
