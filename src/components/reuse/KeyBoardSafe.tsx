@@ -36,7 +36,7 @@ const KeyBoardSafe = ({
                 <Box
                     flex={1}
                     // isPaddingAdnroid
-                    paddingTop={Platform.OS === 'android' ? 10 : 0}
+                    paddingTop={Platform.OS === 'android' ? 0 : 0}
                 >
                     <Scroll
                         flexGrow={1}
