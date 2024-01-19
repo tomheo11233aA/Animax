@@ -118,7 +118,7 @@ const MediaPlayer = () => {
 
     const checkPipMode = () => {
         PipModule.isInPipMode().then((isInPipMode: any) => {
-            console.log('isInPipMode', isInPipMode);
+            console.log("isInPipMode", isInPipMode);
             setIsPipMode(isInPipMode);
         }).catch((error: any) => {
             console.error(error);
@@ -126,6 +126,8 @@ const MediaPlayer = () => {
     }
     const handleAppStateChange = (nextAppState: any) => {
         if (nextAppState === 'active') {
+            checkPipMode();
+        } else if (nextAppState === 'background') {
             checkPipMode();
         }
     }
