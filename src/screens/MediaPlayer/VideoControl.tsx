@@ -99,8 +99,6 @@ const VideoControl: React.FC<Props> = ({
                     handleFullScreen={handleFullScreen}
                 />
             )}
-
-
         </View>
     )
 }

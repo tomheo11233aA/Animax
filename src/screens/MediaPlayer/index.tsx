@@ -66,6 +66,7 @@ const MediaPlayer = () => {
     const [playbackRate, setPlaybackRate] = useState(1);
     const [isSpeedSelectorVisible, setIsSpeedSelectorVisible] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
+    const [isSeeking, setIsSeeking] = useState(false);
 
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -112,6 +113,7 @@ const MediaPlayer = () => {
         }
     };
     const onSliderValueChange = (value: any) => {
+        setIsSeeking(true);
         setProgress({ ...progress, currentTime: value });
         videoRef.current?.seek(value);
     };
@@ -166,7 +168,8 @@ const MediaPlayer = () => {
                 />
                 <Video
                     paused={paused}
-                    source={{ uri: data[currentVideoIndex].link }}
+                    // source={{ uri: data[currentVideoIndex].link }}
+                    source={{ uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8', type: 'm3u8' }}
                     ref={videoRef}
                     onProgress={setProgress}
                     onBuffer={handleBuffer}
@@ -186,8 +189,12 @@ const MediaPlayer = () => {
                             setCurrentVideoIndex(currentVideoIndex + 1);
                         }
                     }}
+                    onSeek={({ currentTime }) => {
+                        setProgress({ ...progress, currentTime });
+                        setIsSeeking(false);
+                    }}
                 />
-                {isLoading && (
+                {(isLoading || isSeeking) && (
                     <View
                         style={{
                             width: '100%',
