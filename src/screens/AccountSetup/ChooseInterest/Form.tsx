@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import Box from '@common/Box';
 import Btn from '@common/Btn';
 import Txt from '@common/Txt';
@@ -10,21 +10,20 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '@hooks/redux';
 import { themeUserSelector } from '@redux/selector/appSelector';
 
-const interests = [
-  'Action', 'Drama', 'Comedy', 'Ecchi', 'Adventure',
-  'Mecha', 'Romance', 'Science', 'Music', 'School',
-  'Seinen', 'Shoujo', 'Fantasy', 'Mystery', 'Family',
-  'Vampire', 'Isekai', 'Shounen', 'Television', 'Superheroes',
-  'Magic', 'Game', 'Slice of Life', 'Horror', 'Thriller',
-  'Supernatural'
-];
-
 const Form = () => {
+  const interests = useMemo(() => [
+    'Action', 'Drama', 'Comedy', 'Ecchi', 'Adventure',
+    'Mecha', 'Romance', 'Science', 'Music', 'School',
+    'Seinen', 'Shoujo', 'Fantasy', 'Mystery', 'Family',
+    'Vampire', 'Isekai', 'Shounen', 'Television', 'Superheroes',
+    'Magic', 'Game', 'Slice of Life', 'Horror', 'Thriller',
+    'Supernatural'
+  ], []);
   const { t } = useTranslation();
   const theme = useAppSelector(themeUserSelector);
   const [selectedInterests, setSelectedInterests] = useState(new Set());
 
-  const toggleInterest = (interest: any) => {
+  const toggleInterest = useCallback((interest: any) => {
     const newSelectedInterests = new Set(selectedInterests);
     if (newSelectedInterests.has(interest)) {
       newSelectedInterests.delete(interest);
@@ -32,9 +31,9 @@ const Form = () => {
       newSelectedInterests.add(interest);
     }
     setSelectedInterests(newSelectedInterests);
-  };
+  }, []);
 
-  const renderInterestButton = (interest: any) => {
+  const renderInterestButton = useCallback((interest: any) => {
     const selected = selectedInterests.has(interest);
     return (
       <Btn
@@ -59,7 +58,7 @@ const Form = () => {
         </Txt>
       </Btn>
     );
-  };
+  }, [selectedInterests, toggleInterest]);
 
   return (
     <Scroll

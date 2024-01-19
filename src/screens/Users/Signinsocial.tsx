@@ -203,7 +203,6 @@ const Signinsocial = () => {
                     >
                         {t('Sign up')}
                     </Txt>
-
                 </Box>
             </Scroll>
         </KeyBoardSafe>
