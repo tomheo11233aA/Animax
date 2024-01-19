@@ -175,6 +175,11 @@ const MediaPlayer = () => {
                     muted={isMutted}
                     playInBackground={true}
                     rate={playbackRate}
+                    onEnd={() => {
+                        if (currentVideoIndex < data.length - 1) {
+                            setCurrentVideoIndex(currentVideoIndex + 1);
+                        }
+                    }}
                 />
                 {isLoading && (
                     <View
@@ -223,7 +228,7 @@ export default MediaPlayer;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },     
+    },
 });
 
 var data = [

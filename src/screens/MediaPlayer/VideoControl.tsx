@@ -4,6 +4,7 @@ import { fonts } from '@themes/fonts';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { goBack } from '@utils/navigationRef';
 import FullScreenMode from './FullScreenMode';
+import SmallScreenMode from './SmallScreenMode';
 
 interface Props {
     formatName: (name: string) => string;
@@ -83,6 +84,25 @@ const VideoControl: React.FC<Props> = ({
                     handleFullScreen={handleFullScreen}
                 />
             )}
+
+            {fullScreen === false && (
+                <SmallScreenMode
+                    data={data}
+                    currentVideoIndex={currentVideoIndex}
+                    progress={progress}
+                    format={format}
+                    onSliderValueChange={onSliderValueChange}
+                    videoRef={videoRef}
+                    paused={paused}
+                    setPaused={setPaused}
+                    handlePictureInPicture={handlePictureInPicture}
+                    requestAudioFocus={requestAudioFocus}
+                    abandonAudioFocus={abandonAudioFocus}
+                    showSpeedSelector={showSpeedSelector}
+                    handleFullScreen={handleFullScreen}
+                />
+            )}
+
 
         </View>
     )

@@ -58,7 +58,7 @@ const FullScreenMode: React.FC<Props> = ({
             }}>
                 <TouchableOpacity
                     onPress={() => {
-                        goBack();
+                        handleFullScreen();
                     }}>
                     <Image
                         source={require('@images/video/back.png')}
