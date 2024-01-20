@@ -22,6 +22,7 @@ import { AppDispatch } from '@redux/store/store';
 import { colors } from '@themes/colors'
 import { set } from 'lodash'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
+import { Image } from 'react-native-reanimated/lib/typescript/Animated'
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -35,11 +36,33 @@ const Detail = () => {
       backgroundColor= {theme === 'dark' ? color.bg : color.bg}
       padding={24}
     >
-      <Txt
+      {/* <Txt
         fontFamily={fonts.MAIN}
         size={20}
         color={theme === 'dark' ? color.black : color.white}
-      >Detail</Txt>
+      >Detail</Txt> */}
+      <Box
+        width={wp(100)}
+        height={hp(35)}
+        justifyCenter={'center'}
+        alignCenter={'center'}
+        backgroundColor={'red'}
+        marginLeft={-24}
+        // marginTop={-24}
+      >
+        <Img
+          source={require('@images/background.png')}
+          width={('100%')}
+          height={('100%')}
+          resizeMode='cover'
+        />
+      </Box>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
+      <Box></Box>
     </Box>
   )
 }

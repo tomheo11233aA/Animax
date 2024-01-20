@@ -91,7 +91,7 @@ type itemVideoProps = {
   check: boolean
 }
 
-const ItemVideo = ({ item, onPress, backgroundColor,onPressDetail,
+const ItemVideo = ({ item, onPress, backgroundColor, onPressDetail,
   textColor, borderColor, check, backgroundColorBtn, textColorBtn
 }: itemVideoProps) =>
 (
@@ -348,6 +348,7 @@ const ReleaseCalendar = () => {
       : theme === 'dark' ? color.mainColor : color.mainColor;
     const check = isCheckItem ? true : false;
 
+
     return (
       <ItemVideo
         item={item}
@@ -364,34 +365,36 @@ const ReleaseCalendar = () => {
   }
 
   const HeaderComponent = () => (
-    <Box
-      row={true}
-      alignCenter={true}
-      marginBottom={16}
-    >
+    //nếu ngày hiện tại khác ngày được chọn thì không hiển thị currentTime
+    daySelected.getDate() !== currentTime.getDate() ? null :
       <Box
-        height={2}
-        flex={1}
-        backgroundColor={color.mainColor}
-        marginRight={8}
-        radius={2}
-      />
-      <Txt
-        fontFamily={fonts.MAIN}
-        size={14}
-        fontWeight={'400'}
-        color={theme === 'dark' ? color.white : color.black}
+        row={true}
+        alignCenter={true}
+        marginBottom={16}
       >
-        {t('Current Time -')} {formatTime}
-      </Txt>
-      <Box
-        height={2}
-        flex={1}
-        backgroundColor={color.mainColor}
-        marginLeft={8}
-        radius={2}
-      />
-    </Box>
+        <Box
+          height={2}
+          flex={1}
+          backgroundColor={color.mainColor}
+          marginRight={8}
+          radius={2}
+        />
+        <Txt
+          fontFamily={fonts.MAIN}
+          size={14}
+          fontWeight={'400'}
+          color={theme === 'dark' ? color.white : color.black}
+        >
+          {t('Current Time -')} {formatTime}
+        </Txt>
+        <Box
+          height={2}
+          flex={1}
+          backgroundColor={color.mainColor}
+          marginLeft={8}
+          radius={2}
+        />
+      </Box>
   );
 
 
@@ -449,7 +452,7 @@ const ReleaseCalendar = () => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             getItemLayout={(data, index) => (
-              { length: 66, offset: 66 * index, index }
+              { length: 66, offset: 66 * (index - 2), index }
             )}
           //thiết lập chiều dài (theo chiều cuộn flatlist) của mỗi item là 66
           // để khi cuộn flatlist thì item sẽ cuộn theo
@@ -462,6 +465,7 @@ const ReleaseCalendar = () => {
           flex={1}
           marginBottom={BOTTOM_TAB_HEIGHT}
         >
+
           {/* dữ liệu sau currentTime */}
           <FlatList
             data={dataAfterCurrentTime}
