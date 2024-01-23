@@ -54,6 +54,14 @@ const MediaPlayer = () => {
             subscription.remove();
         }
     }, []);
+    useEffect(() => {
+        resetTimeout();
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, []);
 
     const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
@@ -67,6 +75,9 @@ const MediaPlayer = () => {
     const [isSpeedSelectorVisible, setIsSpeedSelectorVisible] = useState(false);
     const [fullScreen, setFullScreen] = useState(false);
     const [isSeeking, setIsSeeking] = useState(false);
+    const [volume, setVolume] = useState(1);
+    const [isVolumeSliderVisible, setIsVolumeSliderVisible] = useState(false);
+    const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
@@ -95,14 +106,18 @@ const MediaPlayer = () => {
         }
         setFullScreen(!fullScreen);
     };
+    const resetTimeout = () => {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        setTimeoutId(setTimeout(() => setShowControls(false), 5000));
+    };
     const handlePress = () => {
         if (showControls) {
             setShowControls(false);
         } else {
             setShowControls(true);
-            // setTimeout(() => {
-            //     setShowControls(false);
-            // }, 5000);
+            resetTimeout();
         }
     };
     const formatName = (name: string) => {
@@ -117,7 +132,6 @@ const MediaPlayer = () => {
         setProgress({ ...progress, currentTime: value });
         videoRef.current?.seek(value);
     };
-
     const checkPipMode = () => {
         PipModule.isInPipMode().then((isInPipMode: any) => {
             setIsPipMode(isInPipMode);
@@ -145,6 +159,9 @@ const MediaPlayer = () => {
     const abandonAudioFocus = () => {
         AudioFocusModule.abandonAudioFocus();
     };
+    const handleVolumeChange = (value: any) => {
+        setVolume(value);
+    }
 
     return (
         <View style={styles.container}>
@@ -184,6 +201,7 @@ const MediaPlayer = () => {
                     muted={isMutted}
                     playInBackground={true}
                     rate={playbackRate}
+                    volume={volume}
                     onEnd={() => {
                         if (currentVideoIndex < data.length - 1) {
                             setCurrentVideoIndex(currentVideoIndex + 1);
@@ -229,6 +247,10 @@ const MediaPlayer = () => {
                         playbackRate={playbackRate}
                         fullScreen={fullScreen}
                         handleFullScreen={toggleFullScreen}
+                        volume={volume}
+                        setVolume={handleVolumeChange}
+                        isVolumeSliderVisible={isVolumeSliderVisible}
+                        setIsVolumeSliderVisible={setIsVolumeSliderVisible}
                     />
                 )}
             </TouchableOpacity>

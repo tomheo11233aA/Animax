@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
@@ -6,7 +6,6 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import Slider from '@react-native-community/slider';
 import Box from '@common/Box';
 import Txt from '@common/Txt';
-import { goBack } from '@utils/navigationRef';
 
 interface Props {
     formatName: (name: string) => string;
@@ -26,6 +25,10 @@ interface Props {
     showSpeedSelector: () => void;
     playbackRate: number;
     handleFullScreen: () => void;
+    volume: number;
+    setVolume: (value: number) => void;
+    isVolumeSliderVisible: boolean;
+    setIsVolumeSliderVisible: (value: boolean) => void;
 }
 
 const FullScreenMode: React.FC<Props> = ({
@@ -45,8 +48,24 @@ const FullScreenMode: React.FC<Props> = ({
     abandonAudioFocus,
     showSpeedSelector,
     playbackRate,
-    handleFullScreen
+    handleFullScreen,
+    volume,
+    setVolume,
+    isVolumeSliderVisible,
+    setIsVolumeSliderVisible
 }) => {
+    const [hideVolumeSliderTimeout, setHideVolumeSliderTimeout] = useState<NodeJS.Timeout | null>(null);
+    useEffect(() => {
+        if (hideVolumeSliderTimeout) {
+            clearTimeout(hideVolumeSliderTimeout);
+        }
+
+        if (isVolumeSliderVisible) {
+            setHideVolumeSliderTimeout(setTimeout(() => {
+                setIsVolumeSliderVisible(false);
+            }, 2000));
+        }
+    }, [isVolumeSliderVisible]);
     return (
         <>
             <View style={{
@@ -237,6 +256,7 @@ const FullScreenMode: React.FC<Props> = ({
                 </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
+                        setIsVolumeSliderVisible(!isVolumeSliderVisible);
                     }}>
                     <Box row alignCenter>
                         <Image
@@ -249,7 +269,29 @@ const FullScreenMode: React.FC<Props> = ({
                         <Txt color={'white'} size={12} marginLeft={5}>{`Episodes`}</Txt>
                     </Box>
                 </TouchableOpacity>
-
+                {isVolumeSliderVisible && (
+                    <View style={{
+                        position: 'absolute',
+                        top: -hp('20%'),
+                        right: '23%',
+                        width: wp('30%'),
+                        height: hp('10%'),
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000
+                    }}>
+                        <Slider
+                            style={{ width: '100%', height: '100%', transform: [{ rotate: '-90deg' }] }}
+                            minimumValue={0}
+                            maximumValue={1}
+                            minimumTrackTintColor={colors.mainColor}
+                            maximumTrackTintColor="#fff"
+                            value={volume}
+                            onValueChange={setVolume}
+                            thumbTintColor='white'
+                        />
+                    </View>
+                )}
                 <TouchableOpacity
                     onPress={handleNextVideo}
                     disabled={currentVideoIndex === data.length - 1}

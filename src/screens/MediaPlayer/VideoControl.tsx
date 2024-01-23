@@ -1,8 +1,5 @@
 import React, { memo } from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
-import { fonts } from '@themes/fonts';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { goBack } from '@utils/navigationRef';
+import { View } from 'react-native';
 import FullScreenMode from './FullScreenMode';
 import SmallScreenMode from './SmallScreenMode';
 
@@ -27,6 +24,10 @@ interface Props {
     playbackRate: number;
     fullScreen: boolean;
     handleFullScreen: () => void;
+    volume: number;
+    setVolume: (value: number) => void;
+    isVolumeSliderVisible: boolean;
+    setIsVolumeSliderVisible: (value: boolean) => void;
 }
 
 const VideoControl: React.FC<Props> = ({
@@ -50,6 +51,10 @@ const VideoControl: React.FC<Props> = ({
     playbackRate,
     fullScreen,
     handleFullScreen,
+    volume,
+    setVolume,
+    isVolumeSliderVisible,
+    setIsVolumeSliderVisible,
 }) => {
     return (
         <View style={{
@@ -79,6 +84,10 @@ const VideoControl: React.FC<Props> = ({
                     showSpeedSelector={showSpeedSelector}
                     playbackRate={playbackRate}
                     handleFullScreen={handleFullScreen}
+                    volume={volume}
+                    setVolume={setVolume}
+                    isVolumeSliderVisible={isVolumeSliderVisible}
+                    setIsVolumeSliderVisible={setIsVolumeSliderVisible}
                 />
             )}
 
