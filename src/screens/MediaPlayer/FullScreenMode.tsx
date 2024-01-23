@@ -55,17 +55,17 @@ const FullScreenMode: React.FC<Props> = ({
     setIsVolumeSliderVisible
 }) => {
     const [hideVolumeSliderTimeout, setHideVolumeSliderTimeout] = useState<NodeJS.Timeout | null>(null);
-    useEffect(() => {
-        if (hideVolumeSliderTimeout) {
-            clearTimeout(hideVolumeSliderTimeout);
-        }
+    // useEffect(() => {
+    //     if (hideVolumeSliderTimeout) {
+    //         clearTimeout(hideVolumeSliderTimeout);
+    //     }
 
-        if (isVolumeSliderVisible) {
-            setHideVolumeSliderTimeout(setTimeout(() => {
-                setIsVolumeSliderVisible(false);
-            }, 2000));
-        }
-    }, [isVolumeSliderVisible]);
+    //     if (isVolumeSliderVisible) {
+    //         setHideVolumeSliderTimeout(setTimeout(() => {
+    //             setIsVolumeSliderVisible(false);
+    //         }, 2000));
+    //     }
+    // }, [isVolumeSliderVisible]);
     return (
         <>
             <View style={{
@@ -281,14 +281,19 @@ const FullScreenMode: React.FC<Props> = ({
                         zIndex: 1000
                     }}>
                         <Slider
-                            style={{ width: '100%', height: '100%', transform: [{ rotate: '-90deg' }] }}
+                            style={{
+                                width: '100%',
+                                transform: [{ rotate: '-90deg' }],
+                                height: 50 
+                            }}
+                            thumbImage={require('@images/video/volume.png')}
+                            step={0.1}
                             minimumValue={0}
                             maximumValue={1}
                             minimumTrackTintColor={colors.mainColor}
                             maximumTrackTintColor="#fff"
                             value={volume}
                             onValueChange={setVolume}
-                            thumbTintColor='white'
                         />
                     </View>
                 )}

@@ -54,14 +54,14 @@ const MediaPlayer = () => {
             subscription.remove();
         }
     }, []);
-    useEffect(() => {
-        resetTimeout();
-        return () => {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-        };
-    }, []);
+    // useEffect(() => {
+    //     resetTimeout();
+    //     return () => {
+    //         if (timeoutId) {
+    //             clearTimeout(timeoutId);
+    //         }
+    //     };
+    // }, []);
 
     const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
@@ -117,7 +117,7 @@ const MediaPlayer = () => {
             setShowControls(false);
         } else {
             setShowControls(true);
-            resetTimeout();
+            // resetTimeout();
         }
     };
     const formatName = (name: string) => {
@@ -165,7 +165,6 @@ const MediaPlayer = () => {
 
     return (
         <View style={styles.container}>
-
             <TouchableOpacity
                 style={{
                     width: '100%',
