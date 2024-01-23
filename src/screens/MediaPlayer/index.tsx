@@ -65,7 +65,11 @@ const MediaPlayer = () => {
 
     const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
-    const [progress, setProgress] = useState({ currentTime: 0, seekableDuration: 0 });
+    const [progress, setProgress] = useState({
+        currentTime: 0,
+        seekableDuration: 0,
+        playableDuration: 0
+    });
     const [showControls, setShowControls] = useState(false);
     const videoRef = useRef<Video>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -91,6 +95,7 @@ const MediaPlayer = () => {
     }
     const handleBuffer = ({ isBuffering }: { isBuffering: boolean }) => {
         setIsLoading(isBuffering);
+
     };
     const format = (seconds: number) => {
         if (seconds == null) return '00:00';
@@ -128,9 +133,10 @@ const MediaPlayer = () => {
         }
     };
     const onSliderValueChange = (value: any) => {
-        setIsSeeking(true);
-        setProgress({ ...progress, currentTime: value });
-        videoRef.current?.seek(value);
+        if (videoRef.current) {
+            videoRef.current.seek(value);
+            setIsSeeking(true);
+        }
     };
     const checkPipMode = () => {
         PipModule.isInPipMode().then((isInPipMode: any) => {
@@ -162,6 +168,13 @@ const MediaPlayer = () => {
     const handleVolumeChange = (value: any) => {
         setVolume(value);
     }
+    const onProgress = (data: any) => {
+        setProgress({
+            currentTime: data.currentTime,
+            seekableDuration: data.seekableDuration,
+            playableDuration: data.playableDuration
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -187,7 +200,7 @@ const MediaPlayer = () => {
                     // source={{ uri: data[currentVideoIndex].link }}
                     source={{ uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8', type: 'm3u8' }}
                     ref={videoRef}
-                    onProgress={setProgress}
+                    onProgress={onProgress}
                     onBuffer={handleBuffer}
                     onLoadStart={() => setIsLoading(true)}
                     onLoad={() => setIsLoading(false)}

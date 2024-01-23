@@ -2,12 +2,12 @@ import React, { memo } from 'react';
 import { View } from 'react-native';
 import FullScreenMode from './FullScreenMode';
 import SmallScreenMode from './SmallScreenMode';
-
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 interface Props {
     formatName: (name: string) => string;
     data: any[];
     currentVideoIndex: number;
-    progress: { currentTime: number, seekableDuration: number };
+    progress: { currentTime: number, seekableDuration: number, playableDuration: number};
     format: (seconds: number) => string;
     onSliderValueChange: (value: number) => void;
     isMutted: boolean;
@@ -37,8 +37,6 @@ const VideoControl: React.FC<Props> = ({
     progress,
     format,
     onSliderValueChange,
-    isMutted,
-    setIsMutted,
     videoRef,
     paused,
     setPaused,
@@ -57,58 +55,58 @@ const VideoControl: React.FC<Props> = ({
     setIsVolumeSliderVisible,
 }) => {
     return (
-        <View style={{
-            width: '100%',
-            height: fullScreen ? '100%' : 200,
-            position: 'absolute',
-            backgroundColor: 'rgba(0,0,0,.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-        }}>
-            {fullScreen === true && (
-                <FullScreenMode
-                    formatName={formatName}
-                    data={data}
-                    currentVideoIndex={currentVideoIndex}
-                    progress={progress}
-                    format={format}
-                    onSliderValueChange={onSliderValueChange}
-                    videoRef={videoRef}
-                    paused={paused}
-                    setPaused={setPaused}
-                    handlePreviousVideo={handlePreviousVideo}
-                    handleNextVideo={handleNextVideo}
-                    handlePictureInPicture={handlePictureInPicture}
-                    requestAudioFocus={requestAudioFocus}
-                    abandonAudioFocus={abandonAudioFocus}
-                    showSpeedSelector={showSpeedSelector}
-                    playbackRate={playbackRate}
-                    handleFullScreen={handleFullScreen}
-                    volume={volume}
-                    setVolume={setVolume}
-                    isVolumeSliderVisible={isVolumeSliderVisible}
-                    setIsVolumeSliderVisible={setIsVolumeSliderVisible}
-                />
-            )}
+            <GestureHandlerRootView style={{
+                width: '100%',
+                height: fullScreen ? '100%' : 200,
+                position: 'absolute',
+                backgroundColor: 'rgba(0,0,0,.5)',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                {fullScreen === true && (
+                    <FullScreenMode
+                        formatName={formatName}
+                        data={data}
+                        currentVideoIndex={currentVideoIndex}
+                        progress={progress}
+                        format={format}
+                        onSliderValueChange={onSliderValueChange}
+                        videoRef={videoRef}
+                        paused={paused}
+                        setPaused={setPaused}
+                        handlePreviousVideo={handlePreviousVideo}
+                        handleNextVideo={handleNextVideo}
+                        handlePictureInPicture={handlePictureInPicture}
+                        requestAudioFocus={requestAudioFocus}
+                        abandonAudioFocus={abandonAudioFocus}
+                        showSpeedSelector={showSpeedSelector}
+                        playbackRate={playbackRate}
+                        handleFullScreen={handleFullScreen}
+                        volume={volume}
+                        setVolume={setVolume}
+                        isVolumeSliderVisible={isVolumeSliderVisible}
+                        setIsVolumeSliderVisible={setIsVolumeSliderVisible}
+                    />
+                )}
 
-            {fullScreen === false && (
-                <SmallScreenMode
-                    data={data}
-                    currentVideoIndex={currentVideoIndex}
-                    progress={progress}
-                    format={format}
-                    onSliderValueChange={onSliderValueChange}
-                    videoRef={videoRef}
-                    paused={paused}
-                    setPaused={setPaused}
-                    handlePictureInPicture={handlePictureInPicture}
-                    requestAudioFocus={requestAudioFocus}
-                    abandonAudioFocus={abandonAudioFocus}
-                    showSpeedSelector={showSpeedSelector}
-                    handleFullScreen={handleFullScreen}
-                />
-            )}
-        </View>
+                {fullScreen === false && (
+                    <SmallScreenMode
+                        data={data}
+                        currentVideoIndex={currentVideoIndex}
+                        progress={progress}
+                        format={format}
+                        onSliderValueChange={onSliderValueChange}
+                        videoRef={videoRef}
+                        paused={paused}
+                        setPaused={setPaused}
+                        handlePictureInPicture={handlePictureInPicture}
+                        requestAudioFocus={requestAudioFocus}
+                        abandonAudioFocus={abandonAudioFocus}
+                        showSpeedSelector={showSpeedSelector}
+                        handleFullScreen={handleFullScreen}
+                    />
+                )}
+            </GestureHandlerRootView>
     )
 }
 

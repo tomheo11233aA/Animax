@@ -1,14 +1,15 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
-import Slider from '@react-native-community/slider';
+// import Slider from '@react-native-community/slider';
 import { goBack } from '@utils/navigationRef';
-
+import { Slider } from 'react-native-awesome-slider';
+import { useSharedValue } from 'react-native-reanimated';
 interface Props {
     data: any[];
     currentVideoIndex: number;
-    progress: { currentTime: number, seekableDuration: number };
+    progress: { currentTime: number, seekableDuration: number, playableDuration: number };
     format: (seconds: number) => string;
     onSliderValueChange: (value: number) => void;
     videoRef: React.RefObject<any>;
@@ -36,6 +37,16 @@ const SmallScreenMode: React.FC<Props> = ({
     showSpeedSelector,
     handleFullScreen,
 }) => {
+    const progressValue = useSharedValue(progress.currentTime);
+    const minValue = useSharedValue(0);
+    const maxValue = useSharedValue(progress.seekableDuration);
+    const cacheValue = useSharedValue(progress.playableDuration);
+    
+    useEffect(() => {
+        progressValue.value = progress.currentTime;
+        maxValue.value = progress.seekableDuration;
+        cacheValue.value = progress.playableDuration;
+    }, [progress, progressValue, maxValue, cacheValue]);
     return (
         <>
             {/* top left control */}
@@ -112,7 +123,6 @@ const SmallScreenMode: React.FC<Props> = ({
                 height: 50,
                 position: 'absolute',
                 bottom: 0,
-                backgroundColor: 'rgba(0,0,0,.5)',
                 flexDirection: 'row',
                 alignItems: 'center',
             }}>
@@ -120,29 +130,44 @@ const SmallScreenMode: React.FC<Props> = ({
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginLeft: 10,
-                    width: '70%'
+                    width: '80%'
                 }}>
                     <Text style={{
                         color: 'white',
                         fontFamily: fonts.MAIN,
                         fontSize: 14,
+                        marginRight: 10,
+                        width: 40,
                     }}>
                         {format(progress.currentTime)}
                     </Text>
                     <Slider
-                        style={{ width: '93%', height: 40 }}
-                        minimumValue={0}
-                        maximumValue={progress.seekableDuration}
-                        minimumTrackTintColor={colors.mainColor}
-                        maximumTrackTintColor="#fff"
-                        value={progress.currentTime}
-                        onValueChange={onSliderValueChange}
-                        thumbTintColor='white'
+                        style={{
+                            width: '100%',
+                        }}
+                        // progress={progressValue}
+                        progress={
+                            // wait for progressValue to be updated
+                            progressValue.value === 0 ? useSharedValue(progress.currentTime) : useSharedValue(progressValue.value)
+                        }
+                        minimumValue={minValue}
+                        maximumValue={maxValue}
+                        theme={{
+                            minimumTrackTintColor: colors.mainColor,
+                            maximumTrackTintColor: "#fff",   
+                            cacheTrackTintColor: 'gray',
+                        }}
+                        onSlidingComplete={(value) => {
+                            progressValue.value = value;
+                            onSliderValueChange(value);
+                        }}
+                        cache={cacheValue}
                     />
                     <Text style={{
                         color: 'white',
                         fontFamily: fonts.MAIN,
                         fontSize: 14,
+                        marginLeft: 10,
                     }}>
                         {format(progress.seekableDuration)}
                     </Text>
