@@ -407,7 +407,6 @@ const ReleaseCalendar = () => {
       <Box
         flex={1}
         padding={24}
-
       >
         <Box
           row={true}
@@ -463,7 +462,7 @@ const ReleaseCalendar = () => {
         </Box>
         <Box
           flex={1}
-          marginBottom={BOTTOM_TAB_HEIGHT}
+          marginBottom={BOTTOM_TAB_HEIGHT/2+24}
         >
 
           {/* dữ liệu sau currentTime */}

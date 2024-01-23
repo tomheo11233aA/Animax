@@ -23,10 +23,27 @@ import { colors } from '@themes/colors'
 import { set } from 'lodash'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 import { Image } from 'react-native-reanimated/lib/typescript/Animated'
+import { useNavigation } from '@react-navigation/native'
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
+
+
 const Detail = () => {
+
+  const navigation = useNavigation();
+
+  useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: "none"
+      }
+    });
+    return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
+
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
   const color = useTheme()
@@ -48,10 +65,15 @@ const Detail = () => {
         alignCenter={'center'}
         backgroundColor={'red'}
         marginLeft={-24}
+        marginTop={-24}
         // marginTop={-24}
       >
         <Img
-          source={require('@images/background.png')}
+          source={
+            {
+              uri: data[0].poster
+            }
+          }
           width={('100%')}
           height={('100%')}
           resizeMode='cover'
@@ -68,5 +90,199 @@ const Detail = () => {
 }
 
 export default React.memo(Detail)
+
+//fake data film detail
+const data = [
+  {
+    id: 1,
+    title: 'Detective Conan - Thám Tử Lừng Danh Conan',
+    poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
+    description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
+    rating: 9.5,
+    year: '1996',
+    ageRating: '13+',
+    country: 'Japan',
+    hasSub: true, // phụ đề
+    hasDub: true, // lồng tiếng/thuyết minh
+    episodes: [
+      {
+        episode: 1,
+        title: 'Thám Tử Lừng Danh Conan - Tập 1',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 2,
+        title: 'Thám Tử Lừng Danh Conan - Tập 2',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 3,
+        title: 'Thám Tử Lừng Danh Conan - Tập 3',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 4,
+        title: 'Thám Tử Lừng Danh Conan - Tập 4',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+    ]
+  },
+  {
+    id: 1,
+    title: 'Detective Conan - Thám Tử Lừng Danh Conan',
+    poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
+    description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
+    rating: 9.5,
+    year: '1996',
+    ageRating: '13+',
+    country: 'Japan',
+    hasSub: true, // phụ đề
+    hasDub: true, // lồng tiếng/thuyết minh
+    episodes: [
+      {
+        episode: 1,
+        title: 'Thám Tử Lừng Danh Conan - Tập 1',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 2,
+        title: 'Thám Tử Lừng Danh Conan - Tập 2',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 3,
+        title: 'Thám Tử Lừng Danh Conan - Tập 3',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 4,
+        title: 'Thám Tử Lừng Danh Conan - Tập 4',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+    ]
+  },
+  {
+    id: 1,
+    title: 'Detective Conan - Thám Tử Lừng Danh Conan',
+    poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
+    description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
+    rating: 9.5,
+    year: '1996',
+    ageRating: '13+',
+    country: 'Japan',
+    hasSub: true, // phụ đề
+    hasDub: true, // lồng tiếng/thuyết minh
+    episodes: [
+      {
+        episode: 1,
+        title: 'Thám Tử Lừng Danh Conan - Tập 1',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 2,
+        title: 'Thám Tử Lừng Danh Conan - Tập 2',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 3,
+        title: 'Thám Tử Lừng Danh Conan - Tập 3',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 4,
+        title: 'Thám Tử Lừng Danh Conan - Tập 4',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+    ]
+  },
+  {
+    id: 1,
+    title: 'Detective Conan - Thám Tử Lừng Danh Conan',
+    poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
+    description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
+    rating: 9.5,
+    year: '1996',
+    ageRating: '13+',
+    country: 'Japan',
+    hasSub: true, // phụ đề
+    hasDub: true, // lồng tiếng/thuyết minh
+    episodes: [
+      {
+        episode: 1,
+        title: 'Thám Tử Lừng Danh Conan - Tập 1',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 2,
+        title: 'Thám Tử Lừng Danh Conan - Tập 2',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 3,
+        title: 'Thám Tử Lừng Danh Conan - Tập 3',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 4,
+        title: 'Thám Tử Lừng Danh Conan - Tập 4',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+    ]
+  },
+  {
+    id: 1,
+    title: 'Detective Conan - Thám Tử Lừng Danh Conan',
+    poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
+    description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
+    rating: 9.5,
+    year: '1996',
+    ageRating: '13+',
+    country: 'Japan',
+    hasSub: true, // phụ đề
+    hasDub: true, // lồng tiếng/thuyết minh
+    episodes: [
+      {
+        episode: 1,
+        title: 'Thám Tử Lừng Danh Conan - Tập 1',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 2,
+        title: 'Thám Tử Lừng Danh Conan - Tập 2',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 3,
+        title: 'Thám Tử Lừng Danh Conan - Tập 3',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+      {
+        episode: 4,
+        title: 'Thám Tử Lừng Danh Conan - Tập 4',
+        duration: '25 phút',
+        thumbnail: 'https://cdn.tgdd.vn/Files/2023/08/02/1540758/nhung-cau-noi-hay-nhat-trong-phim-tham-tu-lung-danh-conan-202308021125158172.jpg',
+      },
+    ]
+  }
+]
 
 const styles = StyleSheet.create({})

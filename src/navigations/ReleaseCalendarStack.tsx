@@ -4,10 +4,18 @@ import React from 'react'
 import ReleaseCalendar from '@screens/ReleaseCalendar'
 import Detail from '@screens/Detail'
 
+
 const Stack = createNativeStackNavigator()
+
 const ReleaseCalendarStack = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+            screenOptions={
+                {
+                    headerShown: false
+                }
+            }
+        >
             <Stack.Screen name={screens.RELEASE_CALENDAR} component={ReleaseCalendar} />
             <Stack.Screen name={screens.DETAIL} component={Detail} />
         </Stack.Navigator>
