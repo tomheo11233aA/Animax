@@ -506,7 +506,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-19 22:40',
+    time: '2024-01-25 22:40',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {
@@ -514,7 +514,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-16 21:00',
+    time: '2024-01-25 21:00',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {

@@ -24,6 +24,7 @@ import { set } from 'lodash'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 import { Image } from 'react-native-reanimated/lib/typescript/Animated'
 import { useNavigation } from '@react-navigation/native'
+import TextTicker from 'react-native-text-ticker';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -50,14 +51,9 @@ const Detail = () => {
   return (
     <Box
       flex={1}
-      backgroundColor= {theme === 'dark' ? color.bg : color.bg}
+      backgroundColor={theme === 'dark' ? color.bg : color.bg}
       padding={24}
     >
-      {/* <Txt
-        fontFamily={fonts.MAIN}
-        size={20}
-        color={theme === 'dark' ? color.black : color.white}
-      >Detail</Txt> */}
       <Box
         width={wp(100)}
         height={hp(35)}
@@ -66,7 +62,7 @@ const Detail = () => {
         backgroundColor={'red'}
         marginLeft={-24}
         marginTop={-24}
-        // marginTop={-24}
+        marginBottom={24}
       >
         <Img
           source={
@@ -79,9 +75,237 @@ const Detail = () => {
           resizeMode='cover'
         />
       </Box>
-      <Box></Box>
-      <Box></Box>
-      <Box></Box>
+      <Box
+        row={true}
+        justifySpaceBetween={'true'}
+      >
+        <TextTicker
+          style={{
+            fontFamily: fonts.MAINB,
+            fontSize: 24,
+            color: theme === 'dark' ? color.black : color.white,
+            width: wp(100) - 48 - 96,
+          }}
+          duration={12000} // Độ dài thời gian để chữ chạy qua màn hình (milliseconds)
+          loop // Cho phép chạy vô hạn
+
+        >
+          {data[0].title}
+        </TextTicker>
+        <Box
+          row={true}
+          marginBottom={24}
+        >
+          <Btn
+            marginRight={16}
+          >
+            <Img
+              source={require('@images/detail/bookmark.png')}
+              width={24}
+              height={24}
+              tintColor={color.white}
+            ></Img>
+          </Btn>
+          <Btn>
+            <Img
+              source={require('@images/detail/send.png')}
+              width={24}
+              height={24}
+              tintColor={color.white}
+            ></Img>
+          </Btn>
+        </Box>
+      </Box>
+      <Box
+        marginBottom={24}
+        row={true}
+        alignCenter={'center'}
+      >
+        <Img
+          source={require('@images/detail/half-star.png')}
+          width={20}
+          height={20}
+          tintColor={color.mainColor}
+          marginRight={8}
+        ></Img>
+        <Txt
+          color={color.mainColor}
+          size={14}
+          fontFamily={fonts.MAIN}
+          marginRight={8}
+        >
+          {data[0].rating}
+        </Txt>
+        <Img
+          source={require('@images/detail/next.png')}
+          width={20}
+          height={20}
+          tintColor={color.mainColor}
+          marginRight={16}
+        ></Img>
+        <Txt
+          color={color.white}
+          size={14}
+          fontFamily={fonts.MAIN}
+          marginRight={16}
+        >
+          {data[0].year}
+        </Txt>
+
+        <Btn
+          alignCenter={true}
+          // width={wp(23)}
+          height={wp(8)}
+          backgroundColor={color.bg}
+          radius={7}
+          borderWidth={1}
+          borderColor={color.mainColor}
+          paddingHorizontal={8}
+          marginRight={16}
+          disabled={true}
+          onPress={() => { }}
+        >
+          <Txt
+            color={color.mainColor}
+            size={12}
+            fontFamily={fonts.MAIN}
+          >
+            {data[0].ageRating}
+          </Txt>
+        </Btn>
+        <Btn
+          alignCenter={true}
+          // width={wp(23)}
+          height={wp(8)}
+          backgroundColor={color.bg}
+          radius={7}
+          borderWidth={1}
+          borderColor={color.mainColor}
+          paddingHorizontal={8}
+          marginRight={16}
+          disabled={true}
+          onPress={() => { }}
+        >
+          <Txt
+            color={color.mainColor}
+            size={12}
+            fontFamily={fonts.MAIN}
+          >
+            {data[0].country}
+          </Txt>
+        </Btn>
+        {
+          data[0].hasSub && (
+            <Btn
+              alignCenter={true}
+              // width={wp(23)}
+              height={wp(8)}
+              backgroundColor={color.bg}
+              radius={7}
+              borderWidth={1}
+              borderColor={color.mainColor}
+              paddingHorizontal={8}
+              marginRight={16}
+              disabled={true}
+              onPress={() => { }}
+            >
+              <Txt
+                color={color.mainColor}
+                size={12}
+                fontFamily={fonts.MAIN}
+              >
+                {t('Sub')}
+              </Txt>
+            </Btn>
+          )
+        }
+        {
+          data[0].hasDub && (
+            <Btn
+              alignCenter={true}
+              // width={wp(23)}
+              height={wp(8)}
+              backgroundColor={color.bg}
+              radius={7}
+              borderWidth={1}
+              borderColor={color.mainColor}
+              paddingHorizontal={8}
+              marginRight={16}
+              disabled={true}
+              onPress={() => { }}
+            >
+              <Txt
+                color={color.mainColor}
+                size={12}
+                fontFamily={fonts.MAIN}
+              >
+                {t('Dub')}
+              </Txt>
+            </Btn>
+          )
+        }
+      </Box>
+      <Box
+        row={true}
+        marginBottom={24}
+        alignCenter={'center'}
+        justifySpaceBetween={'true'}
+      >
+        <Btn
+          row={true}
+          alignCenter={true}
+          width={wp(43)}
+          height={wp(11)}
+          backgroundColor={color.mainColor}
+          radius={20}
+          borderWidth={2}
+          borderColor={color.mainColor}
+          paddingHorizontal={8}
+          onPress={() => { }}
+        >
+          <Img
+            source={require('@images/detail/play.png')}
+            width={24}
+            height={24}
+            tintColor={color.white}
+            marginRight={8}
+          ></Img>
+          <Txt
+            color={color.white}
+            size={18}
+            fontFamily={fonts.MAIN}
+          >
+            {t('Play')}
+          </Txt>
+        </Btn>
+        <Btn
+          row={true}
+          alignCenter={true}
+          width={wp(43)}
+          height={wp(11)}
+          backgroundColor={color.bg}
+          radius={20}
+          borderWidth={2}
+          borderColor={color.mainColor}
+          paddingHorizontal={8}
+          onPress={() => { }}
+        >
+          <Img
+            source={require('@images/detail/download.png')}
+            width={24}
+            height={24}
+            tintColor={color.mainColor}
+            marginRight={8}
+          ></Img>
+          <Txt
+            color={color.mainColor}
+            size={18}
+            fontFamily={fonts.MAIN}
+          >
+            {t('Download')}
+          </Txt>
+        </Btn>
+      </Box>
       <Box></Box>
       <Box></Box>
       <Box></Box>
