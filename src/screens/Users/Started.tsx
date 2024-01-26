@@ -9,7 +9,6 @@ import Carousel from 'react-native-reanimated-carousel';
 import Animated, { Extrapolation, interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { useSharedValue, interpolateColor } from 'react-native-reanimated';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
 import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
 import { navigate } from '@utils/navigationRef';
