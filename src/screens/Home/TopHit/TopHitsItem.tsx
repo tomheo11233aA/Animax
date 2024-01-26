@@ -12,6 +12,7 @@ interface TopHitsItemProps {
 }
 
 const TopHitsItem: React.FC<TopHitsItemProps> = ({ item, style }) => {
+    console.log('banner', item.images.jpg.image_url)
     return (
         <Box
             width={wp('40%')}
@@ -27,7 +28,9 @@ const TopHitsItem: React.FC<TopHitsItemProps> = ({ item, style }) => {
                 overflow={'hidden'}
             >
                 <Img
-                    source={{ uri: item.image }}
+                    source={{
+                        uri: item.images.jpg.image_url
+                     }}
                     width={wp('40%')}
                     height={hp('25%')}
                     resizeMode='cover'
@@ -57,7 +60,7 @@ const TopHitsItem: React.FC<TopHitsItemProps> = ({ item, style }) => {
                         fontWeight={'600'}
                         fontFamily={fonts.MAINB}
                     >
-                        {item.rating}
+                        {item.score}
                     </Txt>
                 </Box>
                 <Box

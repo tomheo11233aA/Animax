@@ -1,0 +1,48 @@
+import AxiosInstance from "@helper/AxiosInstance";
+
+const axiosService = AxiosInstance();
+
+// top/anime?filter=airing
+export const getTopAnime = function (filter: string) {
+    try {
+        return axiosService.get(`top/anime?filter=${filter}&limit=10`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//top/anime?filter=favorite
+export const getFavoriteAnime = function (filter: string) {
+    try {
+        return axiosService.get(`top/anime?filter=${filter}`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// top/anime?type=tv // movie
+export const getTypeAnime = function (type: string) {
+    try {
+        return axiosService.get(`top/anime?type=${type}`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// top/anime?filter=bypopularity
+export const getPopularAnime = function (filter: string) {
+    try {
+        return axiosService.get(`top/anime?filter=${filter}`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// top/anime?filter=airing&page=1&limit=10
+export const getAiringAnime = function (filter: string, page: number, limit: number) {
+    try {
+        return axiosService.get(`top/anime?filter=${filter}&page=${page}&limit=${limit}`);
+    } catch (error) {
+        console.log(error);
+    }
+}

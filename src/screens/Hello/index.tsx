@@ -4,7 +4,7 @@ import Box from '@common/Box'
 import Icon from '@common/Icon'
 import { keys } from '@contants/keys'
 import { screens } from '@contants/screens'
-import { useAppDispatch } from '@hooks/redux'
+import { useAppDispatch, useAppSelector } from '@hooks/redux'
 import { useNavigation } from '@react-navigation/native'
 import { setLanguage } from '@redux/slice/userSlice'
 import { colors } from '@themes/colors'
@@ -13,11 +13,18 @@ import { width } from '@utils/responsive'
 import { useTranslation } from 'react-i18next'
 import { setTheme } from '@redux/slice/userSlice'
 import LottieView from 'lottie-react-native'
+import { AppDispatch } from '@redux/store/store'
+import { fetchTopAnime } from '@redux/slice/animeSlice'
+import { topAnimeSelector } from '@redux/selector/animeSelector'
 
 const Hello = () => {
-  const dispatch = useAppDispatch()
+  const dispatch: AppDispatch = useAppDispatch()
   const { i18n } = useTranslation()
   const navigation = useNavigation<any>()
+  useEffect(() => {
+    dispatch(fetchTopAnime())
+  }, [])
+
 
   useEffect(() => {
     const timeOut = setTimeout(async () => {

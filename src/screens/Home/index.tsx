@@ -12,9 +12,12 @@ import MostFavorite from './MostFavorite/MostFavorite';
 import TopTVSeries from './TopTVSeries/TopTVSeries';
 import TopMovie from './TopMovie/TopMovie';
 import MostPopular from './MostPopular/MostPopular';
+import { useAppSelector } from '@hooks/redux';
+import { topAnimeSelector } from '@redux/selector/animeSelector';
 
 const Home = () => {
   const { t } = useTranslation()
+  const topAnime = useAppSelector(topAnimeSelector)
   const formatName = (name: string) => {
     if (name.length > 21) {
       return name.slice(0, 21) + '...'
@@ -51,9 +54,9 @@ const Home = () => {
         </Carousel>
         <TopHitsAnime
           t={t}
-          banner={bannerData}>
+          banner={topAnime}>
         </TopHitsAnime>
-        <NewEpisodeRelease
+        {/* <NewEpisodeRelease
           t={t}
           banner={bannerData}>
         </NewEpisodeRelease>
@@ -72,7 +75,7 @@ const Home = () => {
         <MostPopular
           t={t}
           banner={bannerData}>
-        </MostPopular>
+        </MostPopular> */}
       </Scroll>
     </KeyBoardSafe>
   )
