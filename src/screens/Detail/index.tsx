@@ -25,6 +25,7 @@ import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 import { Image } from 'react-native-reanimated/lib/typescript/Animated'
 import { useNavigation } from '@react-navigation/native'
 import TextTicker from 'react-native-text-ticker';
+import ReadMore from 'react-native-read-more-text';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -306,7 +307,49 @@ const Detail = () => {
           </Txt>
         </Btn>
       </Box>
-      <Box></Box>
+      <Box>
+        <Txt
+          color={color.white}
+          size={14}
+          fontFamily={fonts.MAIN}
+          marginBottom={12}
+          numberOfLines={1}
+        >
+          {t('Genres')}: {data[0].genres.join(', ')}
+        </Txt>
+        <ReadMore
+          numberOfLines={3} // Số dòng hiển thị khi đoạn text được rút gọn
+          renderTruncatedFooter={(handlePress: ()=>void) => (
+            <Txt
+              onPress={handlePress}
+              color={color.mainColor} // Màu sắc chữ khi ở trạng thái rút gọn
+              size={14}
+              fontFamily={fonts.MAIN}
+            >
+              {t('Read More')}
+            </Txt>
+          )}
+          renderRevealedFooter={(handlePress: ()=>void) => (
+            <Txt
+              onPress={handlePress}
+              color={color.mainColor} // Màu sắc chữ khi ở trạng thái mở rộng
+              size={14}
+              fontFamily={fonts.MAIN}
+            >
+              {t('Show Less')}
+            </Txt>
+          )}
+        // Các thuộc tính kiểu dáng khác có thể được thêm vào ở đây
+        >
+          <Txt
+            color={color.white}
+            size={14}
+            fontFamily={fonts.MAIN}
+          >
+            {data[0].description}
+          </Txt>
+        </ReadMore>
+      </Box>
       <Box></Box>
       <Box></Box>
     </Box>
@@ -328,6 +371,14 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    genres: [
+      'Action',
+      'Adventure',
+      'Comedy',
+      'Mystery',
+      'Police',
+      'Shounen'
+    ],
     episodes: [
       {
         episode: 1,
@@ -356,7 +407,7 @@ const data = [
     ]
   },
   {
-    id: 1,
+    id: 2,
     title: 'Detective Conan - Thám Tử Lừng Danh Conan',
     poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
     description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
@@ -366,6 +417,14 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    genres: [
+      'Action',
+      'Adventure',
+      'Comedy',
+      'Mystery',
+      'Police',
+      'Shounen'
+    ],
     episodes: [
       {
         episode: 1,
@@ -394,7 +453,7 @@ const data = [
     ]
   },
   {
-    id: 1,
+    id: 3,
     title: 'Detective Conan - Thám Tử Lừng Danh Conan',
     poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
     description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
@@ -404,6 +463,14 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    genres: [
+      'Action',
+      'Adventure',
+      'Comedy',
+      'Mystery',
+      'Police',
+      'Shounen'
+    ],
     episodes: [
       {
         episode: 1,
@@ -432,7 +499,7 @@ const data = [
     ]
   },
   {
-    id: 1,
+    id: 4,
     title: 'Detective Conan - Thám Tử Lừng Danh Conan',
     poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
     description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
@@ -442,6 +509,14 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    genres: [
+      'Action',
+      'Adventure',
+      'Comedy',
+      'Mystery',
+      'Police',
+      'Shounen'
+    ],
     episodes: [
       {
         episode: 1,
@@ -470,7 +545,7 @@ const data = [
     ]
   },
   {
-    id: 1,
+    id: 5,
     title: 'Detective Conan - Thám Tử Lừng Danh Conan',
     poster: 'https://shizukatsukiko.files.wordpress.com/2020/08/detective-conan-anime-hd-wallpaper-preview.jpg',
     description: 'Anime Detective Conan (Thám Tử Lừng Danh Conan) xoay quanh câu chuyện về cậu thám tử thiếu niên Shinichi đang trong hình hài của cậu nhóc Conan 6 tuổi. Để có thể trở về được hình dáng cũ thì Conan cần phải được nắm được những bí mật quan trọng của tổ chức Áo Đen – Một tổ chức tội phạm toàn cầu. Trên hành trình điều tra về tổ chức áo đen Conan đã giúp cảnh sát giải quyết nhiều vụ án nguy hiểm và nan giải.',
@@ -480,6 +555,14 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    genres: [
+      'Action',
+      'Adventure',
+      'Comedy',
+      'Mystery',
+      'Police',
+      'Shounen'
+    ],
     episodes: [
       {
         episode: 1,
