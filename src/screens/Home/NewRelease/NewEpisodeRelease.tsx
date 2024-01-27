@@ -5,8 +5,6 @@ import Btn from '@common/Btn'
 import { colors } from '@themes/colors'
 import { fonts } from '@themes/fonts'
 import { FlatList } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Img from '@common/Img'
 import TopHitsItem from '../TopHit/TopHitsItem'
 
 interface Props {

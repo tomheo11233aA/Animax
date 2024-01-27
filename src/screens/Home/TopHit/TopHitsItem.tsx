@@ -12,7 +12,6 @@ interface TopHitsItemProps {
 }
 
 const TopHitsItem: React.FC<TopHitsItemProps> = ({ item, style }) => {
-    console.log('banner', item.images.jpg.image_url)
     return (
         <Box
             width={wp('40%')}

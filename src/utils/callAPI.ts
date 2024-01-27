@@ -14,7 +14,7 @@ export const getTopAnime = function (filter: string) {
 //top/anime?filter=favorite
 export const getFavoriteAnime = function (filter: string) {
     try {
-        return axiosService.get(`top/anime?filter=${filter}`);
+        return axiosService.get(`top/anime?filter=${filter}&limit=10`);
     } catch (error) {
         console.log(error);
     }
@@ -23,7 +23,7 @@ export const getFavoriteAnime = function (filter: string) {
 // top/anime?type=tv // movie
 export const getTypeAnime = function (type: string) {
     try {
-        return axiosService.get(`top/anime?type=${type}`);
+        return axiosService.get(`top/anime?type=${type}&limit=10`);
     } catch (error) {
         console.log(error);
     }
@@ -32,7 +32,7 @@ export const getTypeAnime = function (type: string) {
 // top/anime?filter=bypopularity
 export const getPopularAnime = function (filter: string) {
     try {
-        return axiosService.get(`top/anime?filter=${filter}`);
+        return axiosService.get(`top/anime?filter=${filter}&limit=10`);
     } catch (error) {
         console.log(error);
     }

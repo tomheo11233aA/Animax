@@ -16,3 +16,7 @@ export const errorAnimeSelector = (state: RootState) => state.anime.error
 
 export const animeSelector = (state: RootState) => state.anime
 
+export const typeTvAnimeSelector = (state: RootState) => state.anime.topTvAnime
+
+export const typeMovieAnimeSelector = (state: RootState) => state.anime.topMovieAnime
+

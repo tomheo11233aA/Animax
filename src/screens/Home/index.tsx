@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import KeyBoardSafe from '@reuse/KeyBoardSafe'
 import Carousel from 'react-native-reanimated-carousel';
 import Banner from './Banner';
@@ -13,11 +13,18 @@ import TopTVSeries from './TopTVSeries/TopTVSeries';
 import TopMovie from './TopMovie/TopMovie';
 import MostPopular from './MostPopular/MostPopular';
 import { useAppSelector } from '@hooks/redux';
-import { topAnimeSelector } from '@redux/selector/animeSelector';
+import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, typeMovieAnimeSelector, popularAnimeSelector } from '@redux/selector/animeSelector'
+import HomeLoading from '@themes/Skeleton/HomeLoading';
 
 const Home = () => {
   const { t } = useTranslation()
+  const [fakeLoading, setFakeLoading] = React.useState(true)
   const topAnime = useAppSelector(topAnimeSelector)
+  const favoriteAnime = useAppSelector(favoriteAnimeSelector)
+  const typeTvAnime = useAppSelector(typeTvAnimeSelector)
+  const typeMovieAnime = useAppSelector(typeMovieAnimeSelector)
+  const popularAnime = useAppSelector(popularAnimeSelector)
+
   const formatName = (name: string) => {
     if (name.length > 21) {
       return name.slice(0, 21) + '...'
@@ -30,6 +37,24 @@ const Home = () => {
     }
     return category
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFakeLoading(false);
+    }, 500);
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [])
+
+  if (fakeLoading) {
+    return (
+      <KeyBoardSafe>
+        <HomeLoading />
+      </KeyBoardSafe>
+    )
+  }
+
   return (
     <KeyBoardSafe>
       <Scroll
@@ -48,7 +73,6 @@ const Home = () => {
           )}
           width={wp('100%')}
           height={hp('45%')}
-          style={{ backgroundColor: 'red' }}
           autoPlay
         >
         </Carousel>
@@ -56,32 +80,33 @@ const Home = () => {
           t={t}
           banner={topAnime}>
         </TopHitsAnime>
-        {/* <NewEpisodeRelease
+        <NewEpisodeRelease
           t={t}
-          banner={bannerData}>
+          banner={topAnime}>
         </NewEpisodeRelease>
         <MostFavorite
           t={t}
-          banner={bannerData}>
+          banner={favoriteAnime}>
         </MostFavorite>
         <TopTVSeries
           t={t}
-          banner={bannerData}>
+          banner={typeTvAnime}>
         </TopTVSeries>
         <TopMovie
           t={t}
-          banner={bannerData}>
+          banner={typeMovieAnime}>
         </TopMovie>
         <MostPopular
           t={t}
-          banner={bannerData}>
-        </MostPopular> */}
+          banner={popularAnime}>
+        </MostPopular>
       </Scroll>
     </KeyBoardSafe>
   )
 }
 
-export default Home
+export default React.memo(Home)
+
 
 var bannerData = [
   {

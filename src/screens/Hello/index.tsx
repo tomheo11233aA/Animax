@@ -14,31 +14,38 @@ import { useTranslation } from 'react-i18next'
 import { setTheme } from '@redux/slice/userSlice'
 import LottieView from 'lottie-react-native'
 import { AppDispatch } from '@redux/store/store'
-import { fetchTopAnime } from '@redux/slice/animeSlice'
-import { topAnimeSelector } from '@redux/selector/animeSelector'
+import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime } from '@redux/slice/animeSlice'
 
 const Hello = () => {
   const dispatch: AppDispatch = useAppDispatch()
   const { i18n } = useTranslation()
   const navigation = useNavigation<any>()
-  useEffect(() => {
-    dispatch(fetchTopAnime())
-  }, [])
-
 
   useEffect(() => {
-    const timeOut = setTimeout(async () => {
-      const lng = localStorage.getString(keys.LANGUAGE) || 'en'
-      i18n.changeLanguage(lng)
-      const lngObj = convertLanguage(lng)
-      dispatch(setLanguage(lngObj))
-      const theme = (localStorage.getString(keys.THEME) || 'light') as 'dark' | 'light';
-      dispatch(setTheme(theme));
-      navigation.replace(screens.MAIN)
-    }, 2000)
-    return () => clearTimeout(timeOut)
-  }, [])
+    const fetchAnime = async () => {
+      const topAnimePromise = dispatch(fetchTopAnime());
+      const favoriteAnimePromise = dispatch(fetchFavoriteAnime());
+      const topTvAnimePromise = dispatch(fetchTopTvAnime());
+      await Promise.all([topAnimePromise, favoriteAnimePromise, topTvAnimePromise]);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      const topMovieAnimePromise = dispatch(fetchTopMovieAnime());
+      const popularAnimePromise = dispatch(fetchPopularAnime());
+      await Promise.all([topMovieAnimePromise, popularAnimePromise]);
+    };
+    fetchAnime().then(() => {
+      const timeOut = setTimeout(async () => {
+        const lng = localStorage.getString(keys.LANGUAGE) || 'en'
+        i18n.changeLanguage(lng)
+        const lngObj = convertLanguage(lng)
+        dispatch(setLanguage(lngObj))
+        const theme = (localStorage.getString(keys.THEME) || 'light') as 'dark' | 'light';
+        dispatch(setTheme(theme));
+        navigation.replace(screens.MAIN)
+      }, 250)
 
+      return () => clearTimeout(timeOut)
+    })
+  }, [])
 
   return (
     <Box
