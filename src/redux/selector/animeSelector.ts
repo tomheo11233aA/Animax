@@ -20,3 +20,5 @@ export const typeTvAnimeSelector = (state: RootState) => state.anime.topTvAnime
 
 export const typeMovieAnimeSelector = (state: RootState) => state.anime.topMovieAnime
 
+export const newReleaseAnimeSelector = (state: RootState) => state.anime.newReleaseAnime
+

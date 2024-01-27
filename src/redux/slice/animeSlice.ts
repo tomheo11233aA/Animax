@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getTopAnime, getFavoriteAnime, getTypeAnime, getPopularAnime } from "@utils/callAPI";
+import { getTopAnime, getFavoriteAnime, getTypeAnime, getPopularAnime, newReleaseAnime } from "@utils/callAPI";
 
 export const fetchTopAnime = createAsyncThunk('anime/fetchTopAnime', async () => {
     const response = await getTopAnime('airing');
@@ -33,6 +33,11 @@ export const fetchPopularAnime = createAsyncThunk('anime/fetchPopularAnime', asy
     return response?.data;
 });
 
+export const fetchNewReleaseAnime = createAsyncThunk('anime/fetchNewReleaseAnime', async () => {
+    const response = await newReleaseAnime();
+    return response?.data;
+});
+
 interface AnimeState {
     topAnime: any[];
     favoriteAnime: any[];
@@ -41,6 +46,7 @@ interface AnimeState {
     topMovieAnime: any[];
     popularAnime: any[];
     airingAnime: any[];
+    newReleaseAnime: any[];
     loading: boolean;
     error: string | null;
 }
@@ -52,6 +58,7 @@ const initialState: AnimeState = {
     topTvAnime: [],
     topMovieAnime: [],
     popularAnime: [],
+    newReleaseAnime: [],
     airingAnime: [],
     loading: true,
     error: null
@@ -133,6 +140,18 @@ const animeSlice = createSlice({
             return { ...state, popularAnime: action.payload, loading: false }
         });
         builder.addCase(fetchPopularAnime.rejected, (state, action: PayloadAction<any>) => {
+            state.error = action.payload;
+            state.loading = false;
+        });
+
+        // case reducer for new release anime
+        builder.addCase(fetchNewReleaseAnime.pending, (state, action: PayloadAction<any>) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchNewReleaseAnime.fulfilled, (state, action: PayloadAction<any>) => {
+            return { ...state, newReleaseAnime: action.payload, loading: false }
+        });
+        builder.addCase(fetchNewReleaseAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
             state.loading = false;
         });

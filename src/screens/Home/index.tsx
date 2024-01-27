@@ -13,7 +13,7 @@ import TopTVSeries from './TopTVSeries/TopTVSeries';
 import TopMovie from './TopMovie/TopMovie';
 import MostPopular from './MostPopular/MostPopular';
 import { useAppSelector } from '@hooks/redux';
-import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, typeMovieAnimeSelector, popularAnimeSelector } from '@redux/selector/animeSelector'
+import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector } from '@redux/selector/animeSelector'
 import HomeLoading from '@themes/Skeleton/HomeLoading';
 
 const Home = () => {
@@ -24,6 +24,7 @@ const Home = () => {
   const typeTvAnime = useAppSelector(typeTvAnimeSelector)
   const typeMovieAnime = useAppSelector(typeMovieAnimeSelector)
   const popularAnime = useAppSelector(popularAnimeSelector)
+  const newReleaseAnime = useAppSelector(newReleaseAnimeSelector)
 
   const formatName = (name: string) => {
     if (name.length > 21) {
@@ -37,7 +38,7 @@ const Home = () => {
     }
     return category
   }
-
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setFakeLoading(false);
@@ -82,7 +83,7 @@ const Home = () => {
         </TopHitsAnime>
         <NewEpisodeRelease
           t={t}
-          banner={topAnime}>
+          banner={newReleaseAnime}>
         </NewEpisodeRelease>
         <MostFavorite
           t={t}

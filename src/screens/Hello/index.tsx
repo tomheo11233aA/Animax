@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { setTheme } from '@redux/slice/userSlice'
 import LottieView from 'lottie-react-native'
 import { AppDispatch } from '@redux/store/store'
-import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime } from '@redux/slice/animeSlice'
+import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
 
 const Hello = () => {
   const dispatch: AppDispatch = useAppDispatch()
@@ -31,6 +31,9 @@ const Hello = () => {
       const topMovieAnimePromise = dispatch(fetchTopMovieAnime());
       const popularAnimePromise = dispatch(fetchPopularAnime());
       await Promise.all([topMovieAnimePromise, popularAnimePromise]);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const newReleaseAnimePromise = dispatch(fetchNewReleaseAnime());
+      await Promise.all([newReleaseAnimePromise]);
     };
     fetchAnime().then(() => {
       const timeOut = setTimeout(async () => {

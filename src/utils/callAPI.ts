@@ -38,6 +38,14 @@ export const getPopularAnime = function (filter: string) {
     }
 }
 
+export const newReleaseAnime = function (){
+    try {
+        return axiosService.get(`seasons/now?limit=10`);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 // top/anime?filter=airing&page=1&limit=10
 export const getAiringAnime = function (filter: string, page: number, limit: number) {
     try {
