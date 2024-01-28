@@ -451,7 +451,7 @@ const ReleaseCalendar = () => {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             getItemLayout={(data, index) => (
-              { length: 66, offset: 66 * (index - 2), index }
+              { length: 66, offset: 66 * (index-2), index }
             )}
           //thiết lập chiều dài (theo chiều cuộn flatlist) của mỗi item là 66
           // để khi cuộn flatlist thì item sẽ cuộn theo
