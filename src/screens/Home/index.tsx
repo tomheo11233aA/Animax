@@ -13,7 +13,8 @@ import TopTVSeries from './TopTVSeries/TopTVSeries';
 import TopMovie from './TopMovie/TopMovie';
 import MostPopular from './MostPopular/MostPopular';
 import { useAppSelector } from '@hooks/redux';
-import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector } from '@redux/selector/animeSelector'
+import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, 
+  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector } from '@redux/selector/animeSelector'
 import HomeLoading from '@themes/Skeleton/HomeLoading';
 
 const Home = () => {

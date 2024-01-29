@@ -12,12 +12,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import CommonComponents from '@common/CommonComponents';
 import { useTranslation } from 'react-i18next'
 import { themeUserSelector } from '@redux/selector/appSelector'
-import { useAppSelector } from '@hooks/redux'
-import { useTheme } from '@hooks/redux'
 import KeyBoardSafe from '@reuse/KeyBoardSafe'
 import { goBack } from '@utils/navigationRef'
 import { fonts } from '@themes/fonts'
-import { useAppDispatch } from '@hooks/redux';
+import { useAppDispatch, useAppSelector, useTheme } from '@hooks/redux';
+import {
+  topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, typeMovieAnimeSelector,
+  popularAnimeSelector, newReleaseAnimeSelector
+} from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store';
 import { colors } from '@themes/colors'
 import { set } from 'lodash'
@@ -26,9 +28,10 @@ import { Image } from 'react-native-reanimated/lib/typescript/Animated'
 import { useNavigation } from '@react-navigation/native'
 import TextTicker from 'react-native-text-ticker';
 import ReadMore from 'react-native-read-more-text';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import TopHitsItem from '../Home/TopHit/TopHitsItem';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
-
 
 
 const Detail = () => {
@@ -49,6 +52,76 @@ const Detail = () => {
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
   const color = useTheme()
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: 'first', title: t('More Like This') }, 
+    { key: 'second', title: t('Comments') + '(' + data[0].comments + ')' },
+  ]);
+
+  const topAnime = useAppSelector(topAnimeSelector) // lấy danh sách top anime từ redux
+  //lấy 6 phần tử ngẫu nhiên trong mảng data
+  // const dataRandom = data.sort(() => Math.random() - Math.random()).slice(0, 6)
+
+  const FirstRoute = () => (
+    <Box
+      // backgroundColor={'red'}
+      // width={wp(100)}
+    >
+      <FlatList
+        data={topAnime}
+        renderItem={({ item }) => (
+          <TopHitsItem
+            item={item}
+          />
+        )}
+        keyExtractor={(item, index) => item.mal_id.toString()}
+        horizontal // hiển thị ngang
+        showsHorizontalScrollIndicator={false}
+        ListFooterComponent={<Box width={20} />}
+      />
+    </Box>
+
+  );
+  const SecondRoute = () => (
+    <Box
+      // backgroundColor={'red'}
+      width={wp(100)-48}
+      height={hp(35)}
+    >
+      <FlatList
+        data={topAnime}
+        renderItem={({ item }) => (
+          <TopHitsItem
+            item={item}
+          />
+        )}
+        keyExtractor={(item, index) => item.mal_id.toString()}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        ListFooterComponent={<Box width={20} />}
+      />
+    </Box>
+  );
+
+  const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+  });
+
+  const renderTabBar = (props: any) => (
+    <TabBar
+      {...props}
+      indicatorStyle={{ backgroundColor: color.mainColor }}
+      style={{ backgroundColor: color.bg }}
+      renderLabel={({ route, focused, color }) => (
+        <Text style={{ color: focused ? color : color }} numberOfLines={1}>
+          {route.title}
+        </Text>
+      )}
+    />
+  );
+
   return (
     <KeyBoardSafe>
       <Box
@@ -364,7 +437,7 @@ const Detail = () => {
             marginBottom={24}
             justifySpaceBetween={'true'}
             alignCenter={'center'}
-            // backgroundColor={'red'}
+          // backgroundColor={'red'}
           >
             <Txt
               color={color.white}
@@ -462,7 +535,19 @@ const Detail = () => {
             }}
           />
         </Box>
-        <Box></Box>
+        <Box
+          // backgroundColor={'red'}
+          width={wp(100)-48}
+          height={hp(35)}
+        >
+          <TabView
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: wp(100) }}
+            renderTabBar={renderTabBar}
+          />
+        </Box>
       </Box>
     </KeyBoardSafe>
   )
@@ -483,6 +568,7 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    comments: 500,
     genres: [
       'Action',
       'Adventure',
@@ -529,6 +615,7 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    comments: 500,
     genres: [
       'Action',
       'Adventure',
@@ -575,6 +662,7 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    comments: 500,
     genres: [
       'Action',
       'Adventure',
@@ -621,6 +709,7 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    comments: 500,
     genres: [
       'Action',
       'Adventure',
@@ -667,6 +756,7 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
+    comments: 500,
     genres: [
       'Action',
       'Adventure',

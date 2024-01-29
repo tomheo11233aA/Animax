@@ -16,7 +16,7 @@ const TopHitsItem: React.FC<TopHitsItemProps> = ({ item, style }) => {
         <Box
             width={wp('40%')}
             height={hp('25%')}
-            marginLeft={15}
+            marginRight={20}
             marginTop={20}
             style={style}
         >
