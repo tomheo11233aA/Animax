@@ -32,6 +32,8 @@ const MostPopular: React.FC<Props> = ({ t, banner }) => {
                     {t('Most Popular')}
                 </Txt>
                 <Btn
+                    marginVertical={5}
+                    marginHorizontal={10}
                 >
                     <Txt
                         size={12}
@@ -44,6 +46,7 @@ const MostPopular: React.FC<Props> = ({ t, banner }) => {
                 </Btn>
             </Box>
             <FlatList
+                style={{ marginLeft: 10 }}
                 data={banner}
                 renderItem={({ item }) => (
                     <TopHitsItem

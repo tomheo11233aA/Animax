@@ -3,9 +3,9 @@ import AxiosInstance from "@helper/AxiosInstance";
 const axiosService = AxiosInstance();
 
 // top/anime?filter=airing
-export const getTopAnime = function (filter: string) {
+export const getTopAnime = function (filter: string, page: number) {
     try {
-        return axiosService.get(`top/anime?filter=${filter}&limit=10`);
+        return axiosService.get(`top/anime?filter=${filter}&limit=10&page=${page}`);
     } catch (error) {
         console.log(error);
     }
@@ -38,7 +38,7 @@ export const getPopularAnime = function (filter: string) {
     }
 }
 
-export const newReleaseAnime = function (){
+export const newReleaseAnime = function () {
     try {
         return axiosService.get(`seasons/now?limit=10`);
     } catch (error) {

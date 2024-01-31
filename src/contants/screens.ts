@@ -22,4 +22,5 @@ export const screens = {
     RELEASE_CALENDAR: 'RELEASECALENDAR',
     PROFILE: 'PROFILE',
     DETAIL: 'DETAIL',
+    SEE_ALL: 'SEEALL',
 }

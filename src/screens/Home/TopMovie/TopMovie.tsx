@@ -32,6 +32,8 @@ const TopMovie: React.FC<Props> = ({ t, banner }) => {
                     {t('Top Movie')}
                 </Txt>
                 <Btn
+                    marginVertical={5}
+                    marginHorizontal={10}
                 >
                     <Txt
                         size={12}
@@ -44,6 +46,7 @@ const TopMovie: React.FC<Props> = ({ t, banner }) => {
                 </Btn>
             </Box>
             <FlatList
+                style={{ marginLeft: 10 }}
                 data={banner}
                 renderItem={({ item }) => (
                     <TopHitsItem

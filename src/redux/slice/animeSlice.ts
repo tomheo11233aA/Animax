@@ -2,8 +2,8 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getTopAnime, getFavoriteAnime, getTypeAnime, getPopularAnime, newReleaseAnime } from "@utils/callAPI";
 
-export const fetchTopAnime = createAsyncThunk('anime/fetchTopAnime', async () => {
-    const response = await getTopAnime('airing');
+export const fetchTopAnime = createAsyncThunk('anime/fetchTopAnime', async (page?: number) => {
+    const response = await getTopAnime('airing', page ?? 1);
     return response?.data;
 });
 
@@ -119,7 +119,7 @@ const animeSlice = createSlice({
             state.error = action.payload;
             state.loading = false;
         });
-        
+
         // case reducer for top movie anime
         builder.addCase(fetchTopMovieAnime.pending, (state, action: PayloadAction<any>) => {
             state.loading = true;

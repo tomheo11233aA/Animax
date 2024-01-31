@@ -6,7 +6,8 @@ import { colors } from '@themes/colors'
 import { fonts } from '@themes/fonts'
 import { FlatList } from 'react-native'
 import TopHitsItem from '../TopHit/TopHitsItem'
-
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
 interface Props {
     t: any
     banner: any
@@ -17,7 +18,7 @@ const NewEpisodeRelease: React.FC<Props> = ({ t, banner }) => {
             <Box
                 marginTop={20}
                 marginLeft={20}
-                marginRight={20}
+                marginRight={10}
                 row
                 style={{
                     alignItems: 'center',
@@ -32,6 +33,9 @@ const NewEpisodeRelease: React.FC<Props> = ({ t, banner }) => {
                     {t('New Episode Releases')}
                 </Txt>
                 <Btn
+                    marginVertical={5}
+                    marginHorizontal={10}
+                    onPress={() => navigate(screens.SEE_ALL, { type: 'newEpisode' })}
                 >
                     <Txt
                         size={12}
@@ -44,6 +48,7 @@ const NewEpisodeRelease: React.FC<Props> = ({ t, banner }) => {
                 </Btn>
             </Box>
             <FlatList
+                style={{ marginLeft: 10 }}
                 data={banner}
                 renderItem={({ item }) => (
                     <TopHitsItem
