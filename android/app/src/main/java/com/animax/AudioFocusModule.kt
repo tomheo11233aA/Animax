@@ -3,10 +3,10 @@ package com.animax
 import android.media.AudioManager
 import android.content.Context
 import android.media.AudioManager.OnAudioFocusChangeListener
-import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.Promise
 class AudioFocusModule (reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext){
     private var audioFocusRequest: Int? = null
     private val audioChangeListener = OnAudioFocusChangeListener { focusChange ->

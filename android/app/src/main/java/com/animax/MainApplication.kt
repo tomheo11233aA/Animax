@@ -20,6 +20,7 @@ class MainApplication : Application(), ReactApplication {
                 val packages = PackageList(this).packages
                 packages.add(PipPackage())
                 packages.add(AudioFocusPackage())
+                packages.add(VideoNotificationPackage())
                 return packages
             }
 

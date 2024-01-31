@@ -9,12 +9,11 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { NativeModules } from 'react-native';
 import { AppState } from 'react-native';
 import ModalSpeed from './ModalSpeed';
-
-const { PipModule, AudioFocusModule } = NativeModules;
+import { DeviceEventEmitter } from 'react-native';
+const { PipModule, AudioFocusModule, VideoNotificationModule } = NativeModules;
 
 const MAX_NAME_LENGTH = 30;
 const MediaPlayer = () => {
-
     useEffect(() => {
         requestAudioFocus();
         return () => {
@@ -63,6 +62,9 @@ const MediaPlayer = () => {
     //     };
     // }, []);
 
+    useEffect(() => {
+    }, []);
+
     const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({
@@ -82,7 +84,11 @@ const MediaPlayer = () => {
     const [volume, setVolume] = useState(1);
     const [isVolumeSliderVisible, setIsVolumeSliderVisible] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-
+    useEffect(() => {
+        const title = data[currentVideoIndex].name;
+        const content = "Đang phát...";
+        VideoNotificationModule.showNotification(title, content);
+    }, [currentVideoIndex]);
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
             setCurrentVideoIndex(currentVideoIndex + 1);
@@ -197,8 +203,8 @@ const MediaPlayer = () => {
                 />
                 <Video
                     paused={paused}
-                    // source={{ uri: data[currentVideoIndex].link }}
-                    source={{ uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8', type: 'm3u8' }}
+                    source={{ uri: data[currentVideoIndex].link }}
+                    // source={{ uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8', type: 'm3u8' }}
                     ref={videoRef}
                     onProgress={onProgress}
                     onBuffer={handleBuffer}
