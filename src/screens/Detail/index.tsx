@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
 import React,
 {
   useState,
@@ -33,8 +33,23 @@ import TopHitsItem from '../Home/TopHit/TopHitsItem';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
+const toggleLike = (id: number, isLike: number[], setIsLike: (isLike: number[]) => void) => {
+  if (isLike.includes(id)) {
+    setIsLike(isLike.filter(item => item !== id))
+  } else {
+    setIsLike([...isLike, id])
+  }
+}
+
+
 
 const Detail = () => {
+
+  const [user, setUser] = useState({
+    id: 1,
+    name: 'Nguyễn Văn A',
+    avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+  })
 
   const navigation = useNavigation();
 
@@ -55,39 +70,27 @@ const Detail = () => {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
-    { key: 'first', title: t('More Like This') }, 
-    { key: 'second', title: t('Comments') + '(' + data[0].comments + ')' },
+    { key: 'first', title: t('More Like This') },
+    { key: 'second', title: t('Comments') + ' (' + data[0].comments.length + ')' },
   ]);
 
   const topAnime = useAppSelector(topAnimeSelector) // lấy danh sách top anime từ redux
   //lấy 6 phần tử ngẫu nhiên trong mảng data
   // const dataRandom = data.sort(() => Math.random() - Math.random()).slice(0, 6)
 
+  // lọc danh sách comment mà user đã like vào mảng isLike
+  const [isLike, setIsLike] = useState<number[]>([])
+  useEffect(() => {
+    const isLike = data[0].comments
+      .filter(item => item.likes.some(like => like.id === user.id)).map(item => item.id)
+    setIsLike(isLike)
+  }, [])
+
   const FirstRoute = () => (
     <Box
       // backgroundColor={'red'}
-      // width={wp(100)}
-    >
-      <FlatList
-        data={topAnime}
-        renderItem={({ item }) => (
-          <TopHitsItem
-            item={item}
-          />
-        )}
-        keyExtractor={(item, index) => item.mal_id.toString()}
-        horizontal // hiển thị ngang
-        showsHorizontalScrollIndicator={false}
-        ListFooterComponent={<Box width={20} />}
-      />
-    </Box>
-
-  );
-  const SecondRoute = () => (
-    <Box
-      // backgroundColor={'red'}
-      width={wp(100)-48}
-      height={hp(35)}
+      width={wp(100) - 48}
+      flex={1}
     >
       <FlatList
         data={topAnime}
@@ -101,6 +104,140 @@ const Detail = () => {
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={<Box width={20} />}
       />
+    </Box>
+
+  );
+  const SecondRoute = () => (
+    <Box
+      // backgroundColor={'red'}
+      width={wp(100) - 48}
+      flex={1}
+      height={(500)}
+    >
+      <Box
+        row={true}
+        marginBottom={24}
+        marginTop={24}
+        // backgroundColor={'yellow'}
+        justifySpaceBetween={'true'}
+      >
+        <Txt
+          color={color.white}
+          size={16}
+          fontWeight={'bold'}
+        >
+          {data[0].comments.length}{t(' Comments')}
+        </Txt>
+        <Btn>
+          <Txt
+            color={color.mainColor}
+            size={12}
+          >
+            {t('See all')}
+          </Txt>
+        </Btn>
+      </Box>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        {
+          data[0].comments &&
+          data[0].comments.map((item, index) => {
+            if (index > 4) return null
+            const checkLike = isLike.includes(item.id)
+            return (
+              <Box
+                key={index}
+                marginBottom={24}
+              // backgroundColor={'red'}
+              >
+                <Box
+                  row={true}
+                  marginBottom={16}
+                >
+                  <Img
+                    source={{ uri: item.user.avatar }}
+                    width={wp(10)}
+                    height={wp(10)}
+                    radius={wp(5)}
+                  />
+                  <Box
+                    marginLeft={16}
+                    justifySpaceBetween={'true'}
+                    row={true}
+                    flex={1}
+                    height={wp(10)}
+                    alignCenter={'center'}
+                  >
+                    <Txt
+                      color={color.white}
+                      size={14}
+                      fontWeight={'bold'}
+                    >
+                      {item.user.name}
+                    </Txt>
+                    <Img
+                      source={require('@images/more-information.png')}
+                      width={20}
+                      height={20}
+                      tintColor={color.white}
+                    ></Img>
+                  </Box>
+                </Box>
+                <Box
+                  marginBottom={16}
+                >
+                  <Txt
+                    color={color.white}
+                    size={13}
+                  >
+                    {item.content}
+                  </Txt>
+                </Box>
+                <Box
+                  row={true}
+                >
+                  <Btn
+                    onPress={() => toggleLike(item.id, isLike, setIsLike)}
+                    marginRight={8}
+                  >
+                    <Img
+                      source={
+                        checkLike
+                          ? require('@images/detail/love.png')
+                          : require('@images/detail/love2.png')}
+                      width={20}
+                      height={20}
+                      tintColor={
+                        checkLike
+                          ? color.mainColor
+                          : color.white
+                      }
+                    ></Img>
+                  </Btn>
+                  <Txt
+                    color={color.white}
+                    size={12}
+                    width={wp(20)}
+                    marginRight={16}
+                    lineHeight={20}
+                  // fontFamily={fonts.MAIN}
+                  >
+                    {item.likes.length}
+                  </Txt>
+                  <Txt
+                    color={color.white}
+                    size={12}
+                    lineHeight={20}
+                  >
+                    {item.date}
+                  </Txt>
+                </Box>
+              </Box>
+            )
+          })
+        }
+      </ScrollView>
     </Box>
   );
 
@@ -123,7 +260,7 @@ const Detail = () => {
   );
 
   return (
-    <KeyBoardSafe>
+    // <KeyBoardSafe>
       <Box
         flex={1}
         backgroundColor={theme === 'dark' ? color.bg : color.bg}
@@ -537,19 +674,20 @@ const Detail = () => {
         </Box>
         <Box
           // backgroundColor={'red'}
-          width={wp(100)-48}
-          height={hp(35)}
+          width={wp(100) - 48}
+          flex={1}
+          // height={hp(35)}
         >
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
             onIndexChange={setIndex}
-            initialLayout={{ width: wp(100) }}
+            initialLayout={{ width: wp(100)}}
             renderTabBar={renderTabBar}
           />
         </Box>
       </Box>
-    </KeyBoardSafe>
+    // {/* </KeyBoardSafe> */}
   )
 }
 
@@ -568,7 +706,100 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
-    comments: 500,
+    comments:
+      [
+        {
+          id: 1,
+          user: {
+            id: 1,
+            name: 'Nguyễn Văn A',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+
+        },
+        {
+          id: 2,
+          user: {
+            id: 2,
+            name: 'Nguyễn Văn B',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 3,
+          user: {
+            id: 3,
+            name: 'Nguyễn Văn C',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 4,
+          user: {
+            id: 4,
+            name: 'Nguyễn Văn D',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 5,
+          user: {
+            id: 5,
+            name: 'Nguyễn Văn E',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+      ],
     genres: [
       'Action',
       'Adventure',
@@ -615,7 +846,99 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
-    comments: 500,
+    comments:
+      [
+        {
+          id: 1,
+          user: {
+            id: 1,
+            name: 'Nguyễn Văn A',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 2,
+          user: {
+            id: 2,
+            name: 'Nguyễn Văn B',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 3,
+          user: {
+            id: 3,
+            name: 'Nguyễn Văn C',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 4,
+          user: {
+            id: 4,
+            name: 'Nguyễn Văn D',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 5,
+          user: {
+            id: 5,
+            name: 'Nguyễn Văn E',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+      ],
     genres: [
       'Action',
       'Adventure',
@@ -662,7 +985,99 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
-    comments: 500,
+    comments:
+      [
+        {
+          id: 1,
+          user: {
+            id: 1,
+            name: 'Nguyễn Văn A',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 2,
+          user: {
+            id: 2,
+            name: 'Nguyễn Văn B',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 3,
+          user: {
+            id: 3,
+            name: 'Nguyễn Văn C',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 4,
+          user: {
+            id: 4,
+            name: 'Nguyễn Văn D',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 5,
+          user: {
+            id: 5,
+            name: 'Nguyễn Văn E',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+      ],
     genres: [
       'Action',
       'Adventure',
@@ -709,7 +1124,99 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
-    comments: 500,
+    comments:
+      [
+        {
+          id: 1,
+          user: {
+            id: 1,
+            name: 'Nguyễn Văn A',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 2,
+          user: {
+            id: 2,
+            name: 'Nguyễn Văn B',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 3,
+          user: {
+            id: 3,
+            name: 'Nguyễn Văn C',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 4,
+          user: {
+            id: 4,
+            name: 'Nguyễn Văn D',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 5,
+          user: {
+            id: 5,
+            name: 'Nguyễn Văn E',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+      ],
     genres: [
       'Action',
       'Adventure',
@@ -756,7 +1263,99 @@ const data = [
     country: 'Japan',
     hasSub: true, // phụ đề
     hasDub: true, // lồng tiếng/thuyết minh
-    comments: 500,
+    comments:
+      [
+        {
+          id: 1,
+          user: {
+            id: 1,
+            name: 'Nguyễn Văn A',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 2,
+          user: {
+            id: 2,
+            name: 'Nguyễn Văn B',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 3,
+          user: {
+            id: 3,
+            name: 'Nguyễn Văn C',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 4,
+          user: {
+            id: 4,
+            name: 'Nguyễn Văn D',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+        {
+          id: 5,
+          user: {
+            id: 5,
+            name: 'Nguyễn Văn E',
+            avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
+          },
+          content: 'Phim hay quá',
+          date: '2021-08-20T09:00:00.000Z',
+          likes: [
+            { id: 20, name: 'Nguyễn Văn A' },
+            { id: 21, name: 'Nguyễn Văn B' },
+            { id: 22, name: 'Nguyễn Văn C' },
+            { id: 23, name: 'Nguyễn Văn D' },
+            { id: 24, name: 'Nguyễn Văn E' },
+            { id: 25, name: 'Nguyễn Văn F' },
+          ]
+        },
+      ],
     genres: [
       'Action',
       'Adventure',
@@ -793,5 +1392,6 @@ const data = [
     ]
   }
 ]
+
 
 const styles = StyleSheet.create({})
