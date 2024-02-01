@@ -11,7 +11,7 @@ const Header = () => {
   const { t } = useTranslation()
   return (
     <>
-      <Box row alignCenter >
+      <Box row alignCenter>
         <Btn
           onPress={() => goBack()}>
           <Icon

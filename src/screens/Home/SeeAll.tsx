@@ -6,11 +6,15 @@ import { fetchTopAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
 import { topAnimeSelector, newReleaseAnimeSelector } from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store'
 import Box from '@common/Box'
-import Txt from '@common/Txt'
-import TopHitsItem from './TopHit/TopHitsItem'
-import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
-import { useNavigation } from '@react-navigation/native'
 import { useHideNavigation } from '@themes/hideNavigation'
+import Header from './Header'
+import { useTranslation } from 'react-i18next'
+import { useTheme } from '@hooks/redux'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import { formatRoute } from '@utils/formatRoute'
+import AnimeItem from './AnimeItem'
+import useFormatName from '@utils/formatName'
+import useFormatCategory from '@utils/formatCategory'
 
 type RootStackParamList = {
   SeeAll: { type: string }
@@ -25,11 +29,16 @@ interface Props {
 const { width } = Dimensions.get('window')
 
 const SeeAll: React.FC<Props> = ({ route }) => {
-  const navigation = useNavigation()
+  const { t } = useTranslation()
   const dispatch: AppDispatch = useAppDispatch()
+  const theme = useTheme()
   const topAnime = useAppSelector(topAnimeSelector)
   const newReleaseAnime = useAppSelector(newReleaseAnimeSelector)
+  const myFormatRoute = formatRoute(route.params.type)
   useHideNavigation()
+  const formatName = useFormatName();
+  const formatCategory = useFormatCategory();
+
   useEffect(() => {
     if (route.params.type === 'topHits') {
       dispatch(fetchTopAnime(1))
@@ -38,40 +47,27 @@ const SeeAll: React.FC<Props> = ({ route }) => {
     }
   }, [route.params.type])
 
-  const { numColumns } = React.useMemo(() => {
-    let numColumns = Math.floor(width / 150)
-    console.log(numColumns)
-    return { numColumns }
-  }, [width])
-
   return (
-    <Box>
+    <Box
+      backgroundColor={theme.bg}
+    >
+      <Header t={t} title={myFormatRoute} />
       {route.params.type === 'topHits' && (
         <FlatList
-          style={{ marginLeft: 10, marginVertical: 10 }}
+          contentContainerStyle={{
+            paddingBottom: hp(15),
+          }}
           data={topAnime}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <TopHitsItem
+            <AnimeItem
               item={item}
+              theme={theme}
+              t={t}
+              formatName={formatName}
+              formatCategory={formatCategory}
             />
           )}
-          keyExtractor={(item, index) => item.mal_id.toString()}
-          showsHorizontalScrollIndicator={false}
-          numColumns={numColumns}
-        />
-      )}
-      {route.params.type === 'newEpisode' && (
-        <FlatList
-          style={{ marginLeft: 10, marginVertical: 10 }}
-          data={newReleaseAnime}
-          renderItem={({ item }) => (
-            <TopHitsItem
-              item={item}
-            />
-          )}
-          keyExtractor={(item, index) => item.mal_id.toString()}
-          showsHorizontalScrollIndicator={false}
-          numColumns={numColumns}
         />
       )}
     </Box>
@@ -79,3 +75,4 @@ const SeeAll: React.FC<Props> = ({ route }) => {
 }
 
 export default React.memo(SeeAll)
+

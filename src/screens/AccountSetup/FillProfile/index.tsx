@@ -1,22 +1,25 @@
 import React from 'react'
 import Header from './Header'
 import Form from './Form'
-import KeyBoardSafe from '@reuse/KeyBoardSafe'
+import Box from '@common/Box'
+import { useTheme } from '@hooks/redux'
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import Scroll from '@common/Scroll'
-const FillProfile = () => {
-  return (
-    <KeyBoardSafe>
-      <Scroll
-        style={{
-          justifyContent: 'space-between'
-        }}
-        padding={24}
-        flex={1}>
-        <Header />
-        <Form />
-      </Scroll>
 
-    </KeyBoardSafe>
+const FillProfile = () => {
+  const theme = useTheme()
+  return (
+    <Scroll
+      style={{
+        justifyContent: 'space-around'
+      }}
+      padding={24}
+      backgroundColor={theme.bg}
+      flex={1}
+    >
+      <Header />
+      <Form />
+    </Scroll>
   )
 }
 

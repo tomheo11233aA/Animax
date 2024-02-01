@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { StyleSheet, View, TextInput, Image } from 'react-native';
 import { colors } from '@themes/colors';
 import { fonts } from '@themes/fonts';
@@ -9,15 +9,21 @@ interface CardInputProps {
     icon?: any;
     maxLength?: number;
     value?: string;
+    returnKeyType?: 'done' | 'next' | 'go';
+    onSubmitEditing?: () => void;
+    keyboardType?: 'default' | 'numeric';
 }
 
-const CardInput: React.FC<CardInputProps> = ({
+const CardInput = forwardRef<TextInput, CardInputProps>(({
     placeholder,
     onChangeText,
-    icon,
     maxLength,
     value,
-}) => {
+    icon,
+    returnKeyType = 'done',
+    onSubmitEditing,
+    keyboardType = 'default'
+}, ref) => {
     return (
         <View style={styles.inputContainer}>
             {icon && <Image source={icon} style={styles.iconStyle} />}
@@ -28,10 +34,14 @@ const CardInput: React.FC<CardInputProps> = ({
                 onChangeText={onChangeText}
                 maxLength={maxLength}
                 value={value}
+                returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}
+                ref={ref}
+                keyboardType={keyboardType}
             />
         </View>
     );
-};
+});
 
 export default CardInput;
 

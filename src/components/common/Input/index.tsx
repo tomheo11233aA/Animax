@@ -1,6 +1,6 @@
 import { getSize } from '@utils/responsive';
 import { isNumber } from 'lodash';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Image, Platform, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { handleMargin, handlePadding, handleRound, handleSquare } from '../shared';
@@ -11,7 +11,7 @@ import Img from '@common/Img';
 import Txt from '@common/Txt';
 import { useTheme } from '@hooks/redux';
 
-const Input = ({
+const Input = forwardRef<TextInput, Props>(({
     readonly,
     value,
     onChangeText,
@@ -97,8 +97,10 @@ const Input = ({
     borderTopRightRadius,
     borderBottomLeftRadius,
     coin,
+    returnKeyType,
+    onSubmitEditing,
     ...rest
-}: Props) => {
+}: Props, ref) => {
     const insets = useSafeAreaInsets();
     const myColor = useTheme();
     const myBoderColor = borderColor ? borderColor : myColor.black4;
@@ -222,6 +224,9 @@ const Input = ({
                 textAlign={textAlign}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}
+                ref={ref}
             />
             {iconTwo &&
                 <Btn
@@ -254,11 +259,13 @@ const Input = ({
             }
         </Box>
     );
-};
+});
 
 export default React.memo(Input);
 
 interface Props {
+    returnKeyType?: 'done' | 'next' | 'go';
+    onSubmitEditing?: () => void;
     value?: any,
     onChangeText?: any,
     hint?: any,

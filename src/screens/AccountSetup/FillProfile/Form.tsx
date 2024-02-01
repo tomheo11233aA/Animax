@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Box from '@common/Box'
 import Input from '@common/Input'
 import Img from '@common/Img'
@@ -20,6 +20,7 @@ import PhoneInput from "react-native-phone-number-input";
 import { SelectList } from 'react-native-dropdown-select-list'
 import * as ImagePicker from 'react-native-image-picker';
 import { ActivityIndicator } from 'react-native'
+import { KeyboardAvoidingView } from 'react-native'
 
 const Form = () => {
     const { t } = useTranslation();
@@ -63,8 +64,13 @@ const Form = () => {
         );
     }
 
+    const fullNameRef = useRef<any>(null);
+    const nickNameRef = useRef<any>(null);
+    const emailRef = useRef<any>(null);
+    const phoneRef = useRef<any>(null);
+
     return (
-        <Box marginTop={20} relative>
+        <KeyboardAvoidingView>
             <Box>
                 <Img
                     source={selectedImage ? { uri: selectedImage } : require('@images/unAuth/user.png')}
@@ -114,6 +120,9 @@ const Form = () => {
                     hintColor={'#888888'}
                     onChangeText={(text: string) => setValue('fullName', text)}
                     color={theme === 'light' ? color.black : color.white}
+                    returnKeyType='next'
+                    onSubmitEditing={() => nickNameRef.current?.focus()}
+                    ref={fullNameRef}
                 />
                 {errors.fullName && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.fullName?.message}</Txt>}
                 <Input
@@ -128,6 +137,9 @@ const Form = () => {
                     font={fonts.MAIN}
                     onChangeText={(text: string) => setValue('nickName', text)}
                     color={theme === 'light' ? color.black : color.white}
+                    returnKeyType='next'
+                    onSubmitEditing={() => emailRef.current?.focus()}
+                    ref={nickNameRef}
                 />
                 {errors.nickName && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.nickName?.message}</Txt>}
                 <Input
@@ -152,6 +164,10 @@ const Form = () => {
                             theme === 'dark' && email.length > 0 ? color.white :
                                 theme === 'light' ? color.tintLight : color.tintLight
                     }
+                    returnKeyType='next'
+                    keyboardType='email-address'
+                    onSubmitEditing={() => phoneRef.current?.focus()}
+                    ref={emailRef}
                 />
                 {errors.email && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.email?.message}</Txt>}
                 <PhoneInput
@@ -200,7 +216,8 @@ const Form = () => {
                     }}
                     placeholder='Choose gender'
                     fontFamily={fonts.MAIN}
-                    boxStyles={{ marginTop: hp(3), borderWidth: 0,
+                    boxStyles={{
+                        marginTop: hp(3), borderWidth: 0,
                         backgroundColor: theme === 'light' ? color.black3 : color.black3,
                         height: hp(7), borderRadius: wp('4%'), borderColor: theme === 'light' ? color.black3 : color.black3,
                     }}
@@ -271,7 +288,7 @@ const Form = () => {
                     </Btn>
                 </Box>
             </Box>
-        </Box >
+        </KeyboardAvoidingView>
     )
 }
 
