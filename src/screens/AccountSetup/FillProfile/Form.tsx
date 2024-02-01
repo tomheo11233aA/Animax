@@ -20,7 +20,6 @@ import PhoneInput from "react-native-phone-number-input";
 import { SelectList } from 'react-native-dropdown-select-list'
 import * as ImagePicker from 'react-native-image-picker';
 import { ActivityIndicator } from 'react-native'
-import { KeyboardAvoidingView } from 'react-native'
 
 const Form = () => {
     const { t } = useTranslation();
@@ -70,7 +69,7 @@ const Form = () => {
     const phoneRef = useRef<any>(null);
 
     return (
-        <KeyboardAvoidingView>
+        <Box marginVertical={50}>
             <Box>
                 <Img
                     source={selectedImage ? { uri: selectedImage } : require('@images/unAuth/user.png')}
@@ -288,7 +287,7 @@ const Form = () => {
                     </Btn>
                 </Box>
             </Box>
-        </KeyboardAvoidingView>
+        </Box>
     )
 }
 
