@@ -18,6 +18,7 @@ interface Props {
 
 
 const { width } = Dimensions.get('window')
+const height = Dimensions.get('window').height
 
 const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory }) => {
     return (
@@ -28,7 +29,7 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
         >
             <Img
                 width={width / 2 - 30}
-                height={width / 2 * 1.25}
+                height={height / 3.8}
                 radius={10}
                 source={{ uri: item.images.jpg.image_url }}
             ></Img>
@@ -39,7 +40,6 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
                 style={{
                     justifyContent: 'space-around',
                 }}
-                paddingVertical={15}
             >
                 <Txt
                     size={20}
