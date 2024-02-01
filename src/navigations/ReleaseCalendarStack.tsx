@@ -16,7 +16,7 @@ const ReleaseCalendarStack = () => {
                 }
             }
         >
-            <Stack.Screen name={screens.RELEASE_CALENDAR} component={ReleaseCalendar} />
+            {/* <Stack.Screen name={screens.RELEASE_CALENDAR} component={ReleaseCalendar} /> */}
             <Stack.Screen name={screens.DETAIL} component={Detail} />
         </Stack.Navigator>
     )
