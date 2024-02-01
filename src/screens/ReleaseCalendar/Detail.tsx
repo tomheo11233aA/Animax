@@ -56,8 +56,9 @@ const Detail = () => {
   useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
     navigation.getParent()?.setOptions({
       tabBarStyle: {
-        display: "none"
+        display: 'none',
       }
+
     });
     return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
       tabBarStyle: undefined
@@ -80,11 +81,16 @@ const Detail = () => {
 
   // lọc danh sách comment mà user đã like vào mảng isLike
   const [isLike, setIsLike] = useState<number[]>([])
+
   useEffect(() => {
     const isLike = data[0].comments
       .filter(item => item.likes.some(like => like.id === user.id)).map(item => item.id)
     setIsLike(isLike)
   }, [])
+
+  // lấy comment nhiều like nhất
+  const commentLike = data[0].comments.sort((a, b) => b.likes.length - a.likes.length)[0]
+  const checkLike = isLike.includes(commentLike.id)
 
   const FirstRoute = () => (
     <Box
@@ -99,7 +105,7 @@ const Detail = () => {
             item={item}
           />
         )}
-        keyExtractor={(item, index) => item.mal_id.toString()}
+        keyExtractor={(item, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
         ListFooterComponent={<Box width={20} />}
@@ -137,107 +143,96 @@ const Detail = () => {
           </Txt>
         </Btn>
       </Box>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
+      {/* item */}
+      <Box
+        marginBottom={24}
+      // backgroundColor={'red'}
       >
-        {
-          data[0].comments &&
-          data[0].comments.map((item, index) => {
-            if (index > 4) return null
-            const checkLike = isLike.includes(item.id)
-            return (
-              <Box
-                key={index}
-                marginBottom={24}
-              // backgroundColor={'red'}
-              >
-                <Box
-                  row={true}
-                  marginBottom={16}
-                >
-                  <Img
-                    source={{ uri: item.user.avatar }}
-                    width={wp(10)}
-                    height={wp(10)}
-                    radius={wp(5)}
-                  />
-                  <Box
-                    marginLeft={16}
-                    justifySpaceBetween={'true'}
-                    row={true}
-                    flex={1}
-                    height={wp(10)}
-                    alignCenter={'center'}
-                  >
-                    <Txt
-                      color={color.white}
-                      size={14}
-                      fontWeight={'bold'}
-                    >
-                      {item.user.name}
-                    </Txt>
-                    <Img
-                      source={require('@images/more-information.png')}
-                      width={20}
-                      height={20}
-                      tintColor={color.white}
-                    ></Img>
-                  </Box>
-                </Box>
-                <Box
-                  marginBottom={16}
-                >
-                  <Txt
-                    color={color.white}
-                    size={13}
-                  >
-                    {item.content}
-                  </Txt>
-                </Box>
-                <Box
-                  row={true}
-                >
-                  <Btn
-                    onPress={() => toggleLike(item.id, isLike, setIsLike)}
-                    marginRight={8}
-                  >
-                    <Img
-                      source={
-                        checkLike
-                          ? require('@images/detail/love.png')
-                          : require('@images/detail/love2.png')}
-                      width={20}
-                      height={20}
-                      tintColor={
-                        checkLike
-                          ? color.mainColor
-                          : color.white
-                      }
-                    ></Img>
-                  </Btn>
-                  <Txt
-                    color={color.white}
-                    size={12}
-                    width={wp(20)}
-                    marginRight={16}
-                    lineHeight={20}
-                  // fontFamily={fonts.MAIN}
-                  >
-                    {item.likes.length}
-                  </Txt>
-                  <Txt
-                    color={color.white}
-                    size={12}
-                    lineHeight={20}
-                  >
-                    {item.date}
-                  </Txt>
-                </Box>
-              </Box>
-            )
-          })
-        }
-      </ScrollView>
+        <Box
+          row={true}
+          marginBottom={16}
+        >
+          <Img
+            source={{ uri: commentLike.user.avatar }}
+            width={wp(10)}
+            height={wp(10)}
+            radius={wp(5)}
+          />
+          <Box
+            marginLeft={16}
+            justifySpaceBetween={'true'}
+            row={true}
+            flex={1}
+            height={wp(10)}
+            alignCenter={'center'}
+          >
+            <Txt
+              color={color.white}
+              size={14}
+              fontWeight={'bold'}
+            >
+              {commentLike.user.name}
+            </Txt>
+            <Btn>
+              <Img
+                source={require('@images/more-information.png')}
+                width={20}
+                height={20}
+                tintColor={color.white}
+              ></Img>
+            </Btn>
+          </Box>
+        </Box>
+        <Box
+          marginBottom={16}
+        >
+          <Txt
+            color={color.white}
+            size={13}
+          >
+            {commentLike.content}
+          </Txt>
+        </Box>
+        <Box
+          row={true}
+        >
+          <Btn
+            onPress={() => toggleLike(commentLike.id, isLike, setIsLike)}
+            marginRight={8}
+          >
+            <Img
+              source={
+                checkLike
+                  ? require('@images/detail/love.png')
+                  : require('@images/detail/love2.png')}
+              width={20}
+              height={20}
+              tintColor={
+                checkLike
+                  ? color.mainColor
+                  : color.white
+              }
+            ></Img>
+          </Btn>
+          <Txt
+            color={color.white}
+            size={12}
+            width={wp(20)}
+            marginRight={16}
+            lineHeight={20}
+          // fontFamily={fonts.MAIN}
+          >
+            {commentLike.likes.length}
+          </Txt>
+          <Txt
+            color={color.white}
+            size={12}
+            lineHeight={20}
+          >
+            {commentLike.date}
+          </Txt>
+        </Box>
+      </Box>
     </Box>
   );
 
@@ -260,7 +255,7 @@ const Detail = () => {
   );
 
   return (
-    // <KeyBoardSafe>
+    <KeyBoardSafe>
       <Box
         flex={1}
         backgroundColor={theme === 'dark' ? color.bg : color.bg}
@@ -675,19 +670,19 @@ const Detail = () => {
         <Box
           // backgroundColor={'red'}
           width={wp(100) - 48}
-          flex={1}
-          // height={hp(35)}
+          // flex={1}
+          height={hp(35)}
         >
           <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
             onIndexChange={setIndex}
-            initialLayout={{ width: wp(100)}}
+            initialLayout={{ width: wp(100) }}
             renderTabBar={renderTabBar}
           />
         </Box>
       </Box>
-    // {/* </KeyBoardSafe> */}
+    </KeyBoardSafe>
   )
 }
 
@@ -723,7 +718,6 @@ const data = [
             { id: 22, name: 'Nguyễn Văn C' },
             { id: 23, name: 'Nguyễn Văn D' },
             { id: 24, name: 'Nguyễn Văn E' },
-            { id: 25, name: 'Nguyễn Văn F' },
           ]
 
         },
