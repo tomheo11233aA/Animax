@@ -6,6 +6,8 @@ import { colors } from '@themes/colors'
 import { fonts } from '@themes/fonts'
 import { FlatList } from 'react-native'
 import TopHitsItem from '../TopHit/TopHitsItem'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
 
 interface Props {
     t: any
@@ -34,6 +36,7 @@ const MostPopular: React.FC<Props> = ({ t, banner }) => {
                 <Btn
                     marginVertical={5}
                     marginHorizontal={10}
+                    onPress={() => navigate(screens.SEE_ALL, { type: 'popular' })}
                 >
                     <Txt
                         size={12}

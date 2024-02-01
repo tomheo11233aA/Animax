@@ -39,6 +39,7 @@ export const fetchNewReleaseAnime = createAsyncThunk('anime/fetchNewReleaseAnime
 });
 
 interface AnimeState {
+    page?: number;
     topAnime: any[];
     favoriteAnime: any[];
     typeAnime: any[];
@@ -52,6 +53,7 @@ interface AnimeState {
 }
 
 const initialState: AnimeState = {
+    page: 1,
     topAnime: [],
     favoriteAnime: [],
     typeAnime: [],
@@ -77,7 +79,9 @@ const animeSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(fetchTopAnime.fulfilled, (state, action: PayloadAction<any>) => {
-            return { ...state, topAnime: action.payload, loading: false }
+            // return { ...state, topAnime: action.payload, loading: false }
+            state.topAnime = [...state.topAnime, ...action.payload];
+            state.loading = false;
         });
         builder.addCase(fetchTopAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
