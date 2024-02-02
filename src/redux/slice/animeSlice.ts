@@ -7,34 +7,33 @@ export const fetchTopAnime = createAsyncThunk('anime/fetchTopAnime', async (page
     return response?.data;
 });
 
-export const fetchFavoriteAnime = createAsyncThunk('anime/fetchFavoriteAnime', async () => {
-    const response = await getFavoriteAnime('favorite');
+export const fetchFavoriteAnime = createAsyncThunk('anime/fetchFavoriteAnime', async (page?: number) => {
+    const response = await getFavoriteAnime('favorite', page ?? 1);
     return response?.data;
 });
 
-export const fetchTypeAnime = createAsyncThunk('anime/fetchTypeMovieAnime', async (type: string) => {
-    const response = await getTypeAnime(type);
-    console.log('fetchTypeAnime')
+export const fetchTypeAnime = createAsyncThunk('anime/fetchTypeMovieAnime', async ({ type, page }: { type: string, page: number }) => {
+    const response = await getTypeAnime(type, page ?? 1);
     return response?.data;
 });
 
-export const fetchTopTvAnime = createAsyncThunk('anime/fetchTopTvAnime', async () => {
-    const response = await getTypeAnime('tv');
+export const fetchTopTvAnime = createAsyncThunk('anime/fetchTopTvAnime', async (page?: number) => {
+    const response = await getTypeAnime('tv', page ?? 1);
     return response?.data;
 });
 
-export const fetchTopMovieAnime = createAsyncThunk('anime/fetchTopMovieAnime', async () => {
-    const response = await getTypeAnime('movie');
+export const fetchTopMovieAnime = createAsyncThunk('anime/fetchTopMovieAnime', async (page?: number) => {
+    const response = await getTypeAnime('movie', page ?? 1);
     return response?.data;
 });
 
-export const fetchPopularAnime = createAsyncThunk('anime/fetchPopularAnime', async () => {
-    const response = await getPopularAnime('bypopularity');
+export const fetchPopularAnime = createAsyncThunk('anime/fetchPopularAnime', async (page?: number) => {
+    const response = await getPopularAnime('bypopularity', page ?? 1);
     return response?.data;
 });
 
-export const fetchNewReleaseAnime = createAsyncThunk('anime/fetchNewReleaseAnime', async () => {
-    const response = await newReleaseAnime();
+export const fetchNewReleaseAnime = createAsyncThunk('anime/fetchNewReleaseAnime', async (page?: number) => {
+    const response = await newReleaseAnime(page ?? 1);
     return response?.data;
 });
 
@@ -108,31 +107,25 @@ const animeSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(fetchFavoriteAnime.fulfilled, (state, action: PayloadAction<any>) => {
-            return { ...state, favoriteAnime: action.payload, loading: false }
+            // return { ...state, favoriteAnime: action.payload, loading: false }
+            state.favoriteAnime = [...state.favoriteAnime, ...action.payload];
+            state.pageFavoriteAnime += 1;
+            state.loading = false;
         });
         builder.addCase(fetchFavoriteAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
             state.loading = false;
         });
 
-        // case reducer for type anime
-        // builder.addCase(fetchTypeAnime.pending, (state, action: PayloadAction<any>) => {
-        //     state.loading = true;
-        // });
-        // builder.addCase(fetchTypeAnime.fulfilled, (state, action: PayloadAction<any>) => {
-        //     return { ...state, typeAnime: action.payload, loading: false }
-        // });
-        // builder.addCase(fetchTypeAnime.rejected, (state, action: PayloadAction<any>) => {
-        //     state.error = action.payload;
-        //     state.loading = false;
-        // });
-
         // case reducer for top tv anime
         builder.addCase(fetchTopTvAnime.pending, (state, action: PayloadAction<any>) => {
             state.loading = true;
         });
         builder.addCase(fetchTopTvAnime.fulfilled, (state, action: PayloadAction<any>) => {
-            return { ...state, topTvAnime: action.payload, loading: false }
+            // return { ...state, topTvAnime: action.payload, loading: false }
+            state.topTvAnime = [...state.topTvAnime, ...action.payload];
+            state.pageTopTvAnime += 1;
+            state.loading = false;
         });
         builder.addCase(fetchTopTvAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
@@ -144,7 +137,10 @@ const animeSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(fetchTopMovieAnime.fulfilled, (state, action: PayloadAction<any>) => {
-            return { ...state, topMovieAnime: action.payload, loading: false }
+            // return { ...state, topMovieAnime: action.payload, loading: false }
+            state.topMovieAnime = [...state.topMovieAnime, ...action.payload];
+            state.pageTopMovieAnime += 1;
+            state.loading = false;
         });
         builder.addCase(fetchTopMovieAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
@@ -156,7 +152,10 @@ const animeSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(fetchPopularAnime.fulfilled, (state, action: PayloadAction<any>) => {
-            return { ...state, popularAnime: action.payload, loading: false }
+            // return { ...state, popularAnime: action.payload, loading: false }
+            state.popularAnime = [...state.popularAnime, ...action.payload];
+            state.pagePopularAnime += 1;
+            state.loading = false;
         });
         builder.addCase(fetchPopularAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
@@ -168,9 +167,27 @@ const animeSlice = createSlice({
             state.loading = true;
         });
         builder.addCase(fetchNewReleaseAnime.fulfilled, (state, action: PayloadAction<any>) => {
-            return { ...state, newReleaseAnime: action.payload, loading: false }
+            // return { ...state, newReleaseAnime: action.payload, loading: false }
+            state.newReleaseAnime = [...state.newReleaseAnime, ...action.payload];
+            state.pageNewReleaseAnime += 1;
+            state.loading = false;
         });
         builder.addCase(fetchNewReleaseAnime.rejected, (state, action: PayloadAction<any>) => {
+            state.error = action.payload;
+            state.loading = false;
+        });
+
+        // case reducer for type anime
+        builder.addCase(fetchTypeAnime.pending, (state, action: PayloadAction<any>) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchTypeAnime.fulfilled, (state, action: PayloadAction<any>) => {
+            // return { ...state, typeAnime: action.payload, loading: false }
+            state.typeAnime = [...state.typeAnime, ...action.payload];
+            state.pageTypeAnime += 1;
+            state.loading = false;
+        });
+        builder.addCase(fetchTypeAnime.rejected, (state, action: PayloadAction<any>) => {
             state.error = action.payload;
             state.loading = false;
         });

@@ -12,35 +12,35 @@ export const getTopAnime = function (filter: string, page: number) {
 }
 
 //top/anime?filter=favorite
-export const getFavoriteAnime = function (filter: string) {
+export const getFavoriteAnime = function (filter: string, page?: number) {
     try {
-        return axiosService.get(`top/anime?filter=${filter}&limit=10`);
+        return axiosService.get(`top/anime?filter=${filter}&limit=10&page=${page}`);
     } catch (error) {
         console.log(error);
     }
 }
 
 // top/anime?type=tv // movie
-export const getTypeAnime = function (type: string) {
+export const getTypeAnime = function (type: string, page?: number) {
     try {
-        return axiosService.get(`top/anime?type=${type}&limit=10`);
+        return axiosService.get(`top/anime?type=${type}&limit=10&page=${page}`);
     } catch (error) {
         console.log(error);
     }
 }
 
 // top/anime?filter=bypopularity
-export const getPopularAnime = function (filter: string) {
+export const getPopularAnime = function (filter: string, page?: number) {
     try {
-        return axiosService.get(`top/anime?filter=${filter}&limit=10`);
+        return axiosService.get(`top/anime?filter=${filter}&limit=10&page=${page}`);
     } catch (error) {
         console.log(error);
     }
 }
 
-export const newReleaseAnime = function () {
+export const newReleaseAnime = function (page?: number) {
     try {
-        return axiosService.get(`seasons/now?limit=10`);
+        return axiosService.get(`seasons/now?limit=10&page=${page}`);
     } catch (error) {
         console.log(error);
     }

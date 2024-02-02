@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from '@hooks/redux'
 import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
 import {
   topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector,
-  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector, pageTopAnimeSelector, animeSelector
+  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector, pageTopAnimeSelector,
+  pageFavoriteAnimeSelector, pageTopTvAnimeSelector, pageTopMovieAnimeSelector, pagePopularAnimeSelector, pageNewReleaseAnimeSelector
 } from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store'
 import Box from '@common/Box'
@@ -26,6 +27,7 @@ type RootStackParamList = {
 
 type SeeAllScreenRouteProp = RouteProp<RootStackParamList, 'SeeAll'>;
 
+const MAX_PAGE = 20
 interface Props {
   route: SeeAllScreenRouteProp
 }
@@ -42,7 +44,12 @@ const SeeAll: React.FC<Props> = ({ route }) => {
     tvSeries: useAppSelector(typeTvAnimeSelector),
     movie: useAppSelector(typeMovieAnimeSelector),
     popular: useAppSelector(popularAnimeSelector),
-    pageTopAnime: useAppSelector(pageTopAnimeSelector)
+    pageTopAnime: useAppSelector(pageTopAnimeSelector),
+    pageFavoriteAnime: useAppSelector(pageFavoriteAnimeSelector),
+    pageTopTvAnime: useAppSelector(pageTopTvAnimeSelector),
+    pageTopMovieAnime: useAppSelector(pageTopMovieAnimeSelector),
+    pagePopularAnime: useAppSelector(pagePopularAnimeSelector),
+    pageNewReleaseAnime: useAppSelector(pageNewReleaseAnimeSelector)
   }
 
   const myFormatRoute = formatRoute(route.params.type)
@@ -72,12 +79,38 @@ const SeeAll: React.FC<Props> = ({ route }) => {
   )
 
   const loadMoreData = async () => {
-    if (!loading && animeSelectors.pageTopAnime < 20) {
+    if (
+      !loading && animeSelectors.pageTopAnime < MAX_PAGE
+      && animeSelectors.pageFavoriteAnime < MAX_PAGE
+      && animeSelectors.pageTopTvAnime < MAX_PAGE
+      && animeSelectors.pageTopMovieAnime < MAX_PAGE
+      && animeSelectors.pagePopularAnime < MAX_PAGE
+      && animeSelectors.pageNewReleaseAnime < MAX_PAGE) {
       setLoading(true)
-      await dispatch(fetchTopAnime(animeSelectors.pageTopAnime))
+      switch (route.params.type) {
+        case 'topHits':
+          await dispatch(fetchTopAnime(animeSelectors.pageTopAnime))
+          break
+        case 'newEpisode':
+          await dispatch(fetchNewReleaseAnime(animeSelectors.pageNewReleaseAnime))
+          break
+        case 'favorite':
+          await dispatch(fetchFavoriteAnime(animeSelectors.pageFavoriteAnime))
+          break
+        case 'tvSeries':
+          await dispatch(fetchTopTvAnime(animeSelectors.pageTopTvAnime))
+          break
+        case 'movie':
+          await dispatch(fetchTopMovieAnime(animeSelectors.pageTopMovieAnime))
+          break
+        case 'popular':
+          await dispatch(fetchPopularAnime(animeSelectors.pagePopularAnime))
+          break
+      }
       setLoading(false)
     }
   }
+
   return (
     <Box
       backgroundColor={theme.bg}
