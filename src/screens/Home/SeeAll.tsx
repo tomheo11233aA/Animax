@@ -51,7 +51,6 @@ const SeeAll: React.FC<Props> = ({ route }) => {
     pagePopularAnime: useAppSelector(pagePopularAnimeSelector),
     pageNewReleaseAnime: useAppSelector(pageNewReleaseAnimeSelector)
   }
-
   const myFormatRoute = formatRoute(route.params.type)
   useHideNavigation()
   const formatName = useFormatName();
