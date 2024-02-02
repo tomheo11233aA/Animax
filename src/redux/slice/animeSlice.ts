@@ -39,21 +39,35 @@ export const fetchNewReleaseAnime = createAsyncThunk('anime/fetchNewReleaseAnime
 });
 
 interface AnimeState {
-    page?: number;
     topAnime: any[];
+    pageTopAnime: number;
     favoriteAnime: any[];
+    pageFavoriteAnime: number;
     typeAnime: any[];
+    pageTypeAnime: number;
     topTvAnime: any[];
+    pageTopTvAnime: number;
     topMovieAnime: any[];
+    pageTopMovieAnime: number;
     popularAnime: any[];
+    pagePopularAnime: number;
     airingAnime: any[];
+    pageAiringAnime: number;
     newReleaseAnime: any[];
+    pageNewReleaseAnime: number;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: AnimeState = {
-    page: 1,
+    pageTypeAnime: 1,
+    pageAiringAnime: 1,
+    pageFavoriteAnime: 1,
+    pageNewReleaseAnime: 1,
+    pagePopularAnime: 1,
+    pageTopAnime: 1,
+    pageTopMovieAnime: 1,
+    pageTopTvAnime: 1,
     topAnime: [],
     favoriteAnime: [],
     typeAnime: [],
@@ -81,6 +95,7 @@ const animeSlice = createSlice({
         builder.addCase(fetchTopAnime.fulfilled, (state, action: PayloadAction<any>) => {
             // return { ...state, topAnime: action.payload, loading: false }
             state.topAnime = [...state.topAnime, ...action.payload];
+            state.pageTopAnime += 1;
             state.loading = false;
         });
         builder.addCase(fetchTopAnime.rejected, (state, action: PayloadAction<any>) => {

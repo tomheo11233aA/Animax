@@ -56,7 +56,8 @@ const TopHitsAnime: React.FC<Props> = ({ t, banner }) => {
                         item={item}
                     />
                 )}
-                keyExtractor={(item, index) => item.mal_id.toString()}
+                // keyExtractor={(item, index) => item.mal_id.toString()}
+                keyExtractor={(item, index) => index.toString()}
                 horizontal
                 showsHorizontalScrollIndicator={false}
             />

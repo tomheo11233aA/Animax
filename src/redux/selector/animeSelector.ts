@@ -22,3 +22,18 @@ export const typeMovieAnimeSelector = (state: RootState) => state.anime.topMovie
 
 export const newReleaseAnimeSelector = (state: RootState) => state.anime.newReleaseAnime
 
+export const pageTopAnimeSelector = (state: RootState) => state.anime.pageTopAnime
+
+export const pageFavoriteAnimeSelector = (state: RootState) => state.anime.pageFavoriteAnime
+
+export const pageTypeAnimeSelector = (state: RootState) => state.anime.pageTypeAnime
+
+export const pageTopTvAnimeSelector = (state: RootState) => state.anime.pageTopTvAnime
+
+export const pageTopMovieAnimeSelector = (state: RootState) => state.anime.pageTopMovieAnime
+
+export const pagePopularAnimeSelector = (state: RootState) => state.anime.pagePopularAnime
+
+export const pageAiringAnimeSelector = (state: RootState) => state.anime.pageAiringAnime
+
+export const pageNewReleaseAnimeSelector = (state: RootState) => state.anime.pageNewReleaseAnime

@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/redux'
 import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
 import {
   topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector,
-  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector
+  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector, pageTopAnimeSelector, animeSelector
 } from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store'
 import Box from '@common/Box'
@@ -32,19 +32,19 @@ interface Props {
 
 const SeeAll: React.FC<Props> = ({ route }) => {
   const { t } = useTranslation()
-  const dispatch: AppDispatch = useAppDispatch()
   const theme = useTheme()
-  const [page, setPage] = React.useState(1)
-  const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const dispatch: AppDispatch = useAppDispatch()
   const animeSelectors: any = {
     topHits: useAppSelector(topAnimeSelector),
     newEpisode: useAppSelector(newReleaseAnimeSelector),
     favorite: useAppSelector(favoriteAnimeSelector),
     tvSeries: useAppSelector(typeTvAnimeSelector),
     movie: useAppSelector(typeMovieAnimeSelector),
-    popular: useAppSelector(popularAnimeSelector)
+    popular: useAppSelector(popularAnimeSelector),
+    pageTopAnime: useAppSelector(pageTopAnimeSelector)
   }
+
   const myFormatRoute = formatRoute(route.params.type)
   useHideNavigation()
   const formatName = useFormatName();
@@ -55,10 +55,10 @@ const SeeAll: React.FC<Props> = ({ route }) => {
         paddingBottom: hp(15),
       }}
       data={animeSelectors[animeType]}
-      keyExtractor={(item, index) => item.mal_id.toString()}
-      // onEndReached={loadMoreData}
+      keyExtractor={(item, index) => index.toString()}
+      onEndReached={loadMoreData}
       onEndReachedThreshold={0.3}
-      ListFooterComponent={() => loading && hasMore && <ActivityIndicator size="large" />}
+      ListFooterComponent={() => loading && <ActivityIndicator size="large" />}
       renderItem={({ item }) => (
         <AnimeItem
           item={item}
@@ -70,18 +70,14 @@ const SeeAll: React.FC<Props> = ({ route }) => {
       )}
     />
   )
+
   const loadMoreData = async () => {
-    if (!loading && hasMore) {
-      setLoading(true);
-      const nextPage = page + 1;
-      setPage(nextPage);
-      if (route.params.type === 'topHits') {
-        await dispatch(fetchTopAnime(nextPage));
-      }
-      setLoading(false);
+    if (!loading && animeSelectors.pageTopAnime < 20) {
+      setLoading(true)
+      await dispatch(fetchTopAnime(animeSelectors.pageTopAnime))
+      setLoading(false)
     }
   }
-
   return (
     <Box
       backgroundColor={theme.bg}
