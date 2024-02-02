@@ -12,13 +12,16 @@ import MostFavorite from './MostFavorite/MostFavorite';
 import TopTVSeries from './TopTVSeries/TopTVSeries';
 import TopMovie from './TopMovie/TopMovie';
 import MostPopular from './MostPopular/MostPopular';
-import { useAppSelector } from '@hooks/redux';
+import { useAppSelector, useAppDispatch } from '@hooks/redux';
+import { AppDispatch } from '@redux/store/store';
+import { searchAnimeAction } from '@redux/slice/animeSlice';
 import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, 
   typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector } from '@redux/selector/animeSelector'
 import HomeLoading from '@themes/Skeleton/HomeLoading';
 
 const Home = () => {
   const { t } = useTranslation()
+  const dispatch: AppDispatch = useAppDispatch()
   const [fakeLoading, setFakeLoading] = React.useState(true)
   const topAnime = useAppSelector(topAnimeSelector)
   const favoriteAnime = useAppSelector(favoriteAnimeSelector)
@@ -41,6 +44,7 @@ const Home = () => {
   }
   
   useEffect(() => {
+    dispatch(searchAnimeAction())
     const timer = setTimeout(() => {
       setFakeLoading(false);
     }, 500);

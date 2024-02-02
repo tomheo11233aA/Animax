@@ -4,7 +4,7 @@ import Txt from '@common/Txt'
 import Btn from '@common/Btn'
 import Icon from '@common/Icon'
 import Input from '@common/Input'
-import { FlatList } from 'react-native'
+import { FlatList, Keyboard } from 'react-native'
 import { debounce } from 'lodash'
 import AxiosInstance from '@helper/AxiosInstance'
 import { useTheme } from '@hooks/redux'
@@ -19,16 +19,18 @@ import useFormatName from '@utils/formatName'
 import useFormatCategory from '@utils/formatCategory'
 import AnimeItem from '@screens/Home/AnimeItem'
 import { useTranslation } from 'react-i18next'
+import { searchAnimeSelector } from '@redux/selector/animeSelector'
 
 const Search = () => {
     const { t } = useTranslation()
     const [search, setSearch] = useState('')
-    const [data, setData] = useState([])
+    const [data, setData] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const theme = useAppSelector(themeUserSelector);
     const color = useTheme()
     const formatName = useFormatName();
     const formatCategory = useFormatCategory();
+    const searchAnime = useAppSelector(searchAnimeSelector)
     const fetchSearch = useCallback(async (searchInput: string) => {
         setLoading(true)
         try {
@@ -38,11 +40,16 @@ const Search = () => {
             console.log('error', error)
         } finally {
             setLoading(false)
+            Keyboard.dismiss()
         }
     }, [])
     const debouncedSearch = useCallback(debounce(fetchSearch, 500), [])
     useEffect(() => {
-        debouncedSearch(search)
+        if (search) {
+            debouncedSearch(search)
+        } else {
+            setData(searchAnime)
+        }
         return debouncedSearch.cancel
     }, [search])
     return (
@@ -72,7 +79,7 @@ const Search = () => {
                     height={hp(7)}
                     width={'70%'}
                     borderWidth={1}
-                    hint={'Full name'}
+                    hint={'Eg. Naruto'}
                     font={fonts.MAIN}
                     hintColor={'#888888'}
                     color={theme === 'light' ? color.black : color.white}
@@ -132,7 +139,7 @@ const Search = () => {
                     renderItem={({ item }) => (
                         <AnimeItem
                             item={item}
-                            theme={theme}
+                            theme={color}
                             t={t}
                             formatName={formatName}
                             formatCategory={formatCategory}

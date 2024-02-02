@@ -24,7 +24,8 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
     return (
         <Box
             width={width / 2}
-            padding={hp(2.5)}
+            paddingVertical={hp(1.5)}
+            marginHorizontal={hp(2.5)}
             row
         >
             <Img

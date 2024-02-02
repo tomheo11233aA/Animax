@@ -20,7 +20,6 @@ import AnimeItem from './AnimeItem'
 import useFormatName from '@utils/formatName'
 import useFormatCategory from '@utils/formatCategory'
 import { ActivityIndicator } from 'react-native'
-
 type RootStackParamList = {
   SeeAll: { type: string }
 }

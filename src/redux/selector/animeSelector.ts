@@ -37,3 +37,5 @@ export const pagePopularAnimeSelector = (state: RootState) => state.anime.pagePo
 export const pageAiringAnimeSelector = (state: RootState) => state.anime.pageAiringAnime
 
 export const pageNewReleaseAnimeSelector = (state: RootState) => state.anime.pageNewReleaseAnime
+
+export const searchAnimeSelector = (state: RootState) => state.anime.searchAnime

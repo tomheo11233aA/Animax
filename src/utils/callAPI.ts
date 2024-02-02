@@ -54,3 +54,12 @@ export const getAiringAnime = function (filter: string, page: number, limit: num
         console.log(error);
     }
 }
+
+//             const response = await AxiosInstance().get(`anime?q=${searchInput}`)
+export const searchAnime = function () {
+    try {
+        return axiosService.get(`anime?q=${'Baka to test to shoukanjuu'}`);
+    } catch (error) {
+        console.log(error);
+    }
+}
