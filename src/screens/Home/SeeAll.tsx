@@ -34,9 +34,13 @@ interface Props {
 
 const SeeAll: React.FC<Props> = ({ route }) => {
   const { t } = useTranslation()
+  useHideNavigation()
   const theme = useTheme()
   const [loading, setLoading] = useState(false);
   const dispatch: AppDispatch = useAppDispatch()
+  const formatName = useFormatName();
+  const formatCategory = useFormatCategory();
+
   const animeSelectors: any = {
     topHits: useAppSelector(topAnimeSelector),
     newEpisode: useAppSelector(newReleaseAnimeSelector),
@@ -52,9 +56,7 @@ const SeeAll: React.FC<Props> = ({ route }) => {
     pageNewReleaseAnime: useAppSelector(pageNewReleaseAnimeSelector)
   }
   const myFormatRoute = formatRoute(route.params.type)
-  useHideNavigation()
-  const formatName = useFormatName();
-  const formatCategory = useFormatCategory();
+
   const renderAnimeList = (animeType: string) => (
     <FlatList
       contentContainerStyle={{
