@@ -20,6 +20,7 @@ import useFormatCategory from '@utils/formatCategory'
 import AnimeItem from '@screens/Home/AnimeItem'
 import { useTranslation } from 'react-i18next'
 import { searchAnimeSelector } from '@redux/selector/animeSelector'
+import { useHideNavigation } from '@themes/hideNavigation'
 
 const Search = () => {
     const { t } = useTranslation()
@@ -27,6 +28,7 @@ const Search = () => {
     const [data, setData] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const theme = useAppSelector(themeUserSelector);
+    useHideNavigation()
     const color = useTheme()
     const formatName = useFormatName();
     const formatCategory = useFormatCategory();

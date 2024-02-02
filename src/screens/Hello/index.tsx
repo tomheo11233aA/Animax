@@ -15,11 +15,15 @@ import { setTheme } from '@redux/slice/userSlice'
 import LottieView from 'lottie-react-native'
 import { AppDispatch } from '@redux/store/store'
 import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
+import LogoLight from '../../assets/images/svg/aniflix-light.svg'
+import LogoDark from '../../assets/images/svg/aniflix-dark.svg'
+import { themeUserSelector } from '@redux/selector/appSelector'
 
 const Hello = () => {
   const dispatch: AppDispatch = useAppDispatch()
   const { i18n } = useTranslation()
   const navigation = useNavigation<any>()
+  const theme = useAppSelector(themeUserSelector)
 
   useEffect(() => {
     const fetchAnime = async () => {
@@ -57,12 +61,8 @@ const Hello = () => {
       justifyCenter
       backgroundColor={'#11181e'}
     >
-      <Icon
-        resizeMode={'contain'}
-        source={require('@images/logo.png')}
-        size={width * 30 / 60}
-        tintColor={colors.white}
-      />
+      {theme === 'light' ? <LogoDark width={width * 30 / 60} height={width * 30 / 60} /> : <LogoLight width={width * 30 / 60} height={width * 30 / 60} />}
+
       <LottieView
         source={require('@lotties/loading.json')}
         autoPlay

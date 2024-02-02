@@ -15,9 +15,17 @@ import MostPopular from './MostPopular/MostPopular';
 import { useAppSelector, useAppDispatch } from '@hooks/redux';
 import { AppDispatch } from '@redux/store/store';
 import { searchAnimeAction } from '@redux/slice/animeSlice';
-import { topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, 
-  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector } from '@redux/selector/animeSelector'
+import {
+  topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector,
+  typeMovieAnimeSelector, popularAnimeSelector, newReleaseAnimeSelector
+} from '@redux/selector/animeSelector'
 import HomeLoading from '@themes/Skeleton/HomeLoading';
+import Box from '@common/Box';
+import Img from '@common/Img';
+import Icon from '@common/Icon';
+import Btn from '@common/Btn';
+import { navigate } from '@utils/navigationRef';
+import { screens } from '@contants/screens';
 
 const Home = () => {
   const { t } = useTranslation()
@@ -42,7 +50,7 @@ const Home = () => {
     }
     return category
   }
-  
+
   useEffect(() => {
     dispatch(searchAnimeAction())
     const timer = setTimeout(() => {
@@ -82,6 +90,47 @@ const Home = () => {
           autoPlay
         >
         </Carousel>
+        <Box
+          row
+          marginTop={25}
+          absolute
+          justifySpaceBetween
+          width={'100%'}
+          alignCenter
+        >
+          <Img
+            source={require('@images/logo.png')}
+            width={80}
+            height={80}
+          />
+          <Box
+            row
+            marginRight={20}
+          >
+            <Btn
+              onPress={() => navigate(screens.SEARCH)}
+              width={40}
+              height={40}
+            >
+              <Icon
+                source={require('@images/home/search.png')}
+                size={20}
+              />
+            </Btn>
+
+            <Btn
+              onPress={() => navigate(screens.SEARCH)}
+              width={40}
+              height={40}
+              marginLeft={20}
+            >
+              <Icon
+                source={require('@images/auth/bell.png')}
+                size={20}
+              />
+            </Btn>
+          </Box>
+        </Box>
         <TopHitsAnime
           t={t}
           banner={topAnime}>
