@@ -7,7 +7,6 @@ import Input from '@common/Input'
 import { FlatList } from 'react-native'
 import { debounce } from 'lodash'
 import AxiosInstance from '@helper/AxiosInstance'
-import TopHitsItem from '@screens/Home/TopHit/TopHitsItem'
 import { useTheme } from '@hooks/redux'
 import { themeUserSelector } from '@redux/selector/appSelector'
 import { useAppSelector } from '@hooks/redux';
@@ -16,13 +15,20 @@ import { fonts } from '@themes/fonts'
 import { goBack } from '@utils/navigationRef'
 import { colors } from '@themes/colors'
 import LottieView from 'lottie-react-native'
+import useFormatName from '@utils/formatName'
+import useFormatCategory from '@utils/formatCategory'
+import AnimeItem from '@screens/Home/AnimeItem'
+import { useTranslation } from 'react-i18next'
 
 const Search = () => {
+    const { t } = useTranslation()
     const [search, setSearch] = useState('')
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const theme = useAppSelector(themeUserSelector);
     const color = useTheme()
+    const formatName = useFormatName();
+    const formatCategory = useFormatCategory();
     const fetchSearch = useCallback(async (searchInput: string) => {
         setLoading(true)
         try {
@@ -34,7 +40,7 @@ const Search = () => {
             setLoading(false)
         }
     }, [])
-    const debouncedSearch = useCallback(debounce(fetchSearch, 1000), [])
+    const debouncedSearch = useCallback(debounce(fetchSearch, 500), [])
     useEffect(() => {
         debouncedSearch(search)
         return debouncedSearch.cancel
@@ -122,11 +128,14 @@ const Search = () => {
             {data.length > 0 ? (
                 <FlatList
                     contentContainerStyle={{ paddingBottom: hp('5%') }}
-                    style={{ marginLeft: 10 }}
                     data={data}
                     renderItem={({ item }) => (
-                        <TopHitsItem
+                        <AnimeItem
                             item={item}
+                            theme={theme}
+                            t={t}
+                            formatName={formatName}
+                            formatCategory={formatCategory}
                         />
                     )}
                     keyExtractor={(item, index) => index.toString()}
