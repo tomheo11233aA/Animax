@@ -23,4 +23,5 @@ export const screens = {
     PROFILE: 'PROFILE',
     DETAIL: 'DETAIL',
     SEE_ALL: 'SEEALL',
+    SEARCH: 'SEARCH',
 }

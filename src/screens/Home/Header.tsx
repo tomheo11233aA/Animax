@@ -5,8 +5,9 @@ import Txt from '@common/Txt'
 import Icon from '@common/Icon'
 import Btn from '@common/Btn'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
-import KeyBoardSafe from '@reuse/KeyBoardSafe'
 import { useTheme } from '@hooks/redux'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
 
 interface Props {
     title: string
@@ -45,6 +46,7 @@ const Header: React.FC<Props> = ({ title, t }) => {
 
             <Btn
                 padding={10}
+                onPress={() => navigate(screens.SEARCH)}
             >
                 <Icon
                     source={require('@images/home/search.png')}
