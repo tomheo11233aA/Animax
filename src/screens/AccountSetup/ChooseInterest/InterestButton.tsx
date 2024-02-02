@@ -17,7 +17,6 @@ const InterestButton: React.FC<Props>= ({ onPress, selected, theme, interest }) 
   const { t } = useTranslation();
   return (
     <Btn
-      // delayPressIn={0}
       onPress={onPress}
       marginRight={wp('3%')}
       marginBottom={hp('2.5%')}

@@ -3,20 +3,20 @@ import Header from './Header'
 import Form from './Form'
 import Footer from './Footer'
 import Box from '@common/Box'
-import KeyBoardSafe from '@reuse/KeyBoardSafe'
+import { useTheme } from '@hooks/redux'
 
 const ChooseInterest = () => {
+  const theme = useTheme()
   return (
-    <KeyBoardSafe
+    <Box
+      padding={24}
+      flex={1}
+      backgroundColor={theme.bg}
     >
-      <Box
-        padding={24}
-        flex={1}>
-        <Header />
-        <Form />
-        <Footer />
-      </Box>
-    </KeyBoardSafe>
+      <Header />
+      <Form />
+      <Footer />
+    </Box>
   )
 }
 

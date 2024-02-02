@@ -61,7 +61,8 @@ const Search = () => {
                 row={true}
                 padding={10}
                 marginTop={hp('4%')}
-                justifySpaceAround={true}
+                justifySpaceBetween={true}
+                alignCenter
             >
                 <Btn
                     marginRight={10}
@@ -87,21 +88,21 @@ const Search = () => {
                     tintColor={theme === 'light' ? color.black3 : color.black}
                     sizeIcon={18}
                 />
-                <Box
+                <Btn
                     backgroundColor={'#e6feef'}
-                    radius={wp('4%')}
+                    radius={wp('5%')}
                     style={{
                         justifyContent: 'center',
-                        paddingHorizontal: 15
+                        paddingHorizontal: 15,
+                        paddingVertical: 15
                     }}
-                    height={hp(7)}
                 >
                     <Icon
                         source={require('@images/home/filter.png')}
                         size={18}
                         tintColor={colors.mainColor}
                     />
-                </Box>
+                </Btn>
 
             </Box>
             {loading ? (

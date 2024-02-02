@@ -45,7 +45,7 @@ export const colors = {
         mainColor: '#06C149',
         black: 'white',
         black2: 'black',
-        black3: '#171e24',
+        black3: '#1e272f', // #171e24
         black4: 'transparent',
         white: 'white',
         white2: '#29313c',

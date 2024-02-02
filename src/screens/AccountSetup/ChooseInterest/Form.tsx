@@ -1,32 +1,40 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback, Suspense } from 'react'
 import Box from '@common/Box';
-import Txt from '@common/Txt';
 import Scroll from '@common/Scroll';
 import { useAppSelector } from '@hooks/redux';
 import { themeUserSelector } from '@redux/selector/appSelector';
 import InterestButton from './InterestButton';
 
+const interests = [
+  'Action', 'Drama', 'Comedy', 'Ecchi', 'Adventure',
+  'Mecha', 'Romance', 'Science', 'Music', 'School',
+  'Seinen', 'Shoujo', 'Fantasy', 'Mystery', 'Family',
+  'Vampire', 'Isekai', 'Shounen', 'Television', 'Superheroes',
+  'Magic', 'Game', 'Slice of Life', 'Horror', 'Thriller',
+  'Supernatural'
+];
+
+
 const Form = () => {
-  const interests = useMemo(() => [
-    'Action', 'Drama', 'Comedy', 'Ecchi', 'Adventure',
-    'Mecha', 'Romance', 'Science', 'Music', 'School',
-    'Seinen', 'Shoujo', 'Fantasy', 'Mystery', 'Family',
-    'Vampire', 'Isekai', 'Shounen', 'Television', 'Superheroes',
-    'Magic', 'Game', 'Slice of Life', 'Horror', 'Thriller',
-    'Supernatural'
-  ], []);
   const theme = useAppSelector(themeUserSelector);
   const [selectedInterests, setSelectedInterests] = useState(new Set());
   const toggleInterest = useCallback((interest: any) => {
-    const newSelectedInterests = new Set(selectedInterests);
-    if (newSelectedInterests.has(interest)) {
-      newSelectedInterests.delete(interest);
-    } else {
-      newSelectedInterests.add(interest);
-    }
-    setSelectedInterests(newSelectedInterests);
+    setSelectedInterests(prevSelectedInterests => {
+      const newSelectedInterests = new Set(prevSelectedInterests);
+      if (newSelectedInterests.has(interest)) {
+        newSelectedInterests.delete(interest);
+      } else {
+        newSelectedInterests.add(interest);
+      }
+      return newSelectedInterests;
+    });
   }, []);
-
+  // const InterestButton = React.lazy(() => import('./InterestButton'));
+  // const LazyInterestButton = (props: any) => (
+  //   <Suspense fallback={<Box />}>
+  //     <InterestButton {...props} />
+  //   </Suspense>
+  // );
   const renderInterestButton = useCallback((interest: any) => {
     const selected = selectedInterests.has(interest);
     return (

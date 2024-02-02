@@ -75,6 +75,7 @@ const Btn = ({
     borderTopRightRadius,
     borderBottomRightRadius,
     borderBottomLeftRadius,
+    activeOpacity = 0.7,
     ...rest
 }: Props) => {
     const insets = useSafeAreaInsets();
@@ -154,6 +155,7 @@ const Btn = ({
 
     return (
         <TouchableOpacity
+            activeOpacity={activeOpacity}
             onPress={onPress}
             disabled={disabled}
             style={blockStyles}
@@ -167,6 +169,7 @@ const Btn = ({
 export default React.memo(Btn);
 
 interface Props {
+    activeOpacity?: any,
     onPress?: any,
     disabled?: any,
     flex?: any,
