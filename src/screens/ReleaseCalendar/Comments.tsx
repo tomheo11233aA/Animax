@@ -266,7 +266,7 @@ const Comments = () => {
                             width={width - 120}
                             height={height / 100 * 7}
                             backgroundColor={'#35383F'}
-                            radius={width / 100 * 5}
+                            radius={width / 100 * 4}
                             padding={8}
                             paddingRight={40}
                             color={color.white}
@@ -282,7 +282,8 @@ const Comments = () => {
                         >
                             <Icon
                                 size={20}
-                                source={require('@images/detail/send.png')}
+                                tintColor={'#9e9e9e'}
+                                source={require('@images/detail/smile.png')}
                             />
                         </Btn>
                         <Btn
@@ -292,9 +293,9 @@ const Comments = () => {
                             backgroundColor={color.mainColor}
                         >
                             <Img
-                                source={require('@images/more-information.png')}
-                                width={20}
-                                height={20}
+                                source={require('@images/detail/send2.png')}
+                                width={24}
+                                height={24}
                                 tintColor={color.white}
                             ></Img>
                         </Btn>

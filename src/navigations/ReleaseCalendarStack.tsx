@@ -6,7 +6,11 @@ import Detail from '@screens/ReleaseCalendar/Detail'
 import Comments from '@screens/ReleaseCalendar/Comments'
 
 
-const Stack = createNativeStackNavigator()
+export type RootStackParamList = {
+    [key : string] : undefined
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const ReleaseCalendarStack = () => {
     return (
@@ -17,9 +21,9 @@ const ReleaseCalendarStack = () => {
                 }
             }
         >
-            {/* <Stack.Screen name={screens.RELEASE_CALENDAR} component={ReleaseCalendar} /> */}
-            {/* <Stack.Screen name={screens.DETAIL} component={Detail} /> */}
-            <Stack.Screen name={screens.SEE_ALL} component={Comments} />
+            <Stack.Screen name={screens.RELEASE_CALENDAR} component={ReleaseCalendar} />
+            <Stack.Screen name={screens.DETAIL} component={Detail} />
+            {/* <Stack.Screen name={screens.SEE_ALL} component={Comments} /> */}
         </Stack.Navigator>
     )
 }

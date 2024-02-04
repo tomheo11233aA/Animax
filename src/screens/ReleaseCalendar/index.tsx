@@ -22,8 +22,15 @@ import { AppDispatch } from '@redux/store/store';
 import { colors } from '@themes/colors'
 import { set } from 'lodash'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
+import {useNavigation,NavigationContainer, NavigationProp} from '@react-navigation/native'
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
+
+// export type RootStackParamList = {
+//   [key : string] : undefined
+// }
+
+// const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
 type ItemData = {
   id: number,
@@ -251,6 +258,7 @@ const ReleaseCalendar = () => {
   const flatListRef = useRef<FlatList<ItemData>>(null);
 
 
+
   useEffect(() => {
     const index = new Date().getDate() - 1;
     const dataLength = DATA.length;
@@ -348,12 +356,15 @@ const ReleaseCalendar = () => {
       : theme === 'dark' ? color.mainColor : color.mainColor;
     const check = isCheckItem ? true : false;
 
+    
 
     return (
       <ItemVideo
         item={item}
         onPress={() => toggleSelected(item.id, isCheck, setIsCheck)}
-        onPressDetail={() => navigate(screens.DETAIL)} //chuyển sang màn hình detail. truyền id của item qua màn hình detail
+        onPressDetail={
+          () => navigate(screens.DETAIL)
+        } //chuyển sang màn hình detail. truyền id của item qua màn hình detail
         backgroundColor={backgroundColor}
         textColor={textColor}
         borderColor={borderColor}
@@ -498,7 +509,7 @@ const DATA_VIDEO: itemDataVideo[] = [
     name: 'The Falcon and the Winter Soldier',
     image: 'https://www.themoviedb.org/t/p/w220_and_h330_face/6kbAMLteGO8yyewYau6bJ683sw7.jpg',
     Episodes: 6,
-    time: '2024-01-29 22:41',
+    time: '2024-02-04 22:41',
     showtimes: ['12', '13', '14', '15', '16', '17', '18', '19', '20', '21']
   },
   {

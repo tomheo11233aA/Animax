@@ -53,17 +53,17 @@ const Detail = () => {
 
   const navigation = useNavigation();
 
-  useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
-    navigation.getParent()?.setOptions({
-      tabBarStyle: {
-        display: 'none',
-      }
+  // useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
+  //   navigation.getParent()?.setOptions({
+  //     tabBarStyle: {
+  //       display: 'none',
+  //     }
 
-    });
-    return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
-      tabBarStyle: undefined
-    });
-  }, [navigation]);
+  //   });
+  //   return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
+  //     tabBarStyle: undefined
+  //   });
+  // }, [navigation]);
 
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
