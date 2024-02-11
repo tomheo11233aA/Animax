@@ -10,6 +10,11 @@ import Box from "@common/Box";
 import { StatusBar } from "react-native";
 import { themeUserSelector } from "@redux/selector/appSelector";
 import BiometricStack from "./Biomatric";
+import Detail from "@screens/ReleaseCalendar/Detail";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { NavigationContainer } from '@react-navigation/native';
+
+const Stack = createNativeStackNavigator()
 
 const Main = () => {
     const dispatch: AppDispatch = useAppDispatch()
@@ -31,6 +36,23 @@ const Main = () => {
             />
             <Box
                 flex={1}>
+                {/* <NavigationContainer>
+                    <Stack.Navigator
+                        screenOptions={{
+                            headerShown: false
+                        }}
+                    >
+                        {isUseBiometric ? (
+                            <Stack.Screen name="Biometric" component={BiometricStack} />
+                        ) : isLogin ? (
+                            <Stack.Screen name="Auth" component={AuthNavigation} />
+                        ) : (
+                            <Stack.Screen name="UnAuth" component={UnAuthNavigation} />
+                        )}
+                        <Stack.Screen name="Detail" component={Detail} />
+                    </Stack.Navigator>
+                </NavigationContainer> */}
+
                 {isUseBiometric ? <BiometricStack /> : isLogin ? <AuthNavigation /> : <UnAuthNavigation />}
             </Box>
         </>
