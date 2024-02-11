@@ -18,11 +18,16 @@ const InterestButton: React.FC<Props>= ({ onPress, selected, theme, interest }) 
   return (
     <Btn
       onPress={onPress}
-      marginRight={wp('3%')}
-      marginBottom={hp('2.5%')}
-      paddingVertical={hp('1%')}
-      paddingHorizontal={wp('5%')}
-      radius={wp('6%')}
+      // marginRight={wp('3%')}
+      // marginBottom={hp('2.5%')}
+      // paddingVertical={hp('1%')}
+      // paddingHorizontal={wp('5%')}
+      // radius={wp('6%')}
+      marginRight={12}
+      marginBottom={12}
+      paddingVertical={8}
+      paddingHorizontal={16}
+      radius={24}
       backgroundColor={selected ? colors.lMainColor : theme === 'light' ? colors.white : 'transparent'}
       borderWidth={1.5}
       borderColor={selected ? '#44d076' : colors.mainColor}

@@ -1,4 +1,4 @@
-import { StyleSheet, View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation-locker';
@@ -9,11 +9,13 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import { NativeModules } from 'react-native';
 import { AppState } from 'react-native';
 import ModalSpeed from './ModalSpeed';
-import { DeviceEventEmitter } from 'react-native';
-const { PipModule, AudioFocusModule, VideoNotificationModule } = NativeModules;
+import { PermissionsAndroid } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const MAX_NAME_LENGTH = 30;
+const { PipModule, AudioFocusModule, VideoNotificationModule } = NativeModules;
 const MediaPlayer = () => {
+    const { t } = useTranslation();
     useEffect(() => {
         requestAudioFocus();
         return () => {
@@ -61,10 +63,6 @@ const MediaPlayer = () => {
     //         }
     //     };
     // }, []);
-
-    useEffect(() => {
-    }, []);
-
     const [isPipMode, setIsPipMode] = useState(false);
     const [paused, setPaused] = useState(false);
     const [progress, setProgress] = useState({
@@ -84,11 +82,36 @@ const MediaPlayer = () => {
     const [volume, setVolume] = useState(1);
     const [isVolumeSliderVisible, setIsVolumeSliderVisible] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+    // useEffect(() => {
+    //     const title = data[currentVideoIndex].name;
+    //     const content = "Đang phát...";
+    //     VideoNotificationModule.showNotification(title, content);
+    // }, [currentVideoIndex]);
+    const handleNotification = async () => {
+        if (Platform.OS === 'ios') {
+            return;
+        }
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+            {
+                title: t('Notification'),
+                message: t('App wants to send notifications'),
+                buttonNeutral: t('Ask later'),
+                buttonNegative: t('No'),
+                buttonPositive: t('Yes'),
+            },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            const title = data[currentVideoIndex].name;
+            const content = "Đang phát...";
+            VideoNotificationModule.showNotification(title, content);
+        } else {
+            console.log('Notification permission denied');
+        }
+    }
     useEffect(() => {
-        const title = data[currentVideoIndex].name;
-        const content = "Đang phát...";
-        VideoNotificationModule.showNotification(title, content);
-    }, [currentVideoIndex]);
+        handleNotification();
+    }, []);
     const handleNextVideo = () => {
         if (currentVideoIndex < data.length - 1) {
             setCurrentVideoIndex(currentVideoIndex + 1);

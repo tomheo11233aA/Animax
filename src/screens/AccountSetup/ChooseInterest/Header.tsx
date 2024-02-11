@@ -42,7 +42,7 @@ const Header = () => {
       >
         {t('Choose your interests and get the best anime recommendations. Don’t worry, you can change them later.')}
       </Txt>
-      <Box
+      {/* <Box
         borderBottomWidth={1}
         borderColor={theme.line}
         paddingVertical={10}
@@ -76,7 +76,7 @@ const Header = () => {
             />
           </Box>
         </Btn>
-      </Box>
+      </Box> */}
     </>
   )
 }
