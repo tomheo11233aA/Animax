@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Box from '@common/Box'
 import Txt from '@common/Txt'
-import Btn from '@common/Btn'
-import Icon from '@common/Icon'
-import Input from '@common/Input'
 import { FlatList, Keyboard } from 'react-native'
 import { debounce } from 'lodash'
 import AxiosInstance from '@helper/AxiosInstance'
 import { useTheme } from '@hooks/redux'
 import { themeUserSelector } from '@redux/selector/appSelector'
-import { useAppSelector } from '@hooks/redux';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { AppDispatch } from '@redux/store/store'
+import { useAppSelector, useAppDispatch } from '@hooks/redux';
+import { searchAnimeAction } from '@redux/slice/animeSlice'
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '@themes/fonts'
-import { goBack } from '@utils/navigationRef'
-import { colors } from '@themes/colors'
 import LottieView from 'lottie-react-native'
 import useFormatName from '@utils/formatName'
 import useFormatCategory from '@utils/formatCategory'
@@ -21,6 +18,7 @@ import AnimeItem from '@screens/Home/AnimeItem'
 import { useTranslation } from 'react-i18next'
 import { searchAnimeSelector } from '@redux/selector/animeSelector'
 import { useHideNavigation } from '@themes/hideNavigation'
+import Header from './Header'
 
 const Search = () => {
     const { t } = useTranslation()
@@ -54,59 +52,26 @@ const Search = () => {
         }
         return debouncedSearch.cancel
     }, [search])
+    const dispatch: AppDispatch = useAppDispatch()
+    const checkSearch = () => {
+        if (searchAnime.length === 0) {
+            dispatch(searchAnimeAction())
+            console.log('searchAnime', searchAnime)
+        }
+    }
+    useEffect(() => {
+        checkSearch()
+    }, [])
     return (
         <Box
             flex={1}
             backgroundColor={color.bg}
         >
-            <Box
-                row={true}
-                padding={10}
-                marginTop={hp('4%')}
-                justifySpaceBetween={true}
-                alignCenter
-            >
-                <Btn
-                    marginRight={10}
-                    onPress={() => goBack()}>
-                    <Icon
-                        source={require('@images/home/back.png')}
-                        tintColor={theme === 'light' ? color.black3 : 'white'}
-                        size={24}
-                    />
-                </Btn>
-                <Input
-                    onChangeText={setSearch}
-                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
-                    radius={wp('4%')}
-                    height={hp(7)}
-                    width={'70%'}
-                    borderWidth={1}
-                    hint={'Eg. Naruto'}
-                    font={fonts.MAIN}
-                    hintColor={'#888888'}
-                    color={theme === 'light' ? color.black : color.white}
-                    iconOne={require('@images/home/search.png')}
-                    tintColor={theme === 'light' ? color.black3 : color.black}
-                    sizeIcon={18}
-                />
-                <Btn
-                    backgroundColor={'#e6feef'}
-                    radius={wp('5%')}
-                    style={{
-                        justifyContent: 'center',
-                        paddingHorizontal: 15,
-                        paddingVertical: 15
-                    }}
-                >
-                    <Icon
-                        source={require('@images/home/filter.png')}
-                        size={18}
-                        tintColor={colors.mainColor}
-                    />
-                </Btn>
-
-            </Box>
+            <Header
+                setSearch={setSearch}
+                theme={theme}
+                color={color}
+            />
             {loading ? (
                 <Box
                     absolute={true}

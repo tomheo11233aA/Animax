@@ -183,7 +183,6 @@ const Input = forwardRef<TextInput, Props>(({
             width={width}
             height={height}
             marginTop={marginTop}
-            paddingHorizontal={10}
             marginBottom={marginBottom}
             style={blockStyles} {...rest}
         >
@@ -208,9 +207,9 @@ const Input = forwardRef<TextInput, Props>(({
                     flex: 1,
                     color: color,
                     fontSize: fontSize,
-                    marginHorizontal: 10,
                     fontWeight: fontWeight,
                     fontFamily: font,
+                    width: '100%',
                 }}
                 value={value}
                 onChangeText={onChangeText}

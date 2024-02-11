@@ -82,11 +82,6 @@ const MediaPlayer = () => {
     const [volume, setVolume] = useState(1);
     const [isVolumeSliderVisible, setIsVolumeSliderVisible] = useState(false);
     const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-    // useEffect(() => {
-    //     const title = data[currentVideoIndex].name;
-    //     const content = "Đang phát...";
-    //     VideoNotificationModule.showNotification(title, content);
-    // }, [currentVideoIndex]);
     const handleNotification = async () => {
         if (Platform.OS === 'ios') {
             return;
