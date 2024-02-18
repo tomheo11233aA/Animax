@@ -15,6 +15,7 @@ import DownloadStack from './DownloadStack'
 import MyListStack from './MyListStack'
 import ProfileStack from './ProfileStack'
 import ReleaseCalendarStack from './ReleaseCalendarStack'
+import ForgotPassword from '@screens/AccountSetup/FogotPassword'
 
 const Tab = createBottomTabNavigator()
 const AuthNavigation = () => {
@@ -46,7 +47,8 @@ const AuthNavigation = () => {
         {
             sizeIcon: 18,
             title: 'My List',
-            component: MyListStack,
+            // component: MyListStack,
+            component: ForgotPassword,
             name: screens.MY_LIST_STACK,
             icon: require('@images/auth/mark.png'),
             icon2: require('@images/auth/mark2.png'),
