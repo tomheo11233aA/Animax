@@ -1,183 +1,404 @@
-# Lưu ý sử dụng trong dự án
+# Bee English
 
-## Sử dụng `KeyBoardSafe`
+## Contents
 
-Trong tất cả các màn hình của ứng dụng, bạn **phải** sử dụng component `KeyBoardSafe` từ `@components/reuse/KeyBoardSafe.tsx`. `KeyBoardSafe` giúp quản lý việc hiển thị bàn phím ảo một cách thông minh, tránh việc che khuất nội dung.
+1. [Technical](#technical)
+2. [Project Scaffolding](#project-scaffolding)
+3. [Alias](#alias)
+4. [Core Component](#core-component)
+5. [Custom Component](#custom-component)
+6. [🚀 Getting Started](#-getting-started)
+7. [How to create new Service](#how-to-create-new-service)
+8. [How to create new Flow](#how-to-create-new-flow)
+9. [How to use Lottie Animation](#how-to-use-lottie-animation-)
 
-Ví dụ sử dụng:
-```jsx
-import KeyBoardSafe from '@components/reuse/KeyBoardSafe';
+## Technical
 
-const YourScreen = () => {
-return (
-<KeyBoardSafe>
-{/ Nội dung của màn hình /}
-</KeyBoardSafe>
-);
-};
+- Package Management
+  - [Yarn](https://yarnpkg.com/)
+- State Management
+  - [Redux](https://redux-toolkit.js.org/introduction/getting-started)
+- Routing and Navigation
+  - [React Navigation](https://reactnavigation.org/docs/getting-started) for native mobile
+- Connect API
+  - [Axios](https://axios-http.com/vi/docs/intro)
+- Local Storage
+  - [MMKV](https://github.com/mrousavy/react-native-mmkv) for React Native
+  - [Redux Persist](https://github.com/rt2zz/redux-persist)
+- Animation Handler
+  - [Reanimated3](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/)
+  - [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/)
+  - [React Native Animated API](https://reactnative.dev/docs/animated)
+  - [Lottie](https://airbnb.io/lottie/#/react-native) for React Native
+
+## Project Scaffolding
+
+```bash
+src
+├── @type                     #define commons type use in project
+├── assets                    #contain file image, svg, animation config, ... in project
+│
+├── components
+│   ├── bases                 #define base component for project
+│   ├── commons               #define custom component for project
+│   └── utils                 #define utils for component
+│
+├── hooks                     #define custom hook
+├── navigation
+│   ├── index.ts              #export all method, variable, and components
+│   ├── routes.ts             #define all screen route in project
+│   ├── RootStack.tsx         #contain all stack in project
+│   ├── RootApp.tsx           #contain RootStack, loading modal, message modal
+│   └── NavigationService.ts  #define 'navigationRef' and all method to interact with it
+│
+├── redux                     #define all end point for api
+│   ├── reducers              #define all reducer in project
+│   ├── store                 #define store for project with Redux Persist - MMKV storage
+│   └── selectors             #define all selector in project
+│
+├── screens
+│   ├── HomeScreen
+│   │   ├── components        #define common component for screen
+│   │   ├── index.tsx         #define and export screen component
+│   │   └── type.ts           #define common type for screen
+│   ├── ...
+│   └── index.ts              #export all screen
+│
+├── services
+│   ├── PokemonService.ts     #define all method to connect api of service
+│   ├── ...
+│   └── index.ts              #export all service
+│
+├── themes
+│   ├── baseStyles.ts         #define base style for style sheet create by method 'makeStyles'
+│   ├── colors.ts             #define color palette
+│   ├── font.ts               #define font, fontSize in project
+│   ├── normalize.ts          #define responsive method
+│   ├── style.ts              #define utils, type, hook for style of project theme
+│   └── index.ts              #export all theme method and constants
+│
+├── utils
+│   ├── ...
+│   └── helper.ts             #define helper function for project
+│
+└── App.tsx
 ```
 
-## Sử dụng `Box` từ `@components/common/Box`
+## Alias
 
-`Box` là một component được tạo ra để thay thế cho `View` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng.
+- @type: ./src/@type
+- @assets: ./src/assets
+- @components: ./src/components
+- @hooks: ./src/hooks
+- @navigation: ./src/navigation
+- @redux: ./src/redux
+- @screens: ./src/screens
+- @themes: ./src/themes
+- @utils: ./src/utils
+- @services: ./src/services
+- @i18n: ./src/i18n
 
-Cách sử dụng `Box`:
-```jsx
-import Box from '@components/common/Box';
-import { colors } from '@theme/colors';
+## Core Component
 
-const Example = () => {
-return (
-<Box
-flex={1}
-alignCenter
-justifyCenter
-backgroundColor={colors.white}
-// Thêm row để set flexDirection là 'row'
-// row
->
-{/ Nội dung bên trong /}
-</Box>
-);
-};
+- Container
+- Block
+- Text
+- TextInput
+- Image
+- StatusBar
+
+## Custom Component
+
+- Circle Progress
+
+  - **Props**
+
+    | Name                                    | Type                   | Default value | Require |
+    | --------------------------------------- | ---------------------- | ------------- | ------- |
+    | step                                    | `number`               |               | ✅      |
+    | totalStep                               | `number`               |               | ✅      |
+    | size                                    | `number`               |               | ✅      |
+    | strokeWidth                             | `number`               | 10            |         |
+    | totalStepColor                          | `string`               | `orange`      |         |
+    | stepColor                               | `string`               | `greyLight`   |         |
+    | progressContainerStyles                 | `StyleProp<ViewStyle>` | `{}`          |         |
+    | progressValueProps                      | `CommonTextProps`      | `undefined`   |         |
+    | onCompleteAnimation(isFinish?: boolean) | `Function`             | `()=>{}`      |         |
+
+  - **How to use**
+
+    ```javascript
+    <CircleProgress size={150} step={50} totalSteps={100} strokeWidth={10} />
+    ```
+
+- Progress
+
+  - **Props**
+
+    | Name                                    | Type                   | Default value | Require |
+    | --------------------------------------- | ---------------------- | ------------- | ------- |
+    | step                                    | `number`               |               | ✅      |
+    | totalStep                               | `number`               |               | ✅      |
+    | strokeHeight                            | `number`               | 10            |         |
+    | totalStepColor                          | `string`               | `orange`      |         |
+    | stepColor                               | `string`               | `greyLight`   |         |
+    | progressContainerStyles                 | `StyleProp<ViewStyle>` | `{}`          |         |
+    | onCompleteAnimation(isFinish?: boolean) | `Function`             | `()=>{}`      |         |
+
+  - **How to use**
+
+    ```javascript
+    <Progress
+      strokeHeight={10}
+      step={80}
+      totalSteps={100}
+      progressContainerStyles={{
+        paddingHorizontal: 10,
+      }}
+    />
+    ```
+
+- LinearGradient
+
+  - **Props**
+
+    | Name           | Type                                   | Default value | Require |
+    | -------------- | -------------------------------------- | ------------- | ------- |
+    | colors         | `string[]`                             |               | ✅      |
+    | containerStyle | `StyleProp<ViewStyle>`                 | `{}`          |         |
+    | orientation    | `horizontal` or `vertical` or `number` | `vertical`    |         |
+    | revers         | `boolean`                              | `false`       |         |
+    | transform      | `Partial<TransformedProps>`            | `{}`          |         |
+
+  - **How to use**
+
+    ```javascript
+    <LinearGradient
+      colors={['#FFEFAD', '#FFC107']}
+      containerStyle={{flex: 1}}
+      transform={{rotation: 20}}
+    />
+    ```
+
+- ShadowBlock
+
+  - **Props**
+
+    - **Component is extended all props from `Block` component**
+    - **External Props**
+
+    | Name                       | Type              | Default value | Require |
+    | -------------------------- | ----------------- | ------------- | ------- |
+    | shadowHeight               | `number`          | 5             |         |
+    | shadowPosition             | `top` or `bottom` | `bottom`      |         |
+    | shadowLabel                | `string`          | `undefined`   |         |
+    | shadowLabelTextStyle       | `CommonTextProps` | `undefined`   |         |
+    | shadowLabelContainerStyle  | `BlockProps`      | `undefined`   |         |
+    | shadowBackgroundColor      | `string`          | `#ccc`        |         |
+    | containerPaddingVertical   | `number`          | `undefined`   |         |
+    | containerPaddingHorizontal | `number`          | `undefined`   |         |
+    | containerPaddingRight      | `number`          | `undefined`   |         |
+    | containerPaddingLeft       | `number`          | `undefined`   |         |
+    | containerPaddingTop        | `number`          | `undefined`   |         |
+    | containerPaddingBottom     | `number`          | `undefined`   |         |
+
+  - **How to use**
+
+    ```javascript
+    <ShadowBlock
+      row
+      marginTop={20}
+      space="between"
+      paddingHorizontal={20}
+      containerPaddingHorizontal={20}>
+      <Block width={10} height={10} backgroundColor="red" />
+      <Progress
+        step={10}
+        totalSteps={100}
+        strokeHeight={10}
+        progressContainerStyles={{
+          flex: 1,
+          marginStart: 10,
+        }}
+      />
+    </ShadowBlock>
+    ```
+
+- ShadowButton
+
+  - **Props**
+
+    - **Component is extended all props from `Pressable` (native component from ReactNative) component**
+    - **External Props**
+
+    | Name              | Type                    | Default value | Require |
+    | ----------------- | ----------------------- | ------------- | ------- |
+    | buttonWidth       | `number` or `string`    | 5             |         |
+    | buttonHeight      | `number` or `string`    | `#ccc`        |         |
+    | buttonBorderSize  | `number`                | `undefined`   |         |
+    | buttonBorderColor | `string` or `ReactNode` | `undefined`   |         |
+    | containerStyle    | `StyleProp<ViewStyle>`  | `undefined`   |         |
+    | shadowHeight      | `number`                | 5             |         |
+    | buttonRadius      | `number`                | 5             |         |
+    | buttonColor       | `string`                | `primary`     |         |
+    | disabled          | `boolean`               | `undefined`   |         |
+    | shadowButtonColor | `string`                | `greyLight`   |         |
+
+  - **How to use**
+
+    ```javascript
+    <ShadowButton
+      buttonHeight={45}
+      buttonBorderSize={2}
+      buttonBorderColor={
+        <Block style={StyleSheet.absoluteFill}>
+          <LinearGradient
+            colors={['#FFEFAD', '#FFC107']}
+            containerStyle={{width: '100%', height: '100%'}}
+          />
+        </Block>
+      }
+      shadowHeight={10}
+      buttonRadius={8}
+      shadowButtonColor="#FFC107"
+      buttonColor="#FFEFAD"
+      onPress={() => {
+        console.log('press');
+      }}
+    />
+    ```
+
+- Modal
+
+  - **Props**
+
+    | Name      | Type                          | Default value  | Require |
+    | --------- | ----------------------------- | -------------- | ------- |
+    | children  | `ReactNode`                   | `auto produce` | ✅      |
+    | position  | `top` or `bottom` or `center` | `bottom`       |         |
+    | onShow    | `void function`               | `undefined`    |         |
+    | onDismiss | `void function`               | `undefined`    |         |
+
+  - **How to use**
+  - Wrap the component as a container to use
+
+  ```javascript
+  const modalRef = useRef<ModalFunction>(null)
+  const handleOpen = useCallback(() => {
+  modalRef.current?.openModal()
+  }, [])
+  const handleDismiss = useCallback(() => {
+  modalRef.current?.dismissModal()
+  }, [])
+  const onShow = useCallback(() => {
+  console.log('Modal opened')
+  }, [])
+  const onDissmiss = useCallback(() => {
+  console.log('Modal closed')
+  }, [])
+  return (
+         <Modal
+          position="bottom"
+          ref={modalRef}
+          onShow={onShow}
+          onDismiss={onDismiss}
+        >
+         You code here
+        </Modal>
+  ```
+
+- LineChart
+
+  - **Props**
+
+    | Name                 | Type             | Default value | Require |
+    | -------------------- | ---------------- | ------------- | ------- |
+    | data                 | `Array`          | `undefined`   | ✅      |
+    | width                | `number`         | `undefined`   | ✅      |
+    | height               | `number`         | `undefined`   | ✅      |
+    | precision            | `number`         | 0             |         |
+    | haveVerticalGuides   | `boolean`        | `false`       |         |
+    | haveHorizontalGuides | `boolean`        | `false`       |         |
+    | haveXAxis            | `boolean`        | `false`       |         |
+    | haveYAxis            | `boolean`        | `false`       |         |
+    | axisStrokeWidth      | `number`         | 0.5           |         |
+    | axisStrokeColor      | `string`         | `#E5E5E5`     |         |
+    | haveDots             | `boolean`        | `false`       |         |
+    | dotsColor            | `string`         | `##FFC107`    |         |
+    | dotsStrokeColor      | `string`         | `#FFFFFF`     |         |
+    | dotsStrokeWidth      | `number`         | 2             |         |
+    | rDots                | `number`         | 8             |         |
+    | labelColor           | `string`         | `#171725`     |         |
+    | labelFontSize        | `string`         | `h5`          |         |
+    | labelFontFamily      | `string`         | `semibold`    |         |
+    | lineColor            | `string`         | `#FFEFAD`     |         |
+    | lineWidth            | `number`         | 2             |         |
+    | onItemClick          | `void functioin` | `undefined`   |         |
+
+  - **How to use**
+  - Line chart will be changed based on the data provided
+
+  ```javascript
+  const data = [
+    { id: 0, label: 'Mon', x: 0, y: 0 },
+    { id: 1, label: 'Tues', x: 1, y: 4 },
+    { id: 2, label: 'Wed', x: 2, y: 30 },
+    { id: 3, label: 'Thur', x: 3, y: 15 },
+    { id: 4, label: 'Fri', x: 4, y: 40 },
+    { id: 5, label: 'Sat', x: 5, y: 50 },
+    { id: 6, label: 'Sun', x: 6, y: 40 },
+  ]
+  <LineChart
+    width={widthScreen}
+    height={300}
+    data={data}
+    haveDots
+    haveXAxis
+    haveHorizontalGuides
+    lineColor="#FFEFAD"
+    onItemClick={handleItemClick}
+      />
+  ```
+
+## 🚀 Getting Started
+
+### 1. Installation
+
+```bash
+yarn install
+
+# To build iOS app
+
+cd ios
+pod install
+cd ..
 ```
 
+### 2. Run Android
 
-Nhớ thêm `row` vào props của `Box` nếu bạn muốn sử dụng `flexDirection: 'row'`.
-
-## Custom màu sắc theo Theme
-
-Khi bạn muốn custom màu sắc cho các màn hình theo theme (sáng/tối), bạn cần sử dụng `themeUserSelector` để lấy thông tin theme hiện tại và `useAppSelector` để kết nối với Redux store.
-
-Đầu tiên, import các hook từ thư viện Redux:
-
-import { useAppSelector } from '@hooks/redux';
-import { themeUserSelector } from '@redux/selector/appSelector';
-
-Sau đó, bạn có thể sử dụng `themeUserSelector` trong component của mình để lấy theme hiện tại:
-const theme = useAppSelector(themeUserSelector);
-
-Với giá trị `theme` thu được, bạn có thể điều chỉnh màu sắc của các component dựa trên theme. Ví dụ, nếu bạn muốn set màu nền cho `Box`:
-
-```jsx
-import Box from '@components/common/Box';
-import { useAppSelector } from '@hooks/redux';
-import { themeUserSelector } from '@redux/selector/appSelector';
-import Box from '@components/common/Box';
-import { colors } from '@theme/colors';
-
-const ExampleComponent = () => {
-const theme = useAppSelector(themeUserSelector);
-
-return (
-<Box
-flex={1}
-alignCenter
-justifyCenter
-backgroundColor={theme === 'light' ? colors.lightBackground : colors.darkBackground}
-// Thêm row nếu muốn flexDirection là 'row'
-// row
->
-{/ Nội dung bên trong /}
-</Box>
-);
-};
+```bash
+yarn android
 ```
 
+### 3. Run IOS
 
-Trong ví dụ trên, `Box` sẽ có màu nền tương ứng với theme sáng hoặc tối. Bạn cần đảm bảo rằng các màu sắc đã được định nghĩa trong `@theme/colors`.
-
-Nhớ rằng, mọi thay đổi màu sắc theo theme cần được áp dụng một cách nhất quán trong toàn bộ ứng dụng để đảm bảo trải nghiệm người dùng tốt nhất.
-
-## Sử dụng `Txt` từ `@components/common/Txt`
-
-`Txt` là một component được tạo ra để thay thế cho `Text` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng và hỗ trợ theming.
-
-Cách sử dụng `Txt`:
-
-```jsx
-import Txt from '@components/common/Txt';
-
-const ExampleText = () => {
-return (
-<Txt
-size={16}
-color="blue"
-center
-// Các props khác theo nhu cầu
->
-Đây là văn bản mẫu
-</Txt>
-);
-};
+```bash
+yarn ios
 ```
 
-Nhớ thêm các props tùy chỉnh khác vào `Txt` để điều chỉnh theo nhu cầu của bạn.
+## How to create new Service
 
-## Sử dụng `Btn` từ `@components/common/Btn`
+1. Go to `sevice` folder and define new Service
+2. To export all services from new services, use exported values in the `index` file.
 
-`Btn` là một component được tạo ra để thay thế cho `TouchableOpacity` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng và hỗ trợ theming.
+## How to create new `Flow`
 
-Cách sử dụng `Btn`:
+1. Go to `screens` folder and define new component
+2. Config the `screen` name route at `src/navigation/routes`
+3. Config the new screen route at `src/navigation/RootStack`
 
-```jsx
-import Btn from '@components/common/Btn';
+## How to use Lottie Animation ?
 
-const ExampleButton = () => {
-return (
-<Btn
-onPress={() => console.log('Button pressed')}
-backgroundColor="red"
-padding={10}
-radius={5}
-// Các props khác theo nhu cầu
->
-Nhấn vào đây
-</Btn>
-);
-};
-```
-Nhớ thêm các props tùy chỉnh khác vào `Btn` để điều chỉnh theo nhu cầu của bạn.
+- Official [document](https://airbnb.io/lottie/#/react-native) from Lottie
 
-## Sử dụng `Scroll` từ `@components/common/Scroll`
-`Scroll` là một component được tạo ra để thay thế cho `ScrollView` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng.
-
-Cách sử dụng `Scroll`:
-```jsx
-import Scroll from '@components/common/Scroll';
-
-const ExampleScroll = () => {
-return (
-<Scroll
-horizontal
-showsHorizontalScrollIndicator={false}
-// Các props khác theo nhu cầu
->
-{/ Nội dung bên trong Scroll /}
-</Scroll>
-);
-};
-```
-
-Nhớ thêm các props tùy chỉnh khác vào `Scroll` để điều chỉnh theo nhu cầu của bạn.
-
-## Sử dụng `Input` từ `@components/common/Input`
-
-`Input` là một component được tạo ra để thay thế cho `TextInput` mặc định của React Native, với các props được tùy chỉnh sẵn để dễ dàng sử dụng và hỗ trợ theming.
-
-Cách sử dụng `Input`:
-```jsx
-import Input from '@components/common/Input';
-
-const ExampleInput = () => {
-return (
-<Input
-value={yourValue}
-onChangeText={yourOnChangeTextFunction}
-hint="Nhập văn bản"
-// Các props khác theo nhu cầu
-/>
-);
-};
-```
-Nhớ thêm các props tùy chỉnh khác vào `Input` để điều chỉnh theo nhu cầu của bạn.
+**From [Youth-Tech](https://github.com/Youth-Tech) with 💖**
