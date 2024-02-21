@@ -10,7 +10,11 @@ import { Provider } from 'react-redux';
 import i18n from './src/language/i18n'
 import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
+GoogleSignin.configure({
+    webClientId: '940606664427-ir2h25aaf9m2amnhol7ukutgf62ino6d.apps.googleusercontent.com',
+});
 const Root = () => {
     return (
         <Provider store={store}>

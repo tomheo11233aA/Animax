@@ -33,7 +33,6 @@ interface Props {
 
 const SeeAll: React.FC<Props> = ({ route }) => {
   const { t } = useTranslation()
-  useHideNavigation()
   const theme = useTheme()
   const [loading, setLoading] = useState(false);
   const dispatch: AppDispatch = useAppDispatch()

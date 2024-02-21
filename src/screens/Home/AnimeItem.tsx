@@ -2,6 +2,7 @@ import { Dimensions } from 'react-native'
 import React from 'react'
 import Box from '@common/Box'
 import Img from '@common/Img'
+import LazyLoadImg from '@common/LazyLoadImg'
 import Txt from '@common/Txt'
 import Btn from '@common/Btn'
 import Icon from '@common/Icon'
@@ -28,12 +29,12 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
             marginHorizontal={hp(2.5)}
             row
         >
-            <Img
+            <LazyLoadImg
                 width={width / 2 - 30}
                 height={height / 3.8}
                 radius={10}
                 source={{ uri: item.images.jpg.image_url }}
-            ></Img>
+            />
 
             <Box
                 marginLeft={wp(5)}

@@ -24,6 +24,7 @@ module.exports = {
           "@asyncThunk": "./src/redux/asyncThunk",
           '@helper': './src/helper',
           '@function': './src/function',
+          '@env': './env'
         }
       }
     ]

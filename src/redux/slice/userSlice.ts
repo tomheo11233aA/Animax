@@ -1,6 +1,5 @@
 import { ILanguage, IUSerSlice } from "src/model/user";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState: IUSerSlice = {
     isLogin: false,
@@ -10,6 +9,7 @@ const initialState: IUSerSlice = {
         image: require('@images/unAuth/america.png'),
     },
     theme: 'light',
+    globalLoading: false,
 };
 
 const userSlice = createSlice({
@@ -25,6 +25,9 @@ const userSlice = createSlice({
         setTheme: (state, action: PayloadAction<'dark' | 'light'>) => {
             state.theme = action.payload;
         },
+        setGlobalLoading: (state, action: PayloadAction<boolean>) => {
+            state.globalLoading = action.payload;
+        },
     },
 });
 
@@ -32,6 +35,7 @@ export const {
     setLanguage,
     setLogin,
     setTheme,
+    setGlobalLoading,
 } = userSlice.actions;
 
 export default userSlice

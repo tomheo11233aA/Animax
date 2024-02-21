@@ -17,45 +17,31 @@ import { themeUserSelector } from '@redux/selector/appSelector'
 import { useAppSelector } from '@hooks/redux'
 import { useTheme } from '@hooks/redux'
 //google, facebook
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useLogger, ANSI_COLOR_CODES } from '@utils/logger'
+
 
 
 const Signinsocial = () => {
     const { t } = useTranslation()
     const theme = useAppSelector(themeUserSelector)
     const color = useTheme()
+    const logger = useLogger('Signinsocial', ANSI_COLOR_CODES.fgYellow)
 
-    useEffect(() => {
-        GoogleSignin.configure();
-    }, [])
+    const handleLoginWithGoogle = async () => {
+        await GoogleSignin.hasPlayServices({
+            showPlayServicesUpdateDialog: true,
+        })
 
-    const signInGoogle = useCallback(async () => {
         try {
-            await GoogleSignin.hasPlayServices();
-            await GoogleSignin.signOut();
-            const userInfo = await GoogleSignin.signIn();
-            console.log('google login userInfo:', userInfo)
-            //   setState({ userInfo });
+            await GoogleSignin.signIn()
+            const userInfo = await GoogleSignin.signIn()
+            logger(userInfo)
         } catch (error: any) {
-            switch (error.code) {
-                case statusCodes.SIGN_IN_CANCELLED:
-                  console.log('SIGN_IN_CANCELLED')
-                  // sign in was cancelled
-                  break;
-                case statusCodes.IN_PROGRESS:
-                  console.log('IN_PROGRESS')
-                  // operation (e.g. sign in) already in progress
-                  break;
-                case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-                  console.log('PLAY_SERVICES_NOT_AVAILABLE')
-                  // android only
-                  break;
-                default:
-                  // some other error happened
-                  console.error('signInGoogle', error);
-              }
+            logger(error)
         }
-    }, [])
+
+    }
 
     return (
         <KeyBoardSafe>
@@ -115,7 +101,8 @@ const Signinsocial = () => {
                         alignCenter
                         justifyCenter
                         borderWidth={1}
-                        onPress={signInGoogle}
+                        // onPress={signInGoogle}
+                        onPress={handleLoginWithGoogle}
                     >
                         <Img
                             width={wp('5%')}

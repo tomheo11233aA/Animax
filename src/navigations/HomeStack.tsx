@@ -16,7 +16,6 @@ const HomeStack = () => {
             animation: 'ios'
         }}>
             <Stack.Screen name={screens.HOME} component={Home} />
-            <Stack.Screen name={screens.SEE_ALL} component={SeeAll as any} />
             <Stack.Screen name={screens.SEARCH} component={Search} />
             <Stack.Screen name={screens.FILTER} component={Filter} />
         </Stack.Navigator>

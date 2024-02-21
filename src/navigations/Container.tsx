@@ -7,6 +7,7 @@ import Hello from "@screens/Hello";
 import Main from "./Main";
 import Appearance from "@screens/Appearance";
 import UnAuthNavigation from "./UnAuthNavigation";
+import SeeAll from "@screens/Home/SeeAll";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -17,6 +18,7 @@ const Container = () => {
                 <Stack.Screen name={screens.MAIN} component={Main} />
                 <Stack.Screen name={screens.APPEARANCE} component={Appearance} />
                 <Stack.Screen name={screens.STACK_UNAUTH} component={UnAuthNavigation} />
+                <Stack.Screen name={screens.SEE_ALL} component={SeeAll as any} />
             </Stack.Navigator>
         </NavigationContainer>
     )

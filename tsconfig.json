@@ -5,27 +5,28 @@
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
     /* Completeness */
-    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "baseUrl": ".",
-      "paths": {
-        "@redux/*": ["./src/redux/*"],
-        "@hooks/*": ["./src/hooks/*"],
-        "@utils/*": ["./src/utils/*"],
-        "@models/*": ["./src/models/*"],
-        "@themes/*": ["./src/themes/*"],
-        "@screens/*": ["./src/screens/*"],
-        "@slice/*": ["./src/redux/slice/*"],
-        "@services/*": ["./src/services/*"],
-        "@contants/*": ["./src/contants/*"],
-        "@images/*": ["./src/assets/images/*"],
-        "@reuse/*": ["./src/components/reuse/*"],
-        "@lotties/*": ["./src/assets/lotties/*"],
-        "@selector/*": ["./src/redux/selector/*"],
-        "@navigations/*": ["./src/navigations/*"],
-        "@common/*": ["./src/components/common/*"],
-        "@asyncThunk/*": ["./src/redux/asyncThunk/*"],
-        "@helper/*": ["./src/helper/*"],
-        "@fuction/*": ["./src/fuction/*"],
-      }
+    "paths": {
+      "@redux/*": ["./src/redux/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@models/*": ["./src/models/*"],
+      "@themes/*": ["./src/themes/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@slice/*": ["./src/redux/slice/*"],
+      "@services/*": ["./src/services/*"],
+      "@contants/*": ["./src/contants/*"],
+      "@images/*": ["./src/assets/images/*"],
+      "@reuse/*": ["./src/components/reuse/*"],
+      "@lotties/*": ["./src/assets/lotties/*"],
+      "@selector/*": ["./src/redux/selector/*"],
+      "@navigations/*": ["./src/navigations/*"],
+      "@common/*": ["./src/components/common/*"],
+      "@asyncThunk/*": ["./src/redux/asyncThunk/*"],
+      "@helper/*": ["./src/helper/*"],
+      "@fuction/*": ["./src/fuction/*"],
+      "@env/*": ["./env/*"]
+    }
   }
 }
