@@ -26,6 +26,8 @@ import Icon from '@common/Icon';
 import Btn from '@common/Btn';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { Notification } from 'iconsax-react-native';
 
 const Home = () => {
   const { t } = useTranslation()
@@ -112,10 +114,7 @@ const Home = () => {
               width={40}
               height={40}
             >
-              <Icon
-                source={require('@images/home/search.png')}
-                size={20}
-              />
+              <AntDesign name="search1" size={20} color="white" />
             </Btn>
 
             <Btn
@@ -124,10 +123,7 @@ const Home = () => {
               height={40}
               marginLeft={20}
             >
-              <Icon
-                source={require('@images/auth/bell.png')}
-                size={20}
-              />
+              <Notification color={'white'} size={20} />
             </Btn>
           </Box>
         </Box>

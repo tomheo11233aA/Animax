@@ -32,11 +32,11 @@ const Form = () => {
 
       <View style={styles.infoBox}>
         <View style={styles.iconContainer}>
-        <Icon
-                source={require('@images/message.png')}
-                size={25} 
-                tintColor="#41ab67"
-                />
+          <Icon
+            source={require('@images/message.png')}
+            size={25}
+            tintColor="#41ab67"
+          />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.infoText}>via SMS:</Text>
@@ -45,11 +45,11 @@ const Form = () => {
       </View>
       <View style={styles.infoBox}>
         <View style={styles.iconContainer}>
-        <Icon
-                source={require('@images/email.png')}
-                size={25} 
-                tintColor="#41ab67"
-                />
+          <Icon
+            source={require('@images/email.png')}
+            size={25}
+            tintColor="#41ab67"
+          />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.infoText}>via Email:</Text>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     borderColor: '#00FF00',
   },
   iconContainer: {
-    backgroundColor: '#00FF00', 
+    backgroundColor: '#00FF00',
     padding: 10,
     borderRadius: 50,
     marginRight: 15,

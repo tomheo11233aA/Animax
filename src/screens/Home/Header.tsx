@@ -8,6 +8,10 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useTheme } from '@hooks/redux'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import IonIcon from 'react-native-vector-icons/Ionicons'
+import { themeUserSelector } from '@redux/selector/appSelector'
+import { useAppSelector } from '@hooks/redux'
 
 interface Props {
     title: string
@@ -16,6 +20,7 @@ interface Props {
 
 const Header: React.FC<Props> = ({ title, t }) => {
     const theme = useTheme()
+    const themeUser = useAppSelector(themeUserSelector)
     return (
         <Box
             row
@@ -30,10 +35,7 @@ const Header: React.FC<Props> = ({ title, t }) => {
                     onPress={() => goBack()}
                     padding={10}
                 >
-                    <Icon
-                        source={require('@images/home/back.png')}
-                        size={20}
-                    />
+                    <IonIcon name="arrow-back-outline" size={20} color={themeUser === 'dark' ? 'white' : 'black'} />
                 </Btn>
                 <Txt
                     color={theme.black}
@@ -48,9 +50,12 @@ const Header: React.FC<Props> = ({ title, t }) => {
                 padding={10}
                 onPress={() => navigate(screens.SEARCH)}
             >
-                <Icon
+                {/* <Icon
                     source={require('@images/home/search.png')}
                     size={20}
+                /> */}
+                <AntDesign name="search1" size={20}
+                    color={themeUser === 'dark' ? 'white' : 'black'}
                 />
             </Btn>
         </Box>
