@@ -5,15 +5,18 @@
 import { AppRegistry, Text } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
-import store from '@redux/store/store';
+import store, { persistor } from '@redux/store/store';
 import { Provider } from 'react-redux';
 import i18n from './src/language/i18n'
 import React from 'react';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const Root = () => {
     return (
         <Provider store={store}>
-            <App />
+            <PersistGate loading={null} persistor={persistor}>
+                <App />
+            </PersistGate>
         </Provider>
     );
 };
