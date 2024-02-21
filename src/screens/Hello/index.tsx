@@ -17,13 +17,14 @@ import { AppDispatch } from '@redux/store/store'
 import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
 import LogoLight from '../../assets/images/svg/aniflix-light.svg'
 import LogoDark from '../../assets/images/svg/aniflix-dark.svg'
-import { themeUserSelector } from '@redux/selector/appSelector'
+import { languageUserSelector, themeUserSelector } from '@redux/selector/appSelector'
 
 const Hello = () => {
   const dispatch: AppDispatch = useAppDispatch()
   const { i18n } = useTranslation()
   const navigation = useNavigation<any>()
   const theme = useAppSelector(themeUserSelector)
+  const language = useAppSelector(languageUserSelector)
 
   useEffect(() => {
     const fetchAnime = async () => {
@@ -41,12 +42,12 @@ const Hello = () => {
     };
     fetchAnime().then(() => {
       const timeOut = setTimeout(async () => {
-        const lng = localStorage.getString(keys.LANGUAGE) || 'en'
+        const lng = language.value
         i18n.changeLanguage(lng)
         const lngObj = convertLanguage(lng)
         dispatch(setLanguage(lngObj))
-        const theme = (localStorage.getString(keys.THEME) || 'light') as 'dark' | 'light';
-        dispatch(setTheme(theme));
+        const appTheme = theme || 'light'
+        dispatch(setTheme(appTheme));
         navigation.replace(screens.MAIN)
       }, 250)
 

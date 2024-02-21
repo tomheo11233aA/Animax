@@ -7,7 +7,7 @@ export interface IUSerSlice {
 }
 
 export interface ILanguage {
-    title: string,
+    title?: string,
     value: string,
-    image: ImageSourcePropType,
+    image?: ImageSourcePropType,
 }

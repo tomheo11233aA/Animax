@@ -12,6 +12,7 @@ import {
     REHYDRATE,
 } from "redux-persist";
 import reduxStorage from "@utils/localStorage";
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
 const rootReducer = combineReducers({
     user: userSlice.reducer,
@@ -22,9 +23,9 @@ const persistConfig = {
     key: "root",
     version: 1,
     storage: reduxStorage,
-    timeout: 0,
+    timeout: 30000,
     blacklist: [],
-    whitelist: [],
+    whitelist: ["user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

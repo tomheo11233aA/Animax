@@ -18,6 +18,7 @@ import LottieView from 'lottie-react-native'
 import { Modal, Portal } from 'react-native-paper'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 
+
 const LIGHT = 'Light Mode'
 const DARK = 'Dark Mode'
 
@@ -33,7 +34,6 @@ const Appearance = () => {
     setFakeLoading(true)
     setTimeout(() => {
       const payload = value === LIGHT ? 'light' : 'dark'
-      localStorage.set(keys.THEME, payload)
       dispatch(setTheme(payload))
       setFakeLoading(false)
     }, 3000)
