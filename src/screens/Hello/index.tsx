@@ -18,6 +18,7 @@ import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, fetchTopMovieAnime,
 import LogoLight from '../../assets/images/svg/aniflix-light.svg'
 import LogoDark from '../../assets/images/svg/aniflix-dark.svg'
 import { languageUserSelector, themeUserSelector } from '@redux/selector/appSelector'
+import { useLogger, ANSI_COLOR_CODES } from '@utils/logger'
 
 const Hello = () => {
   const dispatch: AppDispatch = useAppDispatch()
@@ -25,7 +26,8 @@ const Hello = () => {
   const navigation = useNavigation<any>()
   const theme = useAppSelector(themeUserSelector)
   const language = useAppSelector(languageUserSelector)
-
+  const logger = useLogger('Hello', ANSI_COLOR_CODES.fgBlue)
+  logger('Test logger')
   useEffect(() => {
     const fetchAnime = async () => {
       const topAnimePromise = dispatch(fetchTopAnime());
