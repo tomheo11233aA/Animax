@@ -62,6 +62,10 @@ const Signinsocial = () => {
             }
         } catch (error: any) {
             logger(error)
+            if (error.code === 'EUNSPECIFIED') {
+                LoginManager.logOut()
+                LoginManager.logInWithPermissions(['public_profile'])
+            }
         }
     }
 
