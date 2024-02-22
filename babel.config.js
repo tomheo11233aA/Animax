@@ -24,9 +24,13 @@ module.exports = {
           "@asyncThunk": "./src/redux/asyncThunk",
           '@helper': './src/helper',
           '@function': './src/function',
-          '@env': './env'
         }
       }
-    ]
+    ],
+    ["module:react-native-dotenv", {
+      "envName": "APP_ENV",
+      "moduleName": "@env",
+      "path": ".env",
+    }]
   ]
 };

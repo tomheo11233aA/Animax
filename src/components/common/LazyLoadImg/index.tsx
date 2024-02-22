@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Animated } from 'react-native';
 import Img from '@common/Img';
+import { ImageResizeMode, ImageSourcePropType } from 'react-native';
 
 interface LazyLoadImgProps {
-    source: any;
+    source: ImageSourcePropType;
     width: number;
     height: number;
     radius?: number;
+    resizeMode?: ImageResizeMode;
 }
 
-const LazyLoadImg: React.FC<LazyLoadImgProps> = ({ source, width, height, radius }) => {
+const LazyLoadImg: React.FC<LazyLoadImgProps> = ({ source, width, height, radius, resizeMode }) => {
     const [opacity] = useState(new Animated.Value(0));
 
     useEffect(() => {
@@ -27,6 +29,7 @@ const LazyLoadImg: React.FC<LazyLoadImgProps> = ({ source, width, height, radius
                 width={width}
                 height={height}
                 radius={radius}
+                resizeMode={resizeMode}
             />
         </Animated.View>
     );

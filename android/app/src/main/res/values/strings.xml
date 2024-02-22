@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Aniflix</string>
+	<string name="app_name">
+		Aniflix
+	</string>
+	<string name="facebook_app_id">
+		1123214015538973
+	</string>
+	<string name="facebook_client_token">
+		3f63ab9563570f764e555da0e5d59644
+	</string>
 </resources>

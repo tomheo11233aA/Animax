@@ -2,10 +2,9 @@ import React from 'react'
 import Box from '@common/Box'
 import Txt from '@common/Txt'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import Img from '@common/Img'
 import { colors } from '@themes/colors'
 import { fonts } from '@themes/fonts'
-
+import LazyLoadImg from '@common/LazyLoadImg';
 interface TopHitsItemProps {
     item: any;
     style?: any;
@@ -26,10 +25,10 @@ const TopHitsItem: React.FC<TopHitsItemProps> = ({ item, style }) => {
                 radius={13}
                 overflow={'hidden'}
             >
-                <Img
+                <LazyLoadImg
                     source={{
                         uri: item.images.jpg.image_url
-                     }}
+                    }}
                     width={wp('40%')}
                     height={hp('25%')}
                     resizeMode='cover'

@@ -11,10 +11,14 @@ import i18n from './src/language/i18n'
 import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { FIREBASE_WEB_CLIENT_ID, FACEBOOK_APP_ID } from '@env';
+import { Settings } from 'react-native-fbsdk-next';
 
 GoogleSignin.configure({
-    webClientId: '940606664427-ir2h25aaf9m2amnhol7ukutgf62ino6d.apps.googleusercontent.com',
+    webClientId: FIREBASE_WEB_CLIENT_ID,
 });
+Settings.setAppID(FACEBOOK_APP_ID);
+
 const Root = () => {
     return (
         <Provider store={store}>

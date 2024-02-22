@@ -25,8 +25,7 @@
       "@common/*": ["./src/components/common/*"],
       "@asyncThunk/*": ["./src/redux/asyncThunk/*"],
       "@helper/*": ["./src/helper/*"],
-      "@fuction/*": ["./src/fuction/*"],
-      "@env/*": ["./env/*"]
+      "@fuction/*": ["./src/fuction/*"]
     }
   }
 }
