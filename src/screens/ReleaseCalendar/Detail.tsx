@@ -1,4 +1,7 @@
-import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native'
+import {
+  StyleSheet, Text, View, FlatList,
+  ScrollView, Modal
+} from 'react-native'
 import React,
 {
   useState,
@@ -247,12 +250,18 @@ const Detail = () => {
       indicatorStyle={{ backgroundColor: color.mainColor }}
       style={{ backgroundColor: color.bg }}
       renderLabel={({ route, focused, color }) => (
-        <Text style={{ color: focused ? color : color }} numberOfLines={1}>
+        <Text style={{ color: focused ? colors.mainColor : '#9e9e9e' }} numberOfLines={1}>
           {route.title}
         </Text>
       )}
     />
   );
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   return (
     <KeyBoardSafe>
@@ -261,6 +270,185 @@ const Detail = () => {
         backgroundColor={theme === 'dark' ? color.bg : color.bg}
         padding={24}
       >
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={toggleModal}
+        >
+          <Btn
+            flex={1}
+            backgroundColor={'rgba(0,0,0,0.5)'}
+            onPress={toggleModal}
+            justifyEnd={'true'}
+            >
+            <Box 
+              width={wp(100)}
+              backgroundColor={theme === 'dark' ? color.bg : color.white5}
+              padding={30}
+              elevation={5}
+              borderTopLeftRadius={20}
+              borderTopRightRadius={20}
+            >
+              <Text
+                style={{
+                  fontFamily: fonts.MAINB,
+                  fontSize: 20,
+                  color: theme === 'dark' ? color.black : color.white,
+                  marginBottom: 24,
+                  textAlign: 'center'
+                }}
+              >{t('Share to')}</Text>
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+                height={wp(0.5)}
+                backgroundColor={theme === 'dark' ? '#35383F' : color.black}
+              />
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+              >
+                <Btn>
+                  <Img
+                    source={require('@images/detail/facebook.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+                <Btn>
+                  <Img
+                    source={require('@images/detail/twitter.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+                <Btn>
+                  <Img
+                    source={require('@images/detail/instagram.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+                <Btn>
+                  <Img
+                    source={require('@images/detail/linkedin.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+              </Box>
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+              >
+                <Btn>
+                  <Img
+                    source={require('@images/detail/google.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+                <Btn>
+                  <Img
+                    source={require('@images/detail/telegram.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+                <Btn>
+                  <Img
+                    source={require('@images/detail/whatsapp.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+                <Btn>
+                  <Img
+                    source={require('@images/detail/tik-tok.png')}
+                    width={56}
+                    height={56}
+                    marginBottom={8}
+                  ></Img>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 10,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center',
+                    }}
+                  >Facebook</Text>
+                </Btn>
+              </Box>
+            </Box>
+          </Btn>
+        </Modal>
         <Box
           width={wp(100)}
           height={hp(33)}
@@ -317,7 +505,9 @@ const Detail = () => {
                 tintColor={color.white}
               ></Img>
             </Btn>
-            <Btn>
+            <Btn
+              onPress={toggleModal}
+            >
               <Img
                 source={require('@images/detail/send.png')}
                 width={24}
@@ -478,11 +668,11 @@ const Detail = () => {
               source={require('@images/detail/play.png')}
               width={24}
               height={24}
-              tintColor={color.white}
+              tintColor={theme === 'dark' ? color.white : color.white5}
               marginRight={8}
             ></Img>
             <Txt
-              color={color.white}
+              color={theme === 'dark' ? color.white : color.white5}
               size={18}
               fontFamily={fonts.MAIN}
             >
@@ -655,7 +845,7 @@ const Detail = () => {
                     left={0}
                   >
                     <Txt
-                      color={color.white}
+                      color={theme === 'dark' ? color.white : color.white5}
                       size={12}
                       fontFamily={fonts.MAIN}
                     >
@@ -1388,4 +1578,17 @@ const data = [
 ]
 
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black overlay
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5, // For Android shadow
+  },
+})
