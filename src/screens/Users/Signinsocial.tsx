@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React from 'react'
 import Scroll from '@common/Scroll'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
