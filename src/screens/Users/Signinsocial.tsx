@@ -20,6 +20,8 @@ import { useTheme } from '@hooks/redux'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useLogger, ANSI_COLOR_CODES } from '@utils/logger'
 import { LoginManager, Profile, AccessToken } from 'react-native-fbsdk-next'
+import FacebookIcon from '../../assets/images/svg/facebook.svg'
+import GoogleIcon from '../../assets/images/svg/google.svg'
 
 const Signinsocial = () => {
     const { t } = useTranslation()
@@ -86,7 +88,7 @@ const Signinsocial = () => {
                         source={require('@images/viewsignin.jpg')}
                     />
                 </Box>
-                <Box alignCenter marginTop={hp('3%')}>
+                <Box alignCenter marginTop={hp('5%')}>
                     <Txt
                         size={wp('13%')}
                         fontFamily={fonts.MAINB}
@@ -94,10 +96,11 @@ const Signinsocial = () => {
                         {t('Let\'s you in')}
                     </Txt>
                 </Box>
-                <Box marginTop={hp('4%')}>
+
+                <Box marginTop={hp('5%')}>
                     <Btn
                         width={wp('90%')}
-                        height={hp('6%')}
+                        height={hp('7%')}
                         radius={wp('4%')}
                         row
                         alignCenter
@@ -105,11 +108,7 @@ const Signinsocial = () => {
                         borderWidth={1}
                         onPress={handleLoginWithFacebook}
                     >
-                        <Img
-                            width={wp('5%')}
-                            height={wp('5%')}
-                            source={require('@images/facebook.png')}
-                        />
+                        <FacebookIcon width={wp('7%')} height={wp('7%')} />
                         <Txt
                             size={wp('4%')}
                             fontFamily={fonts.MAINB}
@@ -122,51 +121,21 @@ const Signinsocial = () => {
                 <Box marginTop={hp('3%')}>
                     <Btn
                         width={wp('90%')}
-                        height={hp('6%')}
+                        height={hp('7%')}
                         radius={wp('4%')}
                         row
                         alignCenter
                         justifyCenter
                         borderWidth={1}
-                        // onPress={signInGoogle}
                         onPress={handleLoginWithGoogle}
                     >
-                        <Img
-                            width={wp('5%')}
-                            height={wp('5%')}
-                            source={require('@images/google.png')}
-                        />
+                        <GoogleIcon width={wp('7%')} height={wp('7%')} />
                         <Txt
                             size={wp('4%')}
                             fontFamily={fonts.MAINB}
                             marginLeft={wp('4%')}
                         >
                             {t('Continue with Google')}
-                        </Txt>
-                    </Btn>
-                </Box>
-                <Box marginTop={hp('3%')}>
-                    <Btn
-                        width={wp('90%')}
-                        height={hp('6%')}
-                        radius={wp('4%')}
-                        row
-                        alignCenter
-                        justifyCenter
-                        borderWidth={1}
-                    >
-                        <Img
-                            width={wp('5%')}
-                            height={wp('5%')}
-                            source={require('@images/unAuth/apple.png')}
-                            tintColor={theme === 'light' ? colors.black : colors.white}
-                        />
-                        <Txt
-                            size={wp('4%')}
-                            fontFamily={fonts.MAINB}
-                            marginLeft={wp('4%')}
-                        >
-                            {t('Continue with Apple')}
                         </Txt>
                     </Btn>
                 </Box>
@@ -185,7 +154,7 @@ const Signinsocial = () => {
                 <Box>
                     <Btn
                         width={wp('90%')}
-                        height={hp('6%')}
+                        height={hp('7%')}
                         radius={wp('10%')}
                         row
                         alignCenter
