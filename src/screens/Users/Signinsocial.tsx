@@ -19,7 +19,7 @@ import { useTheme } from '@hooks/redux'
 //google, facebook
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useLogger, ANSI_COLOR_CODES } from '@utils/logger'
-import { LoginManager, Profile } from 'react-native-fbsdk-next'
+import { LoginManager, Profile, AccessToken } from 'react-native-fbsdk-next'
 
 const Signinsocial = () => {
     const { t } = useTranslation()
@@ -48,11 +48,16 @@ const Signinsocial = () => {
             if (result.isCancelled) {
                 logger('Login was cancelled')
             } else {
-                const profile = await Profile.getCurrentProfile()
-                if (profile) {
-                    logger(profile)
-                } else {
-                    logger('Profile not found')
+                const data = await AccessToken.getCurrentAccessToken();
+                if (data) {
+                    const accessToken = data.accessToken.toString();
+                    logger('Access Token: ' + accessToken);
+                    const profile = await Profile.getCurrentProfile();
+                    if (profile) {
+                        logger(profile);
+                    } else {
+                        logger('Profile not found');
+                    }
                 }
             }
         } catch (error: any) {
