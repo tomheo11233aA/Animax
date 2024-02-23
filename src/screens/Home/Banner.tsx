@@ -103,6 +103,7 @@ const Banner: React.FC<BannerProps> = ({
                                 <Icon
                                     source={require('@images/plus-sign.png')}
                                     size={15}
+                                    tintColor={'#fff'}
                                 />
                                 <Txt
                                     size={12}
