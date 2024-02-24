@@ -1,6 +1,6 @@
 import {
   StyleSheet, Text, View, FlatList,
-  ScrollView, Modal
+  ScrollView, Modal,
 } from 'react-native'
 import React,
 {
@@ -56,17 +56,17 @@ const Detail = () => {
 
   const navigation = useNavigation();
 
-  // useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
-  //   navigation.getParent()?.setOptions({
-  //     tabBarStyle: {
-  //       display: 'none',
-  //     }
+  useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        display: 'none',
+      }
 
-  //   });
-  //   return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
-  //     tabBarStyle: undefined
-  //   });
-  // }, [navigation]);
+    });
+    return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
+      tabBarStyle: undefined
+    });
+  }, [navigation]);
 
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
@@ -258,6 +258,11 @@ const Detail = () => {
   );
 
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisible2, setModalVisible2] = useState(false);
+
+  const toggleModal2 = () => {
+    setModalVisible2(!isModalVisible2);
+  }
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -273,22 +278,198 @@ const Detail = () => {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={isModalVisible}
-          onRequestClose={toggleModal}
+          visible={isModalVisible2}
+          onRequestClose={toggleModal2}
         >
-          <Btn
+          <Box
             flex={1}
-            backgroundColor={'rgba(0,0,0,0.5)'}
-            onPress={toggleModal}
+            backgroundColor={'rgba(0,0,0,0.6)'}
             justifyEnd={'true'}
-            >
-            <Box 
+          >
+            <Btn
+              flex={1}
+              onPress={toggleModal2}
+              justifyEnd={'true'}
+            />
+            <Box
               width={wp(100)}
               backgroundColor={theme === 'dark' ? color.bg : color.white5}
               padding={30}
               elevation={5}
-              borderTopLeftRadius={20}
-              borderTopRightRadius={20}
+              borderTopLeftRadius={40}
+              borderTopRightRadius={40}
+            >
+              <Text
+                style={{
+                  fontFamily: fonts.MAINB,
+                  fontSize: 20,
+                  color: theme === 'dark' ? color.black : color.white,
+                  marginBottom: 24,
+                  textAlign: 'center'
+                }}
+              >{t('Download')}</Text>
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+                height={wp(0.5)}
+                backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
+              />
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+              >
+                <Text
+                  style={{
+                    fontFamily: fonts.MAINB,
+                    fontSize: 16,
+                    color: theme === 'dark' ? color.black : color.white,
+                    textAlign: 'center'
+                  }}
+                >{t('Episodes')}</Text>
+                <Text
+                  style={{
+                    fontFamily: fonts.MAIN,
+                    fontSize: 14,
+                    color: theme === 'dark' ? color.mainColor : color.mainColor,
+                    textAlign: 'center'
+                  }}
+                >720p</Text>
+              </Box>
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+              >
+                <FlatList
+                  data={data[0].episodes}
+                  keyExtractor={(item, index) => index.toString()}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={({ item, index }) => {
+                    return (
+                      <Box
+                        row={true}
+                        marginBottom={16}
+                        alignCenter={'center'}
+                        justifySpaceBetween={'true'}
+                        height={wp(27)}
+                        width={wp(40)}
+                        marginRight={16}
+                      // backgroundColor={'red'}
+                      >
+                        <Img
+                          source={{ uri: item.thumbnail }}
+                          width={'100%'}
+                          height={'100%'}
+                          radius={5}
+                          resizeMode='cover'
+                        />
+                        <Box
+                          alignCenter={'center'}
+                          absolute={true}
+                          width={'100%'}
+                          height={'20%'}
+                          justifyCenter={'center'}
+                          backgroundColor={'rgba(0,0,0,0.3)'}
+                          bottom={18}
+                        >
+                        </Box>
+                        <Box
+                          alignCenter={'center'}
+                          justifyCenter={'center'}
+                          width={'100%'}
+                          absolute={true}
+                          bottom={20}
+                          left={0}
+                        >
+                          <Txt
+                            color={theme === 'dark' ? color.white : color.white5}
+                            size={12}
+                            fontFamily={fonts.MAIN}
+                          >
+                            {t('Episode ')}{item.episode} - {item.duration} {t('mins')}
+                          </Txt>
+                        </Box>
+                      </Box>
+                    )
+                  }}
+                />
+              </Box>
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+                height={wp(0.5)}
+                backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
+              />
+              <Box
+                row={true}
+                justifySpaceBetween={'true'}
+                marginBottom={24}
+              >
+                <Btn
+                  alignCenter={true}
+                  width={wp(40)}
+                  height={wp(12)}
+                  backgroundColor={theme === 'dark' ? '#35383F' : '#E6F9ED'}
+                  radius={30}
+                  onPress={() => { }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAINB,
+                      fontSize: 16,
+                      color: theme === 'dark' ? color.white : color.mainColor,
+                      textAlign: 'center'
+                    }}
+                  >Cancel</Text>
+                </Btn>
+                <Btn
+                  alignCenter={true}
+                  width={wp(40)}
+                  height={wp(12)}
+                  backgroundColor={theme === 'dark' ? color.mainColor : color.mainColor}
+                  radius={30}
+                  onPress={() => { }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAINB,
+                      fontSize: 16,
+                      color: theme === 'dark' ? color.white : color.white5,
+                      textAlign: 'center'
+                    }}
+                  >Download</Text>
+                </Btn>
+              </Box>
+            </Box>
+          </Box>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={toggleModal}
+        >
+          <Box
+            flex={1}
+            backgroundColor={'rgba(0,0,0,0.6)'}
+            justifyEnd={'true'}
+          >
+            <Btn
+              flex={1}
+              onPress={toggleModal}
+              justifyEnd={'true'}
+            />
+            <Box
+              width={wp(100)}
+              backgroundColor={theme === 'dark' ? color.bg : color.white5}
+              padding={30}
+              elevation={5}
+              borderTopLeftRadius={40}
+              borderTopRightRadius={40}
             >
               <Text
                 style={{
@@ -304,7 +485,7 @@ const Detail = () => {
                 justifySpaceBetween={'true'}
                 marginBottom={24}
                 height={wp(0.5)}
-                backgroundColor={theme === 'dark' ? '#35383F' : color.black}
+                backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
               />
               <Box
                 row={true}
@@ -313,7 +494,7 @@ const Detail = () => {
               >
                 <Btn>
                   <Img
-                    source={require('@images/detail/facebook.png')}
+                    source={require('@images/detail/facebook64.png')}
                     width={56}
                     height={56}
                     marginBottom={8}
@@ -341,7 +522,7 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Twitter</Text>
                 </Btn>
                 <Btn>
                   <Img
@@ -357,7 +538,7 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Instagram</Text>
                 </Btn>
                 <Btn>
                   <Img
@@ -373,7 +554,7 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Linkedin</Text>
                 </Btn>
               </Box>
               <Box
@@ -383,7 +564,7 @@ const Detail = () => {
               >
                 <Btn>
                   <Img
-                    source={require('@images/detail/google.png')}
+                    source={require('@images/detail/gmail.png')}
                     width={56}
                     height={56}
                     marginBottom={8}
@@ -395,7 +576,7 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Gmail</Text>
                 </Btn>
                 <Btn>
                   <Img
@@ -411,7 +592,7 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Telegram</Text>
                 </Btn>
                 <Btn>
                   <Img
@@ -427,7 +608,7 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Whatsapp</Text>
                 </Btn>
                 <Btn>
                   <Img
@@ -443,11 +624,11 @@ const Detail = () => {
                       color: theme === 'dark' ? color.black : color.white,
                       textAlign: 'center',
                     }}
-                  >Facebook</Text>
+                  >Tik-Tok</Text>
                 </Btn>
               </Box>
             </Box>
-          </Btn>
+          </Box>
         </Modal>
         <Box
           width={wp(100)}
@@ -689,7 +870,7 @@ const Detail = () => {
             borderWidth={2}
             borderColor={color.mainColor}
             paddingHorizontal={8}
-            onPress={() => { }}
+            onPress={toggleModal2}
           >
             <Img
               source={require('@images/detail/download.png')}
