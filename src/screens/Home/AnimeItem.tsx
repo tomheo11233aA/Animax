@@ -81,14 +81,18 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
                     backgroundColor={theme.mainColor}
                     width={wp(30)}
                     radius={50}
-                    onPress={() => {
-                        setLoading(true)
-                        if (isAddedToList) {
-                            dispatch(removeAnimeList(item.mal_id));
-                            setLoading(false)
-                        } else {
-                            dispatch(addAnimeList(item));
-                            setLoading(false)
+                    onPress={async () => {
+                        setLoading(true);
+                        try {
+                            if (isAddedToList) {
+                                await dispatch(removeAnimeList(item.mal_id));
+                            } else {
+                                await dispatch(addAnimeList(item));
+                            }
+                        } catch (error) {
+                            console.error(error);
+                        } finally {
+                            setLoading(false);
                         }
                     }}
                 >

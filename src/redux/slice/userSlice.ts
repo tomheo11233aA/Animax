@@ -33,7 +33,6 @@ const userSlice = createSlice({
             state.myLists = [...state.myLists, action.payload];
         },
         removeAnimeList: (state, action: PayloadAction<any>) => {
-            // state.myLists = state.myLists.filter(anime => anime.id !== action.payload);
             state.myLists = state.myLists.filter(anime => anime.mal_id !== action.payload);
         }
     },
