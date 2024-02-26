@@ -29,12 +29,6 @@ const Form = () => {
       return newSelectedInterests;
     });
   }, []);
-  // const InterestButton = React.lazy(() => import('./InterestButton'));
-  // const LazyInterestButton = (props: any) => (
-  //   <Suspense fallback={<Box />}>
-  //     <InterestButton {...props} />
-  //   </Suspense>
-  // );
   const renderInterestButton = useCallback((interest: any) => {
     const selected = selectedInterests.has(interest);
     return (

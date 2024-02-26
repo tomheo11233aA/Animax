@@ -5,6 +5,7 @@ export interface IUSerSlice {
     language: ILanguage;
     theme: 'dark' | 'light';
     globalLoading: boolean; 
+    myLists: any[];
 }
 
 export interface ILanguage {

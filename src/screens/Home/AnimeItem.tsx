@@ -5,9 +5,14 @@ import Img from '@common/Img'
 import LazyLoadImg from '@common/LazyLoadImg'
 import Txt from '@common/Txt'
 import Btn from '@common/Btn'
-import Icon from '@common/Icon'
 import { fonts } from '@themes/fonts'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import { useAppDispatch, useAppSelector } from '@hooks/redux'
+import { AppDispatch } from '@redux/store/store'
+import { addAnimeList, removeAnimeList } from '@redux/slice/userSlice'
+import { myListsUserSelector } from '@redux/selector/appSelector'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import { ActivityIndicator } from 'react-native'
 
 interface Props {
     item: any,
@@ -22,6 +27,11 @@ const { width } = Dimensions.get('window')
 const height = Dimensions.get('window').height
 
 const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory }) => {
+    const dispatch: AppDispatch = useAppDispatch()
+    const myLists = useAppSelector(myListsUserSelector)
+    const isAddedToList = myLists.find((anime) => anime.mal_id === item.mal_id)
+    const [loading, setLoading] = React.useState(false)
+
     return (
         <Box
             width={width / 2}
@@ -71,15 +81,28 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
                     backgroundColor={theme.mainColor}
                     width={wp(30)}
                     radius={50}
+                    onPress={() => {
+                        setLoading(true)
+                        if (isAddedToList) {
+                            dispatch(removeAnimeList(item.mal_id));
+                            setLoading(false)
+                        } else {
+                            dispatch(addAnimeList(item));
+                            setLoading(false)
+                        }
+                    }}
                 >
                     <Box
                         row
                         alignCenter
                     >
-                        <Icon
-                            source={require('@images/plus-sign.png')}
-                            size={15}
-                        />
+                        {loading ?
+                            <ActivityIndicator size="small" color="#fff" /> :
+                            <AntDesign
+                                name={isAddedToList ? 'check' : 'plus'}
+                                size={15}
+                                color={'#fff'}
+                            />}
                         <Txt
                             size={12}
                             color={'#fff'}

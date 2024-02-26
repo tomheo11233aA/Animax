@@ -62,6 +62,7 @@ interface AnimeState {
     searchAnime: any[];
     loading: boolean;
     error: string | null;
+    myLists: any[];
 }
 
 const initialState: AnimeState = {
@@ -83,7 +84,8 @@ const initialState: AnimeState = {
     airingAnime: [],
     searchAnime: [],
     loading: true,
-    error: null
+    error: null,
+    myLists: []
 }
 
 /**
