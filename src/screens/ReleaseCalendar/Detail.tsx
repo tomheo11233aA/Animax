@@ -28,7 +28,7 @@ import { colors } from '@themes/colors'
 import { set } from 'lodash'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 import { Image } from 'react-native-reanimated/lib/typescript/Animated'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import TextTicker from 'react-native-text-ticker';
 import ReadMore from 'react-native-read-more-text';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
@@ -47,6 +47,9 @@ const toggleLike = (id: number, isLike: number[], setIsLike: (isLike: number[]) 
 
 
 const Detail = () => {
+  const route = useRoute()
+  const {item} = route.params as {item: any}
+  console.log('item', item.mal_id)
 
   const [user, setUser] = useState({
     id: 1,
@@ -643,12 +646,14 @@ const Detail = () => {
           <Img
             source={
               {
-                uri: data[0].poster
+                // uri: data[0].poster
+                uri: item.trailer.images.medium_image_url
               }
             }
             width={('100%')}
             height={('100%')}
-            resizeMode='cover'
+            resizeMode='stretch' // cover, contain, stretch, repeat, center
+
           />
         </Box>
         <Box
@@ -669,7 +674,8 @@ const Detail = () => {
             loop // Cho phép chạy vô hạn
 
           >
-            {data[0].title}
+            {item.title_english}
+            {/* {data[0].title} */}
           </TextTicker>
           <Box
             row={true}
@@ -716,7 +722,8 @@ const Detail = () => {
             fontFamily={fonts.MAIN}
             marginRight={8}
           >
-            {data[0].rating}
+            {/* {data[0].rating} */}
+            {item.score}
           </Txt>
           <Img
             source={require('@images/detail/next.png')}
@@ -731,7 +738,8 @@ const Detail = () => {
             fontFamily={fonts.MAIN}
             marginRight={16}
           >
-            {data[0].year}
+            {/* {data[0].year} */}
+            {item.year}
           </Txt>
 
           <Btn

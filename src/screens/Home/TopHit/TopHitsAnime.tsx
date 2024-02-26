@@ -54,6 +54,7 @@ const TopHitsAnime: React.FC<Props> = ({ t, banner }) => {
                 renderItem={({ item }) => (
                     <TopHitsItem
                         item={item}
+                        onPress={() => navigate(screens.DETAIL, { item: item })}
                     />
                 )}
                 // keyExtractor={(item, index) => item.mal_id.toString()}
