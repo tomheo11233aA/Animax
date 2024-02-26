@@ -29,7 +29,7 @@ const height = Dimensions.get('window').height
 const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory }) => {
     const dispatch: AppDispatch = useAppDispatch()
     const myLists = useAppSelector(myListsUserSelector)
-    const isAddedToList = myLists.find((anime) => anime.mal_id === item.mal_id)
+    const isAddedToList = myLists?.find((anime) => anime.mal_id === item.mal_id)
     const [loading, setLoading] = React.useState(false)
 
     return (
