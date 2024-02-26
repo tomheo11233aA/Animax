@@ -12,30 +12,33 @@ import { screens } from '@contants/screens'
 import { useTheme } from '@hooks/redux'
 import { useAppSelector } from '@hooks/redux'
 import { themeUserSelector } from '@redux/selector/appSelector'
+import CustomIcon from '@common/CustomIcon'
+
 
 const Header = () => {
-    const { t } = useTranslation()
-    const theme = useTheme()
-    const themeUser = useAppSelector(themeUserSelector)
-    return (
-        <>
-          <Box row alignCenter >
-            <Btn
-              onPress={() => goBack()}>
-              <Icon
-                source={require('@images/unAuth/back.png')}
-                size={25} />
-            </Btn>
-            <Txt
-              fontFamily={fonts.MAINB}
-              size={22}
-              marginLeft={16}
-            >
-              {t('Forgot Password')}
-            </Txt>
-          </Box>
-        </>
-      )
-    }
-    
-    export default React.memo(Header)
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const themeUser = useAppSelector(themeUserSelector)
+  return (
+    <>
+      <Box row alignCenter >
+        <Btn
+          onPress={() => goBack()}>
+          <CustomIcon
+            name="arrow-back-outline"
+            size={20}
+          />
+        </Btn>
+        <Txt
+          fontFamily={fonts.MAINB}
+          size={22}
+          marginLeft={16}
+        >
+          {t('Forgot Password')}
+        </Txt>
+      </Box>
+    </>
+  )
+}
+
+export default React.memo(Header)

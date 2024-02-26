@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import KeyBoardSafe from '@reuse/KeyBoardSafe'
-import Carousel from 'react-native-reanimated-carousel';
+import Carousel from 'react-native-snap-carousel';
 import Banner from './Banner';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useTranslation } from 'react-i18next';
 import TopHitsAnime from './TopHit/TopHitsAnime';
 import NewEpisodeRelease from './NewRelease/NewEpisodeRelease';
@@ -22,13 +22,14 @@ import {
 import HomeLoading from '@themes/Skeleton/HomeLoading';
 import Box from '@common/Box';
 import Img from '@common/Img';
-import Icon from '@common/Icon';
 import Btn from '@common/Btn';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Notification } from 'iconsax-react-native';
+import { Dimensions } from 'react-native';
 
+const { width } = Dimensions.get('window');
 const Home = () => {
   const { t } = useTranslation()
   const dispatch: AppDispatch = useAppDispatch()
@@ -63,6 +64,15 @@ const Home = () => {
     }
   }, [])
 
+  const renderItem = ({ item }: any) => (
+    <Banner
+      banner={item}
+      formatName={formatName}
+      formatCategory={formatCategory}
+      t={t}
+    />
+  );
+
   if (fakeLoading) {
     return (
       <KeyBoardSafe>
@@ -79,19 +89,15 @@ const Home = () => {
       >
         <Carousel
           data={bannerData}
-          renderItem={({ item }) => (
-            <Banner
-              banner={item}
-              formatName={formatName}
-              formatCategory={formatCategory}
-              t={t}
-            />
-          )}
-          width={wp('100%')}
-          height={hp('45%')}
-          autoPlay
-        >
-        </Carousel>
+          renderItem={renderItem}
+          sliderWidth={width}
+          itemWidth={width}
+          autoplay={true}
+          loop={true}
+          containerCustomStyle={{
+            height: hp('45%'),
+          }}
+        />
         <Box
           row
           marginTop={25}

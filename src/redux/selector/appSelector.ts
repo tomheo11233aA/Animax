@@ -7,3 +7,5 @@ export const languageUserSelector = (state: RootState) => state.user.language
 export const themeUserSelector = (state: RootState) => state.user.theme
 
 export const globalLoadingUserSelector = (state: RootState) => state.user.globalLoading
+
+export const myListsUserSelector = (state: RootState) => state.user.myLists

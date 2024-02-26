@@ -8,6 +8,8 @@ import { t } from 'i18next'
 import { IconButton } from 'react-native-paper';
 import { StyleSheet, Text, View } from 'react-native'
 import Icon from '@common/Icon'
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Form = () => {
   return (
@@ -32,11 +34,7 @@ const Form = () => {
 
       <View style={styles.infoBox}>
         <View style={styles.iconContainer}>
-          <Icon
-            source={require('@images/message.png')}
-            size={25}
-            tintColor="#41ab67"
-          />
+          <AntDesign name="message1" size={25} color="#41ab67" />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.infoText}>via SMS:</Text>
@@ -45,28 +43,13 @@ const Form = () => {
       </View>
       <View style={styles.infoBox}>
         <View style={styles.iconContainer}>
-          <Icon
-            source={require('@images/email.png')}
-            size={25}
-            tintColor="#41ab67"
-          />
+          <MaterialCommunityIcons name="email" size={25} color="#41ab67" />
         </View>
         <View style={styles.textContainer}>
           <Text style={styles.infoText}>via Email:</Text>
           <Text style={styles.email}>and**ley@yourdomain.com</Text>
         </View>
       </View>
-
-      {/* <View style={styles.infoContainer}>
-      <Icon
-                source={require('@images/Group.png')}
-                size={25} 
-                tintColor="#41ab67"
-                />
-        <Text style={styles.text}>via SMS:</Text>
-        <Text style={styles.phoneNumber}>+1 111 *****99</Text>
-      </View> */}
-
     </Box>
 
   )

@@ -12,6 +12,7 @@ import { screens } from '@contants/screens'
 import { useTheme } from '@hooks/redux'
 import { useAppSelector } from '@hooks/redux'
 import { themeUserSelector } from '@redux/selector/appSelector'
+import CustomIcon from '@common/CustomIcon'
 
 const Header = () => {
   const { t } = useTranslation()
@@ -22,9 +23,10 @@ const Header = () => {
       <Box row alignCenter >
         <Btn
           onPress={() => goBack()}>
-          <Icon
-            source={require('@images/unAuth/back.png')}
-            size={18} />
+          <CustomIcon
+            name="arrow-back-outline"
+            size={20}
+          />
         </Btn>
         <Txt
           fontFamily={fonts.MAINB}
@@ -65,14 +67,12 @@ const Header = () => {
           </Txt>
 
           <Box row alignCenter>
-            <Txt size={13} fontFamily={fonts.SGM} color={'red'}>
+            <Txt size={13} fontFamily={fonts.SGM} color={'red'} marginRight={10}>
               {themeUser === 'dark' ? t('Dark Mode') : t('Light Mode')}
             </Txt>
-            <Icon
-              source={require('@images/unAuth/back.png')}
+            <CustomIcon
+              name="arrow-back-outline"
               size={10}
-              resizeMode={'contain'}
-              marginLeft={10}
             />
           </Box>
         </Btn>

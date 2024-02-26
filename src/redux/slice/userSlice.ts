@@ -10,6 +10,7 @@ const initialState: IUSerSlice = {
     },
     theme: 'light',
     globalLoading: false,
+    myLists: [],
 };
 
 const userSlice = createSlice({
@@ -28,6 +29,13 @@ const userSlice = createSlice({
         setGlobalLoading: (state, action: PayloadAction<boolean>) => {
             state.globalLoading = action.payload;
         },
+        addAnimeList: (state, action: PayloadAction<any>) => {
+            state.myLists = [...state.myLists, action.payload];
+        },
+        removeAnimeList: (state, action: PayloadAction<any>) => {
+            // state.myLists = state.myLists.filter(anime => anime.id !== action.payload);
+            state.myLists = state.myLists.filter(anime => anime.mal_id !== action.payload);
+        }
     },
 });
 
@@ -36,6 +44,8 @@ export const {
     setLogin,
     setTheme,
     setGlobalLoading,
+    addAnimeList,
+    removeAnimeList
 } = userSlice.actions;
 
 export default userSlice

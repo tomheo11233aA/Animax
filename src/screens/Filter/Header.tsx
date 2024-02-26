@@ -7,6 +7,7 @@ import Btn from '@common/Btn'
 import { useTranslation } from 'react-i18next'
 import { goBack } from '@utils/navigationRef'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import CustomIcon from '@common/CustomIcon'
 
 const Header = () => {
   const { t } = useTranslation()
@@ -18,9 +19,10 @@ const Header = () => {
       >
         <Btn
           onPress={() => goBack()}>
-          <Icon
-            source={require('@images/unAuth/back.png')}
-            size={18} />
+          <CustomIcon
+            name="arrow-back-outline"
+            size={20}
+          />
         </Btn>
         <Txt
           fontFamily={fonts.MAINB}
