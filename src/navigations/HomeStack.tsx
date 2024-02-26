@@ -5,6 +5,7 @@ import Home from '@screens/Home'
 import SeeAll from '@screens/Home/SeeAll'
 import Search from '@screens/Search'
 import Filter from '@screens/Filter'
+import Detail from '@screens/ReleaseCalendar/Detail'
 
 const Stack = createNativeStackNavigator()
 const HomeStack = () => {
@@ -18,6 +19,7 @@ const HomeStack = () => {
             <Stack.Screen name={screens.HOME} component={Home} />
             <Stack.Screen name={screens.SEARCH} component={Search} />
             <Stack.Screen name={screens.FILTER} component={Filter} />
+            <Stack.Screen name={screens.DETAIL} component={Detail} />
         </Stack.Navigator>
     )
 }
