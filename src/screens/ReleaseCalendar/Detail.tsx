@@ -21,7 +21,7 @@ import { fonts } from '@themes/fonts'
 import { useAppDispatch, useAppSelector, useTheme } from '@hooks/redux';
 import {
   topAnimeSelector, favoriteAnimeSelector, typeTvAnimeSelector, typeMovieAnimeSelector,
-  popularAnimeSelector, newReleaseAnimeSelector
+  popularAnimeSelector, newReleaseAnimeSelector, animeSelector
 } from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store';
 import { colors } from '@themes/colors'
@@ -82,6 +82,7 @@ const Detail = () => {
   ]);
 
   const topAnime = useAppSelector(topAnimeSelector) // lấy danh sách top anime từ redux
+  const anime = useAppSelector(animeSelector) // lấy danh sách anime từ redux
   //lấy 6 phần tử ngẫu nhiên trong mảng data
   // const dataRandom = data.sort(() => Math.random() - Math.random()).slice(0, 6)
 
@@ -105,10 +106,11 @@ const Detail = () => {
       flex={1}
     >
       <FlatList
-        data={topAnime}
+        data={anime.popularAnime}
         renderItem={({ item }) => (
           <TopHitsItem
             item={item}
+            onPress={() => navigate(screens.DETAIL, { item: item })}
           />
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -418,7 +420,7 @@ const Detail = () => {
                   height={wp(12)}
                   backgroundColor={theme === 'dark' ? '#35383F' : '#E6F9ED'}
                   radius={30}
-                  onPress={() => { }}
+                  onPress={toggleModal2}
                 >
                   <Text
                     style={{
@@ -647,12 +649,12 @@ const Detail = () => {
             source={
               {
                 // uri: data[0].poster
-                uri: item.trailer.images.medium_image_url
+                uri: item.images.jpg.large_image_url
               }
             }
             width={('100%')}
             height={('100%')}
-            resizeMode='stretch' // cover, contain, stretch, repeat, center
+            resizeMode='cover' // cover, contain, stretch, repeat, center
 
           />
         </Box>
@@ -760,7 +762,9 @@ const Detail = () => {
               size={12}
               fontFamily={fonts.MAIN}
             >
-              {data[0].ageRating}
+              {/* {data[0].ageRating} */}
+              {/* {item.rating.match(/\d+/)[0]}+ */}
+              {item.rating.slice(0, 2).split(' ')}
             </Txt>
           </Btn>
           <Btn
@@ -781,7 +785,8 @@ const Detail = () => {
               size={12}
               fontFamily={fonts.MAIN}
             >
-              {data[0].country}
+              {/* {data[0].country} */}
+              Japan
             </Txt>
           </Btn>
           {
@@ -906,7 +911,8 @@ const Detail = () => {
             marginBottom={12}
             numberOfLines={1}
           >
-            {t('Genres')}: {data[0].genres.join(', ')}
+            {t('Genres')}: {item.genres.map((item: any) => item.name).join(', ')}
+            {/* {data[0].genres.join(', ')} */}
           </Txt>
           <ReadMore
             numberOfLines={3} // Số dòng hiển thị khi đoạn text được rút gọn
@@ -937,7 +943,8 @@ const Detail = () => {
               size={12}
               fontFamily={fonts.MAIN}
             >
-              {data[0].description}
+              {/* {data[0].description} */}
+              {item.synopsis}
             </Txt>
           </ReadMore>
         </Box>

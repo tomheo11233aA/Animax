@@ -53,6 +53,7 @@ const NewEpisodeRelease: React.FC<Props> = ({ t, banner }) => {
                 renderItem={({ item }) => (
                     <TopHitsItem
                         item={item}
+                        onPress={() => navigate(screens.DETAIL, { item: item })}
                     />
                 )}
                 keyExtractor={(item, index) => index.toString()}
