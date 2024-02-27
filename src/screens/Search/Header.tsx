@@ -29,12 +29,11 @@ const Header: React.FC<Props> = ({
             alignCenter
         >
             <Btn
-                marginRight={10}
                 onPress={() => goBack()}>
                 <Icon
                     source={require('@images/unAuth/back.png')}
                     tintColor={theme === 'light' ? color.black : 'white'}
-                    size={18}
+                    size={20}
                 />
             </Btn>
             <Input
@@ -49,7 +48,6 @@ const Header: React.FC<Props> = ({
                 hintColor={'#888888'}
                 color={theme === 'light' ? color.black : color.white}
                 iconOne={require('@images/home/search.png')}
-                tintColor={theme === 'light' ? color.black3 : color.black}
                 sizeIcon={18}
             />
             <Btn

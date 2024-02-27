@@ -6,7 +6,6 @@ import Icon from '@common/Icon'
 import { colors } from '@themes/colors'
 import Txt from '@common/Txt'
 import { useTranslation } from 'react-i18next'
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 //screens

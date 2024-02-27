@@ -1,6 +1,6 @@
 import { getSize } from '@utils/responsive';
 import { isNumber } from 'lodash';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { Image, Platform, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { handleMargin, handlePadding, handleRound, handleSquare } from '../shared';
@@ -10,6 +10,8 @@ import Btn from '@common/Btn';
 import Img from '@common/Img';
 import Txt from '@common/Txt';
 import { useTheme } from '@hooks/redux';
+import { colors } from '@themes/colors';
+import { TextInputFocusEventData, NativeSyntheticEvent } from 'react-native';
 
 const Input = forwardRef<TextInput, Props>(({
     readonly,
@@ -61,7 +63,7 @@ const Input = forwardRef<TextInput, Props>(({
     marginRight,
     marginTop,
     paddingVertical,
-    paddingHorizontal,
+    paddingHorizontal = 20,
     marginVertical,
     marginHorizontal,
     radius,
@@ -103,8 +105,18 @@ const Input = forwardRef<TextInput, Props>(({
 }: Props, ref) => {
     const insets = useSafeAreaInsets();
     const myColor = useTheme();
-    const myBoderColor = borderColor ? borderColor : myColor.black4;
-    const backgroundColors = backgroundColor ? backgroundColor : myColor.black4;
+    const [isFocused, setIsFocused] = useState(false);
+    const onFocusHandler = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+        setIsFocused(true);
+        onFocus && onFocus(e);
+    }
+    const onBlurHandler = (e: NativeSyntheticEvent<TextInputFocusEventData>) => {
+        setIsFocused(false);
+        if (onBlur) onBlur(e);
+    };
+    const backgroundColors = isFocused ? '#EBFAF1' : (backgroundColor ? backgroundColor : myColor.black4)
+    const myBoderColor = isFocused ? colors.mainColor : (borderColor ? borderColor : myColor.black4);
+    const tintColors = isFocused ? colors.mainColor : (tintColor ? tintColor : myColor.black);
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
         isPaddingIos && {
@@ -197,8 +209,9 @@ const Input = forwardRef<TextInput, Props>(({
                         style={{
                             width: sizeIcon,
                             height: sizeIcon,
+                            marginRight: getSize.m(10),
                         }}
-                        tintColor={tintColor}
+                        tintColor={tintColors}
                     />
                 </Box>
             }
@@ -217,12 +230,11 @@ const Input = forwardRef<TextInput, Props>(({
                 placeholderTextColor={hintColor}
                 secureTextEntry={security ? true : false}
                 keyboardType={keyboardType}
-                // editable={disabled}
                 editable={readonly ? false : true}
                 autoCapitalize={autoCapitalize}
                 textAlign={textAlign}
-                onFocus={onFocus}
-                onBlur={onBlur}
+                onFocus={onFocusHandler}
+                onBlur={onBlurHandler}
                 returnKeyType={returnKeyType}
                 onSubmitEditing={onSubmitEditing}
                 ref={ref}

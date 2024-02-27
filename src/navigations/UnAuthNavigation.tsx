@@ -8,11 +8,16 @@ import Started from '@screens/Users/Started'
 import Signup from '@screens/Users/Signup'
 import ForgotPassword from '@screens/AccountSetup/FogotPassword'
 import MediaPlayer from '@screens/MediaPlayer'
-import { showNavigationBar } from 'react-native-navigation-bar-color'
+import changeNavigationBarColor from 'react-native-navigation-bar-color'
+import { themeUserSelector } from '@redux/selector/appSelector'
+import { useTheme } from '@hooks/redux'
+import { useAppSelector } from '@hooks/redux'
 
-showNavigationBar()
 const Stack = createNativeStackNavigator()
 const UnAuthNavigation = () => {
+    const theme = useAppSelector(themeUserSelector)
+    const colorOfTheme = useTheme()
+    changeNavigationBarColor(theme === 'light' ? colorOfTheme.bg : colorOfTheme.bg, true, true)
     return (
         <Stack.Navigator screenOptions={{
             headerShown: false,
