@@ -81,8 +81,14 @@ const Detail = () => {
     { key: 'second', title: t('Comments') + ' (' + data[0].comments.length + ')' },
   ]);
 
-  const topAnime = useAppSelector(topAnimeSelector) // lấy danh sách top anime từ redux
   const anime = useAppSelector(animeSelector) // lấy danh sách anime từ redux
+  // lấy mảng genres từ item
+  const genres = item.genres.map((item: any) => item.name)
+  // lọc lấy các item có genre trùng với item hiện tại
+  const dataRandom = anime.topAnime.filter(
+    (item: any) => item.genres.some((genre: any) => genres.includes(genre.name)))
+  // console.log('genres', genres)
+
   //lấy 6 phần tử ngẫu nhiên trong mảng data
   // const dataRandom = data.sort(() => Math.random() - Math.random()).slice(0, 6)
 
@@ -106,7 +112,7 @@ const Detail = () => {
       flex={1}
     >
       <FlatList
-        data={anime.popularAnime}
+        data={dataRandom}
         renderItem={({ item }) => (
           <TopHitsItem
             item={item}
