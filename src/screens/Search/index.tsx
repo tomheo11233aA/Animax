@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Box from '@common/Box'
 import Txt from '@common/Txt'
-import { FlatList, Keyboard } from 'react-native'
+import { FlatList, Keyboard, Dimensions } from 'react-native'
 import { debounce } from 'lodash'
 import AxiosInstance from '@helper/AxiosInstance'
 import { useTheme } from '@hooks/redux'
@@ -19,7 +19,10 @@ import { useTranslation } from 'react-i18next'
 import { searchAnimeSelector } from '@redux/selector/animeSelector'
 import { useHideNavigation } from '@themes/hideNavigation'
 import Header from './Header'
+import SearchItem from './SearchItem'
 
+const { width, height } = Dimensions.get('window')
+const numColumns = width > 600 ? 3 : 2
 const Search = () => {
     const { t } = useTranslation()
     const [search, setSearch] = useState('')
@@ -105,14 +108,11 @@ const Search = () => {
                     contentContainerStyle={{ paddingBottom: hp('5%') }}
                     data={data}
                     renderItem={({ item }) => (
-                        <AnimeItem
+                        <SearchItem
                             item={item}
-                            theme={color}
-                            t={t}
-                            formatName={formatName}
-                            formatCategory={formatCategory}
                         />
                     )}
+                    numColumns={numColumns}
                     keyExtractor={(item, index) => index.toString()}
                     showsHorizontalScrollIndicator={false}
                 />

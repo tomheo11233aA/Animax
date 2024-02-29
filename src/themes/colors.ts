@@ -40,8 +40,10 @@ export const colors = {
         yellow7: '#fff6d8',
         tintLight: '#d9d4d4',
         input: '#FAFAFA',
+        borderColor: '#059437',
     },
     dark: {
+        borderColor: '#059437',
         mainColor: '#06C149',
         black: 'white',
         black2: 'black',

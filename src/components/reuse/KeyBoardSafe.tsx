@@ -1,16 +1,17 @@
-import { KeyboardAvoidingView, Platform, SafeAreaView } from 'react-native'
+import { Platform, SafeAreaView } from 'react-native'
 import React from 'react'
 import Box from '@common/Box'
 import Scroll from '@common/Scroll'
 import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 import { useTheme } from '@hooks/redux'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 interface Props {
     bg?: string,
     styles?: any,
     paddingBottom?: number,
     paddingHorizontal?: number,
     children: JSX.Element | JSX.Element[],
+    extraRollHeight?: number,
 }
 
 const KeyBoardSafe = ({
@@ -19,14 +20,17 @@ const KeyBoardSafe = ({
     children,
     paddingBottom,
     paddingHorizontal,
+    extraRollHeight = 100,
 }: Props) => {
     const theme = useTheme()
     const background = bg ? bg : theme.bg
     return (
-        <KeyboardAvoidingView
-            keyboardVerticalOffset={Platform.OS === 'android' ? -1000 : 0}
-            behavior='padding'
-            enabled
+        <KeyboardAwareScrollView
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={extraRollHeight}
+            enableOnAndroid={true}
+            enableAutomaticScroll={true}
             style={[{
                 flex: 1,
                 backgroundColor: background,
@@ -50,7 +54,7 @@ const KeyBoardSafe = ({
                     </Scroll>
                 </Box>
             </SafeAreaView>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
     )
 }
 

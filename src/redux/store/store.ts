@@ -12,7 +12,6 @@ import {
     REHYDRATE,
 } from "redux-persist";
 import reduxStorage from "@utils/localStorage";
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'
 
 const rootReducer = combineReducers({
     user: userSlice.reducer,

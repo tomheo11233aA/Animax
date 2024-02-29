@@ -78,7 +78,9 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
                 </Txt>
                 <Btn
                     paddingVertical={hp(1.2)}
-                    backgroundColor={theme.mainColor}
+                    backgroundColor={isAddedToList ? 'transparent' : theme.mainColor}
+                    borderWidth={isAddedToList ? 1.5 : 0}
+                    borderColor={theme.borderColor}
                     width={wp(30)}
                     radius={50}
                     onPress={async () => {
@@ -105,14 +107,13 @@ const AnimeItem: React.FC<Props> = ({ item, theme, t, formatName, formatCategory
                             <AntDesign
                                 name={isAddedToList ? 'check' : 'plus'}
                                 size={15}
-                                color={'#fff'}
+                                color={isAddedToList ? theme.mainColor : '#fff'}
                             />}
                         <Txt
                             size={12}
-                            color={'#fff'}
+                            color={isAddedToList ? theme.mainColor : '#fff'}
                             marginLeft={15}
-                            fontFamily={fonts.MAINB}
-                            fontWeight={'600'}
+                            fontFamily={fonts.MAIN}
                         >
                             {t('My List')}
                         </Txt>
