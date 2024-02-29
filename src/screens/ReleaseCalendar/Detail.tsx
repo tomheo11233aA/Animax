@@ -1,6 +1,6 @@
 import {
   StyleSheet, Text, View, FlatList,
-  ScrollView, Modal,
+  ScrollView, Modal, TouchableOpacity
 } from 'react-native'
 import React,
 {
@@ -33,6 +33,8 @@ import TextTicker from 'react-native-text-ticker';
 import ReadMore from 'react-native-read-more-text';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import TopHitsItem from '../Home/TopHit/TopHitsItem';
+import { Modalize } from 'react-native-modalize';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -48,7 +50,7 @@ const toggleLike = (id: number, isLike: number[], setIsLike: (isLike: number[]) 
 
 const Detail = () => {
   const route = useRoute()
-  const {item} = route.params as {item: any}
+  const { item } = route.params as { item: any }
   console.log('item', item.mal_id)
 
   const [user, setUser] = useState({
@@ -279,802 +281,817 @@ const Detail = () => {
     setModalVisible(!isModalVisible);
   };
 
+  const modalizeRef = useRef<Modalize>(null);
+
+  const onOpen = () => {
+    modalizeRef.current?.open();
+  };
+
   return (
-    <KeyBoardSafe>
-      <Box
-        flex={1}
-        backgroundColor={theme === 'dark' ? color.bg : color.bg}
-        padding={24}
-      >
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isModalVisible2}
-          onRequestClose={toggleModal2}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <KeyBoardSafe>
+        <Box
+          flex={1}
+          backgroundColor={theme === 'dark' ? color.bg : color.bg}
+          padding={24}
         >
-          <Box
-            flex={1}
-            backgroundColor={'rgba(0,0,0,0.6)'}
-            justifyEnd={'true'}
+          <Modalize
+            ref={modalizeRef}
+            snapPoint={500}
+            modalHeight={500}
           >
-            <Btn
-              flex={1}
-              onPress={toggleModal2}
-              justifyEnd={'true'}
-            />
+            <Text>Content</Text>
+          </Modalize>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isModalVisible2}
+            onRequestClose={toggleModal2}
+          >
             <Box
-              width={wp(100)}
-              backgroundColor={theme === 'dark' ? color.bg : color.white5}
-              padding={30}
-              elevation={5}
-              borderTopLeftRadius={40}
-              borderTopRightRadius={40}
+              flex={1}
+              backgroundColor={'rgba(0,0,0,0.6)'}
+              justifyEnd={'true'}
             >
-              <Text
-                style={{
-                  fontFamily: fonts.MAINB,
-                  fontSize: 20,
-                  color: theme === 'dark' ? color.black : color.white,
-                  marginBottom: 24,
-                  textAlign: 'center'
-                }}
-              >{t('Download')}</Text>
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-                height={wp(0.5)}
-                backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
+              <Btn
+                flex={1}
+                onPress={toggleModal2}
+                justifyEnd={'true'}
               />
               <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
+                width={wp(100)}
+                backgroundColor={theme === 'dark' ? color.bg : color.white5}
+                padding={30}
+                elevation={5}
+                borderTopLeftRadius={40}
+                borderTopRightRadius={40}
               >
                 <Text
                   style={{
                     fontFamily: fonts.MAINB,
-                    fontSize: 16,
+                    fontSize: 20,
                     color: theme === 'dark' ? color.black : color.white,
+                    marginBottom: 24,
                     textAlign: 'center'
                   }}
-                >{t('Episodes')}</Text>
+                >{t('Download')}</Text>
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
+                  height={wp(0.5)}
+                  backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
+                />
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
+                >
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAINB,
+                      fontSize: 16,
+                      color: theme === 'dark' ? color.black : color.white,
+                      textAlign: 'center'
+                    }}
+                  >{t('Episodes')}</Text>
+                  <Text
+                    style={{
+                      fontFamily: fonts.MAIN,
+                      fontSize: 14,
+                      color: theme === 'dark' ? color.mainColor : color.mainColor,
+                      textAlign: 'center'
+                    }}
+                  >720p</Text>
+                </Box>
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
+                >
+                  <FlatList
+                    data={data[0].episodes}
+                    keyExtractor={(item, index) => index.toString()}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={({ item, index }) => {
+                      return (
+                        <Box
+                          row={true}
+                          marginBottom={16}
+                          alignCenter={'center'}
+                          justifySpaceBetween={'true'}
+                          height={wp(27)}
+                          width={wp(40)}
+                          marginRight={16}
+                        // backgroundColor={'red'}
+                        >
+                          <Img
+                            source={{ uri: item.thumbnail }}
+                            width={'100%'}
+                            height={'100%'}
+                            radius={5}
+                            resizeMode='cover'
+                          />
+                          <Box
+                            alignCenter={'center'}
+                            absolute={true}
+                            width={'100%'}
+                            height={'20%'}
+                            justifyCenter={'center'}
+                            backgroundColor={'rgba(0,0,0,0.3)'}
+                            bottom={18}
+                          >
+                          </Box>
+                          <Box
+                            alignCenter={'center'}
+                            justifyCenter={'center'}
+                            width={'100%'}
+                            absolute={true}
+                            bottom={20}
+                            left={0}
+                          >
+                            <Txt
+                              color={theme === 'dark' ? color.white : color.white5}
+                              size={12}
+                              fontFamily={fonts.MAIN}
+                            >
+                              {t('Episode ')}{item.episode} - {item.duration} {t('mins')}
+                            </Txt>
+                          </Box>
+                        </Box>
+                      )
+                    }}
+                  />
+                </Box>
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
+                  height={wp(0.5)}
+                  backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
+                />
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
+                >
+                  <Btn
+                    alignCenter={true}
+                    width={wp(40)}
+                    height={wp(12)}
+                    backgroundColor={theme === 'dark' ? '#35383F' : '#E6F9ED'}
+                    radius={30}
+                    onPress={toggleModal2}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAINB,
+                        fontSize: 16,
+                        color: theme === 'dark' ? color.white : color.mainColor,
+                        textAlign: 'center'
+                      }}
+                    >Cancel</Text>
+                  </Btn>
+                  <Btn
+                    alignCenter={true}
+                    width={wp(40)}
+                    height={wp(12)}
+                    backgroundColor={theme === 'dark' ? color.mainColor : color.mainColor}
+                    radius={30}
+                    onPress={() => { }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAINB,
+                        fontSize: 16,
+                        color: theme === 'dark' ? color.white : color.white5,
+                        textAlign: 'center'
+                      }}
+                    >Download</Text>
+                  </Btn>
+                </Box>
+              </Box>
+            </Box>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={isModalVisible}
+            onRequestClose={toggleModal}
+          >
+            <Box
+              flex={1}
+              backgroundColor={'rgba(0,0,0,0.6)'}
+              justifyEnd={'true'}
+            >
+              <Btn
+                flex={1}
+                onPress={toggleModal}
+                justifyEnd={'true'}
+              />
+              <Box
+                width={wp(100)}
+                backgroundColor={theme === 'dark' ? color.bg : color.white5}
+                padding={30}
+                elevation={5}
+                borderTopLeftRadius={40}
+                borderTopRightRadius={40}
+              >
                 <Text
                   style={{
-                    fontFamily: fonts.MAIN,
-                    fontSize: 14,
-                    color: theme === 'dark' ? color.mainColor : color.mainColor,
+                    fontFamily: fonts.MAINB,
+                    fontSize: 20,
+                    color: theme === 'dark' ? color.black : color.white,
+                    marginBottom: 24,
                     textAlign: 'center'
                   }}
-                >720p</Text>
-              </Box>
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-              >
-                <FlatList
-                  data={data[0].episodes}
-                  keyExtractor={(item, index) => index.toString()}
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <Box
-                        row={true}
-                        marginBottom={16}
-                        alignCenter={'center'}
-                        justifySpaceBetween={'true'}
-                        height={wp(27)}
-                        width={wp(40)}
-                        marginRight={16}
-                      // backgroundColor={'red'}
-                      >
-                        <Img
-                          source={{ uri: item.thumbnail }}
-                          width={'100%'}
-                          height={'100%'}
-                          radius={5}
-                          resizeMode='cover'
-                        />
-                        <Box
-                          alignCenter={'center'}
-                          absolute={true}
-                          width={'100%'}
-                          height={'20%'}
-                          justifyCenter={'center'}
-                          backgroundColor={'rgba(0,0,0,0.3)'}
-                          bottom={18}
-                        >
-                        </Box>
-                        <Box
-                          alignCenter={'center'}
-                          justifyCenter={'center'}
-                          width={'100%'}
-                          absolute={true}
-                          bottom={20}
-                          left={0}
-                        >
-                          <Txt
-                            color={theme === 'dark' ? color.white : color.white5}
-                            size={12}
-                            fontFamily={fonts.MAIN}
-                          >
-                            {t('Episode ')}{item.episode} - {item.duration} {t('mins')}
-                          </Txt>
-                        </Box>
-                      </Box>
-                    )
-                  }}
+                >{t('Share to')}</Text>
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
+                  height={wp(0.5)}
+                  backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
                 />
-              </Box>
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-                height={wp(0.5)}
-                backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
-              />
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-              >
-                <Btn
-                  alignCenter={true}
-                  width={wp(40)}
-                  height={wp(12)}
-                  backgroundColor={theme === 'dark' ? '#35383F' : '#E6F9ED'}
-                  radius={30}
-                  onPress={toggleModal2}
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
                 >
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAINB,
-                      fontSize: 16,
-                      color: theme === 'dark' ? color.white : color.mainColor,
-                      textAlign: 'center'
-                    }}
-                  >Cancel</Text>
-                </Btn>
-                <Btn
-                  alignCenter={true}
-                  width={wp(40)}
-                  height={wp(12)}
-                  backgroundColor={theme === 'dark' ? color.mainColor : color.mainColor}
-                  radius={30}
-                  onPress={() => { }}
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/facebook64.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Facebook</Text>
+                  </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/twitter.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Twitter</Text>
+                  </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/instagram.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Instagram</Text>
+                  </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/linkedin.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Linkedin</Text>
+                  </Btn>
+                </Box>
+                <Box
+                  row={true}
+                  justifySpaceBetween={'true'}
+                  marginBottom={24}
                 >
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAINB,
-                      fontSize: 16,
-                      color: theme === 'dark' ? color.white : color.white5,
-                      textAlign: 'center'
-                    }}
-                  >Download</Text>
-                </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/gmail.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Gmail</Text>
+                  </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/telegram.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Telegram</Text>
+                  </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/whatsapp.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Whatsapp</Text>
+                  </Btn>
+                  <Btn>
+                    <Img
+                      source={require('@images/detail/tik-tok.png')}
+                      width={56}
+                      height={56}
+                      marginBottom={8}
+                    ></Img>
+                    <Text
+                      style={{
+                        fontFamily: fonts.MAIN,
+                        fontSize: 10,
+                        color: theme === 'dark' ? color.black : color.white,
+                        textAlign: 'center',
+                      }}
+                    >Tik-Tok</Text>
+                  </Btn>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Modal>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={isModalVisible}
-          onRequestClose={toggleModal}
-        >
+          </Modal>
           <Box
-            flex={1}
-            backgroundColor={'rgba(0,0,0,0.6)'}
-            justifyEnd={'true'}
+            width={wp(100)}
+            height={hp(33)}
+            justifyCenter={'center'}
+            alignCenter={'center'}
+            backgroundColor={'red'}
+            marginLeft={-24}
+            marginTop={-24}
+            marginBottom={24}
           >
-            <Btn
-              flex={1}
-              onPress={toggleModal}
-              justifyEnd={'true'}
-            />
-            <Box
-              width={wp(100)}
-              backgroundColor={theme === 'dark' ? color.bg : color.white5}
-              padding={30}
-              elevation={5}
-              borderTopLeftRadius={40}
-              borderTopRightRadius={40}
-            >
-              <Text
-                style={{
-                  fontFamily: fonts.MAINB,
-                  fontSize: 20,
-                  color: theme === 'dark' ? color.black : color.white,
-                  marginBottom: 24,
-                  textAlign: 'center'
-                }}
-              >{t('Share to')}</Text>
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-                height={wp(0.5)}
-                backgroundColor={theme === 'dark' ? '#35383F' : '#E0E0E0'}
-              />
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-              >
-                <Btn>
-                  <Img
-                    source={require('@images/detail/facebook64.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Facebook</Text>
-                </Btn>
-                <Btn>
-                  <Img
-                    source={require('@images/detail/twitter.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Twitter</Text>
-                </Btn>
-                <Btn>
-                  <Img
-                    source={require('@images/detail/instagram.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Instagram</Text>
-                </Btn>
-                <Btn>
-                  <Img
-                    source={require('@images/detail/linkedin.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Linkedin</Text>
-                </Btn>
-              </Box>
-              <Box
-                row={true}
-                justifySpaceBetween={'true'}
-                marginBottom={24}
-              >
-                <Btn>
-                  <Img
-                    source={require('@images/detail/gmail.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Gmail</Text>
-                </Btn>
-                <Btn>
-                  <Img
-                    source={require('@images/detail/telegram.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Telegram</Text>
-                </Btn>
-                <Btn>
-                  <Img
-                    source={require('@images/detail/whatsapp.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Whatsapp</Text>
-                </Btn>
-                <Btn>
-                  <Img
-                    source={require('@images/detail/tik-tok.png')}
-                    width={56}
-                    height={56}
-                    marginBottom={8}
-                  ></Img>
-                  <Text
-                    style={{
-                      fontFamily: fonts.MAIN,
-                      fontSize: 10,
-                      color: theme === 'dark' ? color.black : color.white,
-                      textAlign: 'center',
-                    }}
-                  >Tik-Tok</Text>
-                </Btn>
-              </Box>
-            </Box>
-          </Box>
-        </Modal>
-        <Box
-          width={wp(100)}
-          height={hp(33)}
-          justifyCenter={'center'}
-          alignCenter={'center'}
-          backgroundColor={'red'}
-          marginLeft={-24}
-          marginTop={-24}
-          marginBottom={24}
-        >
-          <Img
-            source={
-              {
-                // uri: data[0].poster
-                uri: item.images.jpg.large_image_url
+            <Img
+              source={
+                {
+                  // uri: data[0].poster
+                  uri: item.images.jpg.large_image_url
+                }
               }
-            }
-            width={('100%')}
-            height={('100%')}
-            resizeMode='cover' // cover, contain, stretch, repeat, center
+              width={('100%')}
+              height={('100%')}
+              resizeMode='cover' // cover, contain, stretch, repeat, center
 
-          />
-        </Box>
-        <Box
-          row={true}
-          justifySpaceBetween={'true'}
-          // backgroundColor={'red'}
-          alignCenter={'center'}
-          marginBottom={24}
-        >
-          <TextTicker
-            style={{
-              fontFamily: fonts.MAINB,
-              fontSize: 24,
-              color: theme === 'dark' ? color.black : color.white,
-              width: wp(100) - 48 - 96,
-            }}
-            duration={12000} // Độ dài thời gian để chữ chạy qua màn hình (milliseconds)
-            loop // Cho phép chạy vô hạn
-
-          >
-            {item.title_english}
-            {/* {data[0].title} */}
-          </TextTicker>
+            />
+          </Box>
           <Box
+            row={true}
+            justifySpaceBetween={'true'}
+            // backgroundColor={'red'}
+            alignCenter={'center'}
+            marginBottom={24}
+          >
+            <TextTicker
+              style={{
+                fontFamily: fonts.MAINB,
+                fontSize: 24,
+                color: theme === 'dark' ? color.black : color.white,
+                width: wp(100) - 48 - 96,
+              }}
+              duration={12000} // Độ dài thời gian để chữ chạy qua màn hình (milliseconds)
+              loop // Cho phép chạy vô hạn
+
+            >
+              {item.title_english}
+              {/* {data[0].title} */}
+            </TextTicker>
+            <Box
+              row={true}
+              alignCenter={'center'}
+            >
+              <Btn
+                marginRight={16}
+              // backgroundColor={'red'}
+              >
+                <Img
+                  source={require('@images/detail/bookmark.png')}
+                  width={24}
+                  height={24}
+                  tintColor={color.white}
+                ></Img>
+              </Btn>
+              <Btn
+                onPress={toggleModal}
+              >
+                <Img
+                  source={require('@images/detail/send.png')}
+                  width={24}
+                  height={24}
+                  tintColor={color.white}
+                ></Img>
+              </Btn>
+            </Box>
+          </Box>
+          <Box
+            marginBottom={24}
             row={true}
             alignCenter={'center'}
           >
-            <Btn
-              marginRight={16}
-            // backgroundColor={'red'}
-            >
-              <Img
-                source={require('@images/detail/bookmark.png')}
-                width={24}
-                height={24}
-                tintColor={color.white}
-              ></Img>
-            </Btn>
-            <Btn
-              onPress={toggleModal}
-            >
-              <Img
-                source={require('@images/detail/send.png')}
-                width={24}
-                height={24}
-                tintColor={color.white}
-              ></Img>
-            </Btn>
-          </Box>
-        </Box>
-        <Box
-          marginBottom={24}
-          row={true}
-          alignCenter={'center'}
-        >
-          <Img
-            source={require('@images/detail/half-star.png')}
-            width={20}
-            height={20}
-            tintColor={color.mainColor}
-            marginRight={8}
-          ></Img>
-          <Txt
-            color={color.mainColor}
-            size={14}
-            fontFamily={fonts.MAIN}
-            marginRight={8}
-          >
-            {/* {data[0].rating} */}
-            {item.score}
-          </Txt>
-          <Img
-            source={require('@images/detail/next.png')}
-            width={20}
-            height={20}
-            tintColor={color.mainColor}
-            marginRight={16}
-          ></Img>
-          <Txt
-            color={color.white}
-            size={14}
-            fontFamily={fonts.MAIN}
-            marginRight={16}
-          >
-            {/* {data[0].year} */}
-            {item.year}
-          </Txt>
-
-          <Btn
-            alignCenter={true}
-            // width={wp(23)}
-            height={wp(8)}
-            backgroundColor={color.bg}
-            radius={7}
-            borderWidth={1}
-            borderColor={color.mainColor}
-            paddingHorizontal={8}
-            marginRight={16}
-            disabled={true}
-            onPress={() => { }}
-          >
-            <Txt
-              color={color.mainColor}
-              size={12}
-              fontFamily={fonts.MAIN}
-            >
-              {/* {data[0].ageRating} */}
-              {/* {item.rating.match(/\d+/)[0]}+ */}
-              {item.rating.slice(0, 2).split(' ')}
-            </Txt>
-          </Btn>
-          <Btn
-            alignCenter={true}
-            // width={wp(23)}
-            height={wp(8)}
-            backgroundColor={color.bg}
-            radius={7}
-            borderWidth={1}
-            borderColor={color.mainColor}
-            paddingHorizontal={8}
-            marginRight={16}
-            disabled={true}
-            onPress={() => { }}
-          >
-            <Txt
-              color={color.mainColor}
-              size={12}
-              fontFamily={fonts.MAIN}
-            >
-              {/* {data[0].country} */}
-              Japan
-            </Txt>
-          </Btn>
-          {
-            data[0].hasSub && (
-              <Btn
-                alignCenter={true}
-                // width={wp(23)}
-                height={wp(8)}
-                backgroundColor={color.bg}
-                radius={7}
-                borderWidth={1}
-                borderColor={color.mainColor}
-                paddingHorizontal={8}
-                marginRight={16}
-                disabled={true}
-                onPress={() => { }}
-              >
-                <Txt
-                  color={color.mainColor}
-                  size={12}
-                  fontFamily={fonts.MAIN}
-                >
-                  {t('Sub')}
-                </Txt>
-              </Btn>
-            )
-          }
-          {
-            data[0].hasDub && (
-              <Btn
-                alignCenter={true}
-                // width={wp(23)}
-                height={wp(8)}
-                backgroundColor={color.bg}
-                radius={7}
-                borderWidth={1}
-                borderColor={color.mainColor}
-                paddingHorizontal={8}
-                marginRight={16}
-                disabled={true}
-                onPress={() => { }}
-              >
-                <Txt
-                  color={color.mainColor}
-                  size={12}
-                  fontFamily={fonts.MAIN}
-                >
-                  {t('Dub')}
-                </Txt>
-              </Btn>
-            )
-          }
-        </Box>
-        <Box
-          row={true}
-          marginBottom={24}
-          alignCenter={'center'}
-          justifySpaceBetween={'true'}
-        >
-          <Btn
-            row={true}
-            alignCenter={true}
-            width={wp(43)}
-            height={wp(10)}
-            backgroundColor={color.mainColor}
-            radius={20}
-            borderWidth={2}
-            borderColor={color.mainColor}
-            paddingHorizontal={8}
-            onPress={() => { }}
-          >
             <Img
-              source={require('@images/detail/play.png')}
-              width={24}
-              height={24}
-              tintColor={theme === 'dark' ? color.white : color.white5}
-              marginRight={8}
-            ></Img>
-            <Txt
-              color={theme === 'dark' ? color.white : color.white5}
-              size={18}
-              fontFamily={fonts.MAIN}
-            >
-              {t('Play')}
-            </Txt>
-          </Btn>
-          <Btn
-            row={true}
-            alignCenter={true}
-            width={wp(43)}
-            height={wp(10)}
-            backgroundColor={color.bg}
-            radius={20}
-            borderWidth={2}
-            borderColor={color.mainColor}
-            paddingHorizontal={8}
-            onPress={toggleModal2}
-          >
-            <Img
-              source={require('@images/detail/download.png')}
-              width={24}
-              height={24}
+              source={require('@images/detail/half-star.png')}
+              width={20}
+              height={20}
               tintColor={color.mainColor}
               marginRight={8}
             ></Img>
             <Txt
               color={color.mainColor}
-              size={18}
+              size={14}
               fontFamily={fonts.MAIN}
+              marginRight={8}
             >
-              {t('Download')}
+              {/* {data[0].rating} */}
+              {item.score}
             </Txt>
-          </Btn>
-        </Box>
-        <Box
-          marginBottom={16}
-        >
-          <Txt
-            color={color.white}
-            size={12}
-            fontFamily={fonts.MAIN}
-            marginBottom={12}
-            numberOfLines={1}
+            <Img
+              source={require('@images/detail/next.png')}
+              width={20}
+              height={20}
+              tintColor={color.mainColor}
+              marginRight={16}
+            ></Img>
+            <Txt
+              color={color.white}
+              size={14}
+              fontFamily={fonts.MAIN}
+              marginRight={16}
+            >
+              {/* {data[0].year} */}
+              {item.year}
+            </Txt>
+
+            <Btn
+              alignCenter={true}
+              // width={wp(23)}
+              height={wp(8)}
+              backgroundColor={color.bg}
+              radius={7}
+              borderWidth={1}
+              borderColor={color.mainColor}
+              paddingHorizontal={8}
+              marginRight={16}
+              disabled={true}
+              onPress={() => { }}
+            >
+              <Txt
+                color={color.mainColor}
+                size={12}
+                fontFamily={fonts.MAIN}
+              >
+                {/* {data[0].ageRating} */}
+                {/* {item.rating.match(/\d+/)[0]}+ */}
+                {item.rating.slice(0, 2).split(' ')}
+              </Txt>
+            </Btn>
+            <Btn
+              alignCenter={true}
+              // width={wp(23)}
+              height={wp(8)}
+              backgroundColor={color.bg}
+              radius={7}
+              borderWidth={1}
+              borderColor={color.mainColor}
+              paddingHorizontal={8}
+              marginRight={16}
+              disabled={true}
+              onPress={() => { }}
+            >
+              <Txt
+                color={color.mainColor}
+                size={12}
+                fontFamily={fonts.MAIN}
+              >
+                {/* {data[0].country} */}
+                Japan
+              </Txt>
+            </Btn>
+            {
+              data[0].hasSub && (
+                <Btn
+                  alignCenter={true}
+                  // width={wp(23)}
+                  height={wp(8)}
+                  backgroundColor={color.bg}
+                  radius={7}
+                  borderWidth={1}
+                  borderColor={color.mainColor}
+                  paddingHorizontal={8}
+                  marginRight={16}
+                  disabled={true}
+                  onPress={() => { }}
+                >
+                  <Txt
+                    color={color.mainColor}
+                    size={12}
+                    fontFamily={fonts.MAIN}
+                  >
+                    {t('Sub')}
+                  </Txt>
+                </Btn>
+              )
+            }
+            {
+              data[0].hasDub && (
+                <Btn
+                  alignCenter={true}
+                  // width={wp(23)}
+                  height={wp(8)}
+                  backgroundColor={color.bg}
+                  radius={7}
+                  borderWidth={1}
+                  borderColor={color.mainColor}
+                  paddingHorizontal={8}
+                  marginRight={16}
+                  disabled={true}
+                  onPress={() => { }}
+                >
+                  <Txt
+                    color={color.mainColor}
+                    size={12}
+                    fontFamily={fonts.MAIN}
+                  >
+                    {t('Dub')}
+                  </Txt>
+                </Btn>
+              )
+            }
+          </Box>
+          <Box
+            row={true}
+            marginBottom={24}
+            alignCenter={'center'}
+            justifySpaceBetween={'true'}
           >
-            {t('Genres')}: {item.genres.map((item: any) => item.name).join(', ')}
-            {/* {data[0].genres.join(', ')} */}
-          </Txt>
-          <ReadMore
-            numberOfLines={3} // Số dòng hiển thị khi đoạn text được rút gọn
-            renderTruncatedFooter={(handlePress: () => void) => (
+            <Btn
+              row={true}
+              alignCenter={true}
+              width={wp(43)}
+              height={wp(10)}
+              backgroundColor={color.mainColor}
+              radius={20}
+              borderWidth={2}
+              borderColor={color.mainColor}
+              paddingHorizontal={8}
+              onPress={() => { }}
+            >
+              <Img
+                source={require('@images/detail/play.png')}
+                width={24}
+                height={24}
+                tintColor={theme === 'dark' ? color.white : color.white5}
+                marginRight={8}
+              ></Img>
               <Txt
-                onPress={handlePress}
-                color={color.mainColor} // Màu sắc chữ khi ở trạng thái rút gọn
-                size={12}
+                color={theme === 'dark' ? color.white : color.white5}
+                size={18}
                 fontFamily={fonts.MAIN}
               >
-                {t('Read More')}
+                {t('Play')}
               </Txt>
-            )}
-            renderRevealedFooter={(handlePress: () => void) => (
+            </Btn>
+            <Btn
+              row={true}
+              alignCenter={true}
+              width={wp(43)}
+              height={wp(10)}
+              backgroundColor={color.bg}
+              radius={20}
+              borderWidth={2}
+              borderColor={color.mainColor}
+              paddingHorizontal={8}
+              onPress={onOpen}
+            >
+              <Img
+                source={require('@images/detail/download.png')}
+                width={24}
+                height={24}
+                tintColor={color.mainColor}
+                marginRight={8}
+              ></Img>
               <Txt
-                onPress={handlePress}
-                color={color.mainColor} // Màu sắc chữ khi ở trạng thái mở rộng
-                size={12}
+                color={color.mainColor}
+                size={18}
                 fontFamily={fonts.MAIN}
               >
-                {t('Show Less')}
+                {t('Download')}
               </Txt>
-            )}
-          // Các thuộc tính kiểu dáng khác có thể được thêm vào ở đây
+            </Btn>
+          </Box>
+          <Box
+            marginBottom={16}
           >
             <Txt
               color={color.white}
               size={12}
               fontFamily={fonts.MAIN}
+              marginBottom={12}
+              numberOfLines={1}
             >
-              {/* {data[0].description} */}
-              {item.synopsis}
+              {t('Genres')}: {item.genres.map((item: any) => item.name).join(', ')}
+              {/* {data[0].genres.join(', ')} */}
             </Txt>
-          </ReadMore>
-        </Box>
-        {/* list episodes */}
-        <Box>
-          <Box
-            row={true}
-            marginBottom={24}
-            justifySpaceBetween={'true'}
-            alignCenter={'center'}
-          // backgroundColor={'red'}
-          >
-            <Txt
-              color={color.white}
-              size={18}
-              fontFamily={fonts.MAINB}
-            >
-              {t('Episodes')}
-            </Txt>
-            <Box>
-              <Img
-                source={require('@images/detail/find.png')}
-                width={24}
-                height={24}
-                tintColor={color.white}
-                absolute={true}
-                left={10}
-                top={wp(10) / 2 - 12}
-                zIndex={1}
-              // backgroundColor={'red'}
-              />
-              <Input
-                height={wp(10)}
-                width={wp(49)}
-                hint={t('Search for episodes')}
-                hintColor={'#5f5f5f'}
-                backgroundColor={color.bg}
-                radius={5}
-                borderWidth={1}
-                borderColor={'#5f5f5f'}
-                paddingLeft={(35)}
-                color={color.white}
-                fontSize={14}
-                font={fonts.MAIN}
-              />
-            </Box>
-          </Box>
-          <FlatList
-            data={data[0].episodes}
-            keyExtractor={(item, index) => index.toString()}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <Box
-                  row={true}
-                  marginBottom={16}
-                  alignCenter={'center'}
-                  justifySpaceBetween={'true'}
-                  height={wp(27)}
-                  width={wp(40)}
-                  marginRight={16}
-                // backgroundColor={'red'}
+            <ReadMore
+              numberOfLines={3} // Số dòng hiển thị khi đoạn text được rút gọn
+              renderTruncatedFooter={(handlePress: () => void) => (
+                <Txt
+                  onPress={handlePress}
+                  color={color.mainColor} // Màu sắc chữ khi ở trạng thái rút gọn
+                  size={12}
+                  fontFamily={fonts.MAIN}
                 >
-                  <Img
-                    source={{ uri: item.thumbnail }}
-                    width={'100%'}
-                    height={'100%'}
-                    radius={5}
-                    resizeMode='cover'
-                  />
+                  {t('Read More')}
+                </Txt>
+              )}
+              renderRevealedFooter={(handlePress: () => void) => (
+                <Txt
+                  onPress={handlePress}
+                  color={color.mainColor} // Màu sắc chữ khi ở trạng thái mở rộng
+                  size={12}
+                  fontFamily={fonts.MAIN}
+                >
+                  {t('Show Less')}
+                </Txt>
+              )}
+            // Các thuộc tính kiểu dáng khác có thể được thêm vào ở đây
+            >
+              <Txt
+                color={color.white}
+                size={12}
+                fontFamily={fonts.MAIN}
+              >
+                {/* {data[0].description} */}
+                {item.synopsis}
+              </Txt>
+            </ReadMore>
+          </Box>
+          {/* list episodes */}
+          <Box>
+            <Box
+              row={true}
+              marginBottom={24}
+              justifySpaceBetween={'true'}
+              alignCenter={'center'}
+            // backgroundColor={'red'}
+            >
+              <Txt
+                color={color.white}
+                size={18}
+                fontFamily={fonts.MAINB}
+              >
+                {t('Episodes')}
+              </Txt>
+              <Box>
+                <Img
+                  source={require('@images/detail/find.png')}
+                  width={24}
+                  height={24}
+                  tintColor={color.white}
+                  absolute={true}
+                  left={10}
+                  top={wp(10) / 2 - 12}
+                  zIndex={1}
+                // backgroundColor={'red'}
+                />
+                <Input
+                  height={wp(10)}
+                  width={wp(49)}
+                  hint={t('Search for episodes')}
+                  hintColor={'#5f5f5f'}
+                  backgroundColor={color.bg}
+                  radius={5}
+                  borderWidth={1}
+                  borderColor={'#5f5f5f'}
+                  paddingLeft={(35)}
+                  color={color.white}
+                  fontSize={14}
+                  font={fonts.MAIN}
+                />
+              </Box>
+            </Box>
+            <FlatList
+              data={data[0].episodes}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
+                return (
                   <Box
+                    row={true}
+                    marginBottom={16}
                     alignCenter={'center'}
-                    absolute={true}
-                    width={'100%'}
-                    height={'60%'}
-                    justifyCenter={'center'}
-                    backgroundColor={'rgba(0,0,0,0.5)'}
+                    justifySpaceBetween={'true'}
+                    height={wp(27)}
+                    width={wp(40)}
+                    marginRight={16}
+                  // backgroundColor={'red'}
                   >
                     <Img
-                      source={require('@images/detail/play.png')}
-                      width={24}
-                      height={24}
-                      tintColor={color.mainColor}
-                      marginRight={8}
-                    ></Img>
-                  </Box>
-                  <Box
-                    alignCenter={'center'}
-                    justifyCenter={'center'}
-                    width={'100%'}
-                    absolute={true}
-                    bottom={20}
-                    left={0}
-                  >
-                    <Txt
-                      color={theme === 'dark' ? color.white : color.white5}
-                      size={12}
-                      fontFamily={fonts.MAIN}
+                      source={{ uri: item.thumbnail }}
+                      width={'100%'}
+                      height={'100%'}
+                      radius={5}
+                      resizeMode='cover'
+                    />
+                    <Box
+                      alignCenter={'center'}
+                      absolute={true}
+                      width={'100%'}
+                      height={'60%'}
+                      justifyCenter={'center'}
+                      backgroundColor={'rgba(0,0,0,0.5)'}
                     >
-                      {t('Episode ')}{item.episode} - {item.duration} {t('mins')}
-                    </Txt>
+                      <Img
+                        source={require('@images/detail/play.png')}
+                        width={24}
+                        height={24}
+                        tintColor={color.mainColor}
+                        marginRight={8}
+                      ></Img>
+                    </Box>
+                    <Box
+                      alignCenter={'center'}
+                      justifyCenter={'center'}
+                      width={'100%'}
+                      absolute={true}
+                      bottom={20}
+                      left={0}
+                    >
+                      <Txt
+                        color={theme === 'dark' ? color.white : color.white5}
+                        size={12}
+                        fontFamily={fonts.MAIN}
+                      >
+                        {t('Episode ')}{item.episode} - {item.duration} {t('mins')}
+                      </Txt>
+                    </Box>
                   </Box>
-                </Box>
-              )
-            }}
-          />
+                )
+              }}
+            />
+          </Box>
+          <Box
+            // backgroundColor={'red'}
+            width={wp(100) - 48}
+            // flex={1}
+            height={hp(35)}
+          >
+            <TabView
+              navigationState={{ index, routes }}
+              renderScene={renderScene}
+              onIndexChange={setIndex}
+              initialLayout={{ width: wp(100) }}
+              renderTabBar={renderTabBar}
+            />
+          </Box>
         </Box>
-        <Box
-          // backgroundColor={'red'}
-          width={wp(100) - 48}
-          // flex={1}
-          height={hp(35)}
-        >
-          <TabView
-            navigationState={{ index, routes }}
-            renderScene={renderScene}
-            onIndexChange={setIndex}
-            initialLayout={{ width: wp(100) }}
-            renderTabBar={renderTabBar}
-          />
-        </Box>
-      </Box>
-    </KeyBoardSafe>
+      </KeyBoardSafe>
+    </GestureHandlerRootView>
   )
 }
 
