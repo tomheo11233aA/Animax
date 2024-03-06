@@ -35,6 +35,9 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import TopHitsItem from '../Home/TopHit/TopHitsItem';
 import { Modalize } from 'react-native-modalize';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
+import RenderHTML from 'react-native-render-html';
+import WebView from 'react-native-webview';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -282,10 +285,47 @@ const Detail = () => {
   };
 
   const modalizeRef = useRef<Modalize>(null);
+  const modalizeRef2 = useRef<Modalize>(null);
 
   const onOpen = () => {
     modalizeRef.current?.open();
   };
+  const closeModal = () => {
+    modalizeRef.current?.close();
+  };
+
+  const onOpen2 = () => {
+    modalizeRef2.current?.open();
+  };
+
+  const source = {
+    html:
+      `
+    ${item.trailer && item.trailer.embed_url
+        ? `
+        <iframe 
+          width="100%" 
+          height="315" 
+          src="${item.trailer.embed_url}" 
+          title="YouTube video player" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen
+        ></iframe>
+      `
+        : `
+      <div style="width: 100%; height: 315px; display: flex; justify-content: center; align-items: center;">
+      <img 
+        src="${item.images.jpg.large_image_url}" 
+        alt="Trailer Image" 
+        style="width: 100%; height: 315px; object-fit: cover;"
+      />
+      </div>
+      `
+      }
+    `
+  }
+  //item.images.jpg.large_image_url
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -297,27 +337,13 @@ const Detail = () => {
         >
           <Modalize
             ref={modalizeRef}
-            snapPoint={500}
-            modalHeight={500}
-          >
-            <Text>Content</Text>
-          </Modalize>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isModalVisible2}
-            onRequestClose={toggleModal2}
+            adjustToContentHeight={true}
           >
             <Box
               flex={1}
-              backgroundColor={'rgba(0,0,0,0.6)'}
+              // backgroundColor={'rgba(0,0,0,0.5)'}
               justifyEnd={'true'}
             >
-              <Btn
-                flex={1}
-                onPress={toggleModal2}
-                justifyEnd={'true'}
-              />
               <Box
                 width={wp(100)}
                 backgroundColor={theme === 'dark' ? color.bg : color.white5}
@@ -442,7 +468,7 @@ const Detail = () => {
                     height={wp(12)}
                     backgroundColor={theme === 'dark' ? '#35383F' : '#E6F9ED'}
                     radius={30}
-                    onPress={toggleModal2}
+                    onPress={closeModal}
                   >
                     <Text
                       style={{
@@ -473,23 +499,16 @@ const Detail = () => {
                 </Box>
               </Box>
             </Box>
-          </Modal>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isModalVisible}
-            onRequestClose={toggleModal}
+          </Modalize>
+          <Modalize
+            ref={modalizeRef2}
+            adjustToContentHeight={true}
           >
             <Box
               flex={1}
-              backgroundColor={'rgba(0,0,0,0.6)'}
+              // backgroundColor={'rgba(0,0,0,0.6)'}
               justifyEnd={'true'}
             >
-              <Btn
-                flex={1}
-                onPress={toggleModal}
-                justifyEnd={'true'}
-              />
               <Box
                 width={wp(100)}
                 backgroundColor={theme === 'dark' ? color.bg : color.white5}
@@ -656,7 +675,30 @@ const Detail = () => {
                 </Box>
               </Box>
             </Box>
-          </Modal>
+          </Modalize>
+          <Box
+            width={wp(100)}
+            height={315}
+            justifyCenter={'center'}
+            alignCenter={'center'}
+            alignSelf={'center'}
+            backgroundColor={'#99FF99'}
+            marginBottom={24}
+            marginHorizontal={-24}
+            marginTop={-24}
+          >
+            <RenderHTML
+              renderers={{
+                iframe: IframeRenderer
+              }}
+              WebView={WebView}
+              customHTMLElementModels={{
+                iframe: iframeModel
+              }}
+              source={source}
+            />
+          </Box>
+          {/*
           <Box
             width={wp(100)}
             height={hp(33)}
@@ -680,6 +722,7 @@ const Detail = () => {
 
             />
           </Box>
+          */}
           <Box
             row={true}
             justifySpaceBetween={'true'}
@@ -717,7 +760,7 @@ const Detail = () => {
                 ></Img>
               </Btn>
               <Btn
-                onPress={toggleModal}
+                onPress={onOpen2}
               >
                 <Img
                   source={require('@images/detail/send.png')}
