@@ -15,7 +15,7 @@
 ## Technical
 
 - Package Management
-  - [Yarn](https://yarnpkg.com/)
+  - [Node](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs)
 - State Management
   - [Redux](https://redux-toolkit.js.org/introduction/getting-started)
 - Routing and Navigation
