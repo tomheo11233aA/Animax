@@ -38,6 +38,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
 import RenderHTML from 'react-native-render-html';
 import WebView from 'react-native-webview';
+import playSVG from '../../assets/images/detail/play.svg';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -678,14 +679,15 @@ const Detail = () => {
           </Modalize>
           <Box
             width={wp(100)}
-            height={315}
-            justifyCenter={'center'}
+            height={wp(100)*9/16 + 48}
+            justifyEnd={'true'}
             alignCenter={'center'}
             alignSelf={'center'}
             backgroundColor={'#99FF99'}
             marginBottom={24}
             marginHorizontal={-24}
             marginTop={-24}
+            paddingTop={hp(5)}
           >
             <RenderHTML
               renderers={{
@@ -698,31 +700,6 @@ const Detail = () => {
               source={source}
             />
           </Box>
-          {/*
-          <Box
-            width={wp(100)}
-            height={hp(33)}
-            justifyCenter={'center'}
-            alignCenter={'center'}
-            backgroundColor={'red'}
-            marginLeft={-24}
-            marginTop={-24}
-            marginBottom={24}
-          >
-            <Img
-              source={
-                {
-                  // uri: data[0].poster
-                  uri: item.images.jpg.large_image_url
-                }
-              }
-              width={('100%')}
-              height={('100%')}
-              resizeMode='cover' // cover, contain, stretch, repeat, center
-
-            />
-          </Box>
-          */}
           <Box
             row={true}
             justifySpaceBetween={'true'}
@@ -735,7 +712,8 @@ const Detail = () => {
                 fontFamily: fonts.MAINB,
                 fontSize: 24,
                 color: theme === 'dark' ? color.black : color.white,
-                width: wp(100) - 48 - 96,
+                width: wp(75)-24,
+                // backgroundColor: 'red',
               }}
               duration={12000} // Độ dài thời gian để chữ chạy qua màn hình (milliseconds)
               loop // Cho phép chạy vô hạn
@@ -747,10 +725,12 @@ const Detail = () => {
             <Box
               row={true}
               alignCenter={'center'}
+              width={wp(25)-24}
+              paddingLeft={16}
             >
               <Btn
                 marginRight={16}
-              // backgroundColor={'red'}
+                // backgroundColor={'red'}
               >
                 <Img
                   source={require('@images/detail/bookmark.png')}
@@ -761,6 +741,7 @@ const Detail = () => {
               </Btn>
               <Btn
                 onPress={onOpen2}
+                // backgroundColor={'red'}
               >
                 <Img
                   source={require('@images/detail/send.png')}
@@ -775,17 +756,19 @@ const Detail = () => {
             marginBottom={24}
             row={true}
             alignCenter={'center'}
+            width={wp(100)-48}
+            // backgroundColor={'#99FF99'}
           >
             <Img
               source={require('@images/detail/half-star.png')}
-              width={20}
-              height={20}
+              width={wp(5)}
+              height={wp(5)}
               tintColor={color.mainColor}
               marginRight={8}
             ></Img>
             <Txt
               color={color.mainColor}
-              size={14}
+              size={wp(3.2)}
               fontFamily={fonts.MAIN}
               marginRight={8}
             >
@@ -794,14 +777,14 @@ const Detail = () => {
             </Txt>
             <Img
               source={require('@images/detail/next.png')}
-              width={20}
-              height={20}
+              width={wp(5)}
+              height={wp(5)}
               tintColor={color.mainColor}
               marginRight={16}
             ></Img>
             <Txt
               color={color.white}
-              size={14}
+              size={wp(3.2)}
               fontFamily={fonts.MAIN}
               marginRight={16}
             >
@@ -811,7 +794,7 @@ const Detail = () => {
 
             <Btn
               alignCenter={true}
-              // width={wp(23)}
+              // width={wp(13)}
               height={wp(8)}
               backgroundColor={color.bg}
               radius={7}
@@ -824,7 +807,7 @@ const Detail = () => {
             >
               <Txt
                 color={color.mainColor}
-                size={12}
+                size={wp(3)}
                 fontFamily={fonts.MAIN}
               >
                 {/* {data[0].ageRating} */}
@@ -834,7 +817,7 @@ const Detail = () => {
             </Btn>
             <Btn
               alignCenter={true}
-              // width={wp(23)}
+              // width={wp(12)}
               height={wp(8)}
               backgroundColor={color.bg}
               radius={7}
@@ -847,8 +830,9 @@ const Detail = () => {
             >
               <Txt
                 color={color.mainColor}
-                size={12}
+                size={wp(3)}
                 fontFamily={fonts.MAIN}
+                numberOfLines={1}
               >
                 {/* {data[0].country} */}
                 Japan
@@ -871,7 +855,7 @@ const Detail = () => {
                 >
                   <Txt
                     color={color.mainColor}
-                    size={12}
+                    size={wp(3)}
                     fontFamily={fonts.MAIN}
                   >
                     {t('Sub')}
@@ -896,7 +880,7 @@ const Detail = () => {
                 >
                   <Txt
                     color={color.mainColor}
-                    size={12}
+                    size={wp(3)}
                     fontFamily={fonts.MAIN}
                   >
                     {t('Dub')}
@@ -924,7 +908,7 @@ const Detail = () => {
               onPress={() => { }}
             >
               <Img
-                source={require('@images/detail/play.png')}
+                source={playSVG}
                 width={24}
                 height={24}
                 tintColor={theme === 'dark' ? color.white : color.white5}
