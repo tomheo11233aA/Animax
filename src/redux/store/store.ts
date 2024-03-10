@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userSlice from "@redux/slice/userSlice";
 import animeSlice from "@redux/slice/animeSlice";
+import bankSlice from "@redux/slice/bankSlice";
 import {
     FLUSH,
     PAUSE,
@@ -16,6 +17,7 @@ import reduxStorage from "@utils/localStorage";
 const rootReducer = combineReducers({
     user: userSlice.reducer,
     anime: animeSlice.reducer,
+    bank: bankSlice.reducer,
 });
 
 const persistConfig = {
@@ -24,17 +26,12 @@ const persistConfig = {
     storage: reduxStorage,
     timeout: 30000,
     blacklist: [],
-    whitelist: ["user"],
+    whitelist: ["user","bank"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-    // reducer: {
-    //     // Here we will be adding reducers
-    //     user: userSlice.reducer,
-    //     anime: animeSlice.reducer,
-    // },
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

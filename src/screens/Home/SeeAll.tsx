@@ -10,7 +10,6 @@ import {
 } from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store'
 import Box from '@common/Box'
-import { useHideNavigation } from '@themes/hideNavigation'
 import Header from './Header'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@hooks/redux'

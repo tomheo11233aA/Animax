@@ -29,7 +29,7 @@ const Search = () => {
     const [data, setData] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const theme = useAppSelector(themeUserSelector);
-    useHideNavigation()
+    // useHideNavigation()
     const color = useTheme()
     const formatName = useFormatName();
     const formatCategory = useFormatCategory();

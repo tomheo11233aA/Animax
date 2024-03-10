@@ -60,6 +60,7 @@ const Input = forwardRef<TextInput, Props>(({
     paddingRight,
     marginBottom,
     marginLeft,
+    maxLength,
     marginRight,
     marginTop,
     paddingVertical,
@@ -101,6 +102,7 @@ const Input = forwardRef<TextInput, Props>(({
     coin,
     returnKeyType,
     onSubmitEditing,
+    isSvg = false,
     ...rest
 }: Props, ref) => {
     const insets = useSafeAreaInsets();
@@ -202,17 +204,17 @@ const Input = forwardRef<TextInput, Props>(({
                 <Box
                     alignCenter
                     justifyCenter
-                    height={'100%'}
+                    height={isSvg ? 0 : '100%'}
                 >
-                    <Image
+                    {isSvg ? iconOne : <Img
                         source={iconOne}
+                        tintColor={tintColors}
                         style={{
                             width: sizeIcon,
                             height: sizeIcon,
                             marginRight: getSize.m(10),
                         }}
-                        tintColor={tintColors}
-                    />
+                    />}
                 </Box>
             }
             <TextInput
@@ -238,8 +240,9 @@ const Input = forwardRef<TextInput, Props>(({
                 returnKeyType={returnKeyType}
                 onSubmitEditing={onSubmitEditing}
                 ref={ref}
+                maxLength={maxLength}
             />
-            {iconTwo &&
+            {/* {iconTwo &&
                 <Btn
                     onPress={onPress}
                     height={'100%'}
@@ -252,6 +255,24 @@ const Input = forwardRef<TextInput, Props>(({
                             height: sizeIcon,
                         }}
                     />
+                </Btn>
+            } */}
+            {iconTwo &&
+                <Btn
+                    onPress={onPress}
+                    alignCenter
+                    justifyCenter
+                    height={isSvg ? 0 : '100%'}
+                >
+                    {isSvg ? iconTwo : <Img
+                        source={iconTwo}
+                        tintColor={tintColors}
+                        style={{
+                            width: sizeIcon,
+                            height: sizeIcon,
+                            marginRight: getSize.m(10),
+                        }}
+                    />}
                 </Btn>
             }
             {coin &&
@@ -275,6 +296,8 @@ const Input = forwardRef<TextInput, Props>(({
 export default React.memo(Input);
 
 interface Props {
+    isSvg?: boolean;
+    maxLength?: number;
     returnKeyType?: 'done' | 'next' | 'go';
     onSubmitEditing?: () => void;
     value?: any,

@@ -12,7 +12,7 @@ const Txt = ({
     flex,
     flexShrink,
     flexGrow,
-    size = 14,
+    size = 16,
     color ,
     center,
     right,
@@ -48,6 +48,7 @@ const Txt = ({
     alignSelf,
     relative,
     absolute,
+    top,
     fontFamily = fonts.MAIN,
     fontWeight,
     ...textProps
@@ -89,6 +90,7 @@ const Txt = ({
         paddingVertical && { paddingVertical: getSize.m(paddingVertical) },
         marginHorizontal && { marginHorizontal: getSize.m(marginHorizontal) },
         marginVertical && { marginVertical: getSize.m(marginVertical) },
+        top && { top: getSize.m(top) },
         isNumber(lineHeight) && { lineHeight: getSize.m(lineHeight) },
         { fontSize: getSize.m(size) },
         textDecorationLine && { textDecorationLine },
@@ -148,5 +150,6 @@ interface Props {
     alignSelf?: any,
     relative?: any,
     absolute?: any,
+    top?: any,
     fontFamily?: any,
 }

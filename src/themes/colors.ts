@@ -1,6 +1,7 @@
 export const colors = {
     light: {
-        mainColor: '#06C149',
+        mainColor: '#1ADF61',
+        mainColor2: '#1ADF61',
         black: 'black',
         black2: 'white',
         black3: '#f5f5f5',
@@ -44,7 +45,8 @@ export const colors = {
     },
     dark: {
         borderColor: '#059437',
-        mainColor: '#06C149',
+        mainColor: '#1ADF61',
+        mainColor2: '#1ADF61',
         black: 'white',
         black2: 'black',
         black3: '#1e272f', // #171e24
@@ -85,7 +87,7 @@ export const colors = {
         tintLight: '#474d57',
         input: '#171e24',
     },
-    mainColor: '#06C149',
+    mainColor: '#1ADF61',
     lMainColor: '#10cc54',
     lMainColor2: '#e5f9ec',
     shadowColor: '#06c14940',

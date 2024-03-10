@@ -14,11 +14,15 @@ import { useTranslation } from 'react-i18next'
 import { setTheme } from '@redux/slice/userSlice'
 import LottieView from 'lottie-react-native'
 import { AppDispatch } from '@redux/store/store'
-import { fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime, 
-  fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime } from '@redux/slice/animeSlice'
+import {
+  fetchTopAnime, fetchFavoriteAnime, fetchTopTvAnime,
+  fetchTopMovieAnime, fetchPopularAnime, fetchNewReleaseAnime
+} from '@redux/slice/animeSlice'
 import LogoLight from '../../assets/images/svg/aniflix-light.svg'
 import LogoDark from '../../assets/images/svg/aniflix-dark.svg'
 import { languageUserSelector, themeUserSelector } from '@redux/selector/appSelector'
+import { fetchBanks } from '@redux/slice/bankSlice'
+import { bankSelector } from '@redux/selector/bankSelector'
 
 const Hello = () => {
   const dispatch: AppDispatch = useAppDispatch()
@@ -26,6 +30,7 @@ const Hello = () => {
   const navigation = useNavigation<any>()
   const theme = useAppSelector(themeUserSelector)
   const language = useAppSelector(languageUserSelector)
+  const banks = useAppSelector(bankSelector)
   useEffect(() => {
     const fetchAnime = async () => {
       const topAnimePromise = dispatch(fetchTopAnime());
@@ -53,6 +58,13 @@ const Hello = () => {
 
       return () => clearTimeout(timeOut)
     })
+  }, [])
+
+  useEffect(() => {
+    if (banks.length === 0) {
+      console.log('fetch banks')
+      dispatch(fetchBanks())
+    }
   }, [])
 
   return (

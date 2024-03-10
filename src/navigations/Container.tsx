@@ -8,6 +8,9 @@ import Main from "./Main";
 import Appearance from "@screens/Appearance";
 import UnAuthNavigation from "./UnAuthNavigation";
 import SeeAll from "@screens/Home/SeeAll";
+import Premium from "@screens/Premium";
+import Payment from "@screens/Payment";
+import CreditInput from "@screens/CreditCard";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -19,6 +22,9 @@ const Container = () => {
                 <Stack.Screen name={screens.APPEARANCE} component={Appearance} />
                 <Stack.Screen name={screens.STACK_UNAUTH} component={UnAuthNavigation} />
                 <Stack.Screen name={screens.SEE_ALL} component={SeeAll as any} />
+                <Stack.Screen name={screens.PREMIUM} component={Premium} />
+                <Stack.Screen name={screens.PAYMENT} component={Payment} />
+                <Stack.Screen name={screens.CREDITCARD_INPUT} component={CreditInput} />
             </Stack.Navigator>
         </NavigationContainer>
     )

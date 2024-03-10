@@ -48,7 +48,6 @@ const AuthNavigation = () => {
         {
             sizeIcon: 18,
             title: 'My List',
-            // component: MyListStack,
             component: ForgotPassword,
             name: screens.MY_LIST_STACK,
             icon: require('@images/auth/mark.png'),
@@ -71,6 +70,7 @@ const AuthNavigation = () => {
             icon2: require('@images/auth/profile2.png'),
         },
     ]
+    // log focused tab
     return (
         <Tab.Navigator
             screenOptions={{

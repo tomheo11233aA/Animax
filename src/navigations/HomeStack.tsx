@@ -10,12 +10,13 @@ import Detail from '@screens/ReleaseCalendar/Detail'
 const Stack = createNativeStackNavigator()
 const HomeStack = () => {
     return (
-        <Stack.Navigator screenOptions={{
-            headerShown: false,
-            gestureEnabled: true,
-            gestureDirection: 'horizontal',
-            animation: 'ios'
-        }}>
+        // <Stack.Navigator screenOptions={{
+        //     headerShown: false,
+        //     gestureEnabled: true,
+        //     gestureDirection: 'horizontal',
+        //     animation: 'ios'
+        // }}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name={screens.HOME} component={Home} />
             <Stack.Screen name={screens.SEARCH} component={Search} />
             <Stack.Screen name={screens.FILTER} component={Filter} />
