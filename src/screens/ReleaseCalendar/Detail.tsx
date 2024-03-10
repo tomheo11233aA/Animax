@@ -38,7 +38,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
 import RenderHTML from 'react-native-render-html';
 import WebView from 'react-native-webview';
-import playSVG from '../../assets/images/detail/play.svg';
+import playlogo from '../../assets/images/play.svg';
+import LogoLight from '../../assets/images/svg/aniflix-light.svg'
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -679,7 +682,7 @@ const Detail = () => {
           </Modalize>
           <Box
             width={wp(100)}
-            height={wp(100)*9/16 + 48}
+            height={wp(100) * 9 / 16 + 48}
             justifyEnd={'true'}
             alignCenter={'center'}
             alignSelf={'center'}
@@ -712,7 +715,7 @@ const Detail = () => {
                 fontFamily: fonts.MAINB,
                 fontSize: 24,
                 color: theme === 'dark' ? color.black : color.white,
-                width: wp(75)-24,
+                width: wp(75) - 24,
                 // backgroundColor: 'red',
               }}
               duration={12000} // Độ dài thời gian để chữ chạy qua màn hình (milliseconds)
@@ -725,12 +728,12 @@ const Detail = () => {
             <Box
               row={true}
               alignCenter={'center'}
-              width={wp(25)-24}
+              width={wp(25) - 24}
               paddingLeft={16}
             >
               <Btn
                 marginRight={16}
-                // backgroundColor={'red'}
+              // backgroundColor={'red'}
               >
                 <Img
                   source={require('@images/detail/bookmark.png')}
@@ -741,7 +744,7 @@ const Detail = () => {
               </Btn>
               <Btn
                 onPress={onOpen2}
-                // backgroundColor={'red'}
+              // backgroundColor={'red'}
               >
                 <Img
                   source={require('@images/detail/send.png')}
@@ -756,8 +759,8 @@ const Detail = () => {
             marginBottom={24}
             row={true}
             alignCenter={'center'}
-            width={wp(100)-48}
-            // backgroundColor={'#99FF99'}
+            width={wp(100) - 48}
+          // backgroundColor={'#99FF99'}
           >
             <Img
               source={require('@images/detail/half-star.png')}
@@ -907,14 +910,10 @@ const Detail = () => {
               paddingHorizontal={8}
               onPress={() => { }}
             >
-              <Img
-                source={playSVG}
-                width={24}
-                height={24}
-                tintColor={theme === 'dark' ? color.white : color.white5}
-                marginRight={8}
-              ></Img>
+              <AntDesign name="play" size={20} 
+              color={theme === 'dark' ? color.white : color.white5} />
               <Txt
+                marginLeft={8}
                 color={theme === 'dark' ? color.white : color.white5}
                 size={18}
                 fontFamily={fonts.MAIN}
@@ -934,14 +933,10 @@ const Detail = () => {
               paddingHorizontal={8}
               onPress={onOpen}
             >
-              <Img
-                source={require('@images/detail/download.png')}
-                width={24}
-                height={24}
-                tintColor={color.mainColor}
-                marginRight={8}
-              ></Img>
+              <Entypo name="download" size={20} 
+              color={color.mainColor} />
               <Txt
+                marginLeft={8}
                 color={color.mainColor}
                 size={18}
                 fontFamily={fonts.MAIN}
