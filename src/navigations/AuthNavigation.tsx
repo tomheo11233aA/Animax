@@ -15,9 +15,11 @@ import MyListStack from './MyListStack'
 import ProfileStack from './ProfileStack'
 import ReleaseCalendarStack from './ReleaseCalendarStack'
 import ForgotPassword from '@screens/AccountSetup/FogotPassword'
+import { useTheme } from '@hooks/redux'
 
 const Tab = createBottomTabNavigator()
 const AuthNavigation = () => {
+    const color = useTheme()
     changeNavigationBarColor('transparent', true, true)
     const { t } = useTranslation()
     const formatTitle = (name: string): string => {
@@ -75,14 +77,14 @@ const AuthNavigation = () => {
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
-                    // height: hp('12%'),
                     height: BOTTOM_TAB_HEIGHT,
                     paddingTop: 10,
-                    borderTopWidth: 1,
-                    backgroundColor: 'white',
+                    backgroundColor: color.bg,
                     position: 'absolute',
                     borderTopLeftRadius: 25,
                     borderTopRightRadius: 25,
+                    borderTopWidth: 0,
+
                 }
             }}
         >
@@ -106,7 +108,7 @@ const AuthNavigation = () => {
                                         <Txt
                                             size={12}
                                             numberOfLines={1}
-                                            color={focused ? colors.mainColor : 'black'}
+                                            color={focused ? colors.mainColor : color.white}
                                         >
                                             {formatTitle(t(tab.title))}
                                         </Txt>

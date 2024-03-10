@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useAppDispatch } from '@hooks/redux'
 import { setLogin } from '@redux/slice/userSlice'
@@ -13,32 +12,38 @@ import { useTranslation } from 'react-i18next'
 import Btn from '@common/Btn'
 import { useTheme } from '@hooks/redux'
 import Header from './Header'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
+import { fonts } from '@themes/fonts'
+import Info from './Info'
+import { colors } from '@themes/colors'
+import { Crown, ArrowRight2 } from 'iconsax-react-native'
+import Premium from './Premium'
+import List from './List'
+import Scroll from '@common/Scroll'
+import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
 
 const Profile = () => {
   const color = useTheme()
   const { t } = useTranslation()
   const dispatch: AppDispatch = useAppDispatch()
   return (
-    <KeyBoardSafe>
-      <Box
-        paddingHorizontal={20}
-        flex={1}
-      >
-
+    <>
+      <Box paddingHorizontal={20} backgroundColor={color.bg}>
         <Header t={t} title="Profile" />
-        <Img
-          source={require('@images/unAuth/user.png')}
-          width={50}
-          height={50}
-          radius={50}
-          marginTop={20}
-        />
       </Box>
-
-    </KeyBoardSafe>
+      <KeyBoardSafe>
+        <Scroll
+          paddingHorizontal={20}
+          flex={1}
+          marginBottom={BOTTOM_TAB_HEIGHT}
+        >
+          <Info />
+          <Premium t={t} color={color} />
+          <List t={t} />
+        </Scroll>
+      </KeyBoardSafe >
+    </>
   )
 }
 
 export default Profile
-
-const styles = StyleSheet.create({})

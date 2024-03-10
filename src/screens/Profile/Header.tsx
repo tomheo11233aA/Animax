@@ -7,13 +7,13 @@ import { useAppSelector } from '@hooks/redux'
 import Img from '@common/Img'
 import { fonts } from '@themes/fonts'
 import { MoreCircle } from 'iconsax-react-native'
+import Btn from '@common/Btn'
 interface Props {
     title: string
     t: any
 }
 
 const Header: React.FC<Props> = ({ title, t }) => {
-    const color = useTheme()
     const themeUser = useAppSelector(themeUserSelector)
     return (
         <Box
@@ -21,25 +21,23 @@ const Header: React.FC<Props> = ({ title, t }) => {
             marginTop={25}
             width={'100%'}
             alignCenter
-            flex={1}
         >
             <Img
                 source={require('@images/logo.png')}
-                width={80}
+                width={40}
                 height={80}
             />
             <Txt
                 size={25}
                 flex={1}
                 fontFamily={fonts.MAINB}
+                marginLeft={20}
             >
                 {title}
             </Txt>
-            <Box
-                marginRight={20}
-            >
+            <Btn>
                 <MoreCircle size={25} color={themeUser === 'light' ? 'black' : 'white'} />
-            </Box>
+            </Btn>
         </Box>
     )
 }
