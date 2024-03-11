@@ -38,10 +38,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import IframeRenderer, { iframeModel } from '@native-html/iframe-plugin';
 import RenderHTML from 'react-native-render-html';
 import WebView from 'react-native-webview';
-import playlogo from '../../assets/images/play.svg';
-import LogoLight from '../../assets/images/svg/aniflix-light.svg'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { Box, Img, Btn, Icon, Txt, Input, Scroll } = CommonComponents
 
@@ -680,13 +680,13 @@ const Detail = () => {
               </Box>
             </Box>
           </Modalize>
-          <Box
+          <Box // trailer
             width={wp(100)}
             height={wp(100) * 9 / 16 + 48}
             justifyEnd={'true'}
             alignCenter={'center'}
             alignSelf={'center'}
-            backgroundColor={'#99FF99'}
+            backgroundColor={theme === 'dark' ? color.bg : color.bg}
             marginBottom={24}
             marginHorizontal={-24}
             marginTop={-24}
@@ -703,7 +703,7 @@ const Detail = () => {
               source={source}
             />
           </Box>
-          <Box
+          <Box // title, bookmark, send
             row={true}
             justifySpaceBetween={'true'}
             // backgroundColor={'red'}
@@ -735,27 +735,17 @@ const Detail = () => {
                 marginRight={16}
               // backgroundColor={'red'}
               >
-                <Img
-                  source={require('@images/detail/bookmark.png')}
-                  width={24}
-                  height={24}
-                  tintColor={color.white}
-                ></Img>
+                <MaterialCommunityIcons name="bookmark-minus-outline" size={24} color={color.white} />
               </Btn>
               <Btn
                 onPress={onOpen2}
               // backgroundColor={'red'}
               >
-                <Img
-                  source={require('@images/detail/send.png')}
-                  width={24}
-                  height={24}
-                  tintColor={color.white}
-                ></Img>
+                <Ionicons name="paper-plane-outline" size={24} color={color.white} />
               </Btn>
             </Box>
           </Box>
-          <Box
+          <Box // rating, year, age rating, country, sub, dub
             marginBottom={24}
             row={true}
             alignCenter={'center'}
@@ -892,7 +882,7 @@ const Detail = () => {
               )
             }
           </Box>
-          <Box
+          <Box // button play and download
             row={true}
             marginBottom={24}
             alignCenter={'center'}
@@ -910,8 +900,8 @@ const Detail = () => {
               paddingHorizontal={8}
               onPress={() => { }}
             >
-              <AntDesign name="play" size={20} 
-              color={theme === 'dark' ? color.white : color.white5} />
+              <AntDesign name="play" size={20}
+                color={theme === 'dark' ? color.white : color.white5} />
               <Txt
                 marginLeft={8}
                 color={theme === 'dark' ? color.white : color.white5}
@@ -933,8 +923,8 @@ const Detail = () => {
               paddingHorizontal={8}
               onPress={onOpen}
             >
-              <Entypo name="download" size={20} 
-              color={color.mainColor} />
+              <Entypo name="download" size={20}
+                color={color.mainColor} />
               <Txt
                 marginLeft={8}
                 color={color.mainColor}
@@ -945,7 +935,7 @@ const Detail = () => {
               </Txt>
             </Btn>
           </Box>
-          <Box
+          <Box // genres, description
             marginBottom={16}
           >
             <Txt
@@ -1008,19 +998,21 @@ const Detail = () => {
               >
                 {t('Episodes')}
               </Txt>
-              <Box>
-                <Img
-                  source={require('@images/detail/find.png')}
-                  width={24}
-                  height={24}
-                  tintColor={color.white}
-                  absolute={true}
-                  left={10}
-                  top={wp(10) / 2 - 12}
-                  zIndex={1}
-                // backgroundColor={'red'}
-                />
+              <Box
+                row={true}
+                alignCenter={'center'}
+                height={wp(10)}
+                width={wp(49)}
+                paddingLeft={8}
+              >
+                <AntDesign name="search1"
+                  size={24}
+                  color={color.white} />
                 <Input
+                  absolute={true}
+                  left={0}
+                  top={0}
+                  zIndex={-1}
                   height={wp(10)}
                   width={wp(49)}
                   hint={t('Search for episodes')}
@@ -1068,13 +1060,14 @@ const Detail = () => {
                       justifyCenter={'center'}
                       backgroundColor={'rgba(0,0,0,0.5)'}
                     >
-                      <Img
+                      {/* <Img
                         source={require('@images/detail/play.png')}
                         width={24}
                         height={24}
                         tintColor={color.mainColor}
                         marginRight={8}
-                      ></Img>
+                      ></Img> */}
+                      <AntDesign name="play" size={24} color={color.mainColor} />
                     </Box>
                     <Box
                       alignCenter={'center'}
