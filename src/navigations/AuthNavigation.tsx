@@ -18,6 +18,7 @@ import ForgotPassword from '@screens/AccountSetup/FogotPassword'
 import { useTheme } from '@hooks/redux'
 import { Home2, Calendar, Profile, Archive, DirectboxReceive } from 'iconsax-react-native'
 import { SVG_ICON_SIZE } from '@themes/styled'
+import MediaPlayer from '@screens/MediaPlayer'
 
 const Tab = createBottomTabNavigator()
 const AuthNavigation = () => {
@@ -46,7 +47,7 @@ const AuthNavigation = () => {
         },
         {
             title: 'My List',
-            component: ForgotPassword,
+            component: MyListStack,
             name: screens.MY_LIST_STACK,
             iconNotFocused: <Archive color={color.white} />,
             iconFocused: <Archive variant='Bold' color={colors.mainColor} />
@@ -54,6 +55,7 @@ const AuthNavigation = () => {
         {
             title: 'Download',
             component: DownloadStack,
+            // component: MediaPlayer,
             name: screens.DOWNLOAD_STACK,
             iconNotFocused: <DirectboxReceive color={color.white} />,
             iconFocused: <DirectboxReceive variant='Bold' color={colors.mainColor} />

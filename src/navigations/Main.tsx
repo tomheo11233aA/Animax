@@ -10,7 +10,6 @@ import Box from "@common/Box";
 import { StatusBar } from "react-native";
 import { themeUserSelector } from "@redux/selector/appSelector";
 import BiometricStack from "./Biomatric";
-import Detail from "@screens/ReleaseCalendar/Detail";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 

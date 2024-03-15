@@ -75,7 +75,7 @@ const Btn = ({
     borderTopRightRadius,
     borderBottomRightRadius,
     borderBottomLeftRadius,
-    activeOpacity = 0.7,
+    activeOpacity = 0.2,
     ...rest
 }: Props) => {
     const insets = useSafeAreaInsets();

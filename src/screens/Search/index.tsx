@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Box from '@common/Box'
 import Txt from '@common/Txt'
-import { FlatList, Keyboard, Dimensions } from 'react-native'
+import { Keyboard } from 'react-native'
 import { debounce } from 'lodash'
 import AxiosInstance from '@helper/AxiosInstance'
 import { useTheme } from '@hooks/redux'
@@ -9,30 +9,21 @@ import { themeUserSelector } from '@redux/selector/appSelector'
 import { AppDispatch } from '@redux/store/store'
 import { useAppSelector, useAppDispatch } from '@hooks/redux';
 import { searchAnimeAction } from '@redux/slice/animeSlice'
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '@themes/fonts'
 import LottieView from 'lottie-react-native'
-import useFormatName from '@utils/formatName'
-import useFormatCategory from '@utils/formatCategory'
-import AnimeItem from '@screens/Home/AnimeItem'
-import { useTranslation } from 'react-i18next'
 import { searchAnimeSelector } from '@redux/selector/animeSelector'
-import { useHideNavigation } from '@themes/hideNavigation'
 import Header from './Header'
 import SearchItem from './SearchItem'
+import { width, height } from '@utils/responsive'
+import { FlashList } from '@shopify/flash-list'
 
-const { width, height } = Dimensions.get('window')
 const numColumns = width > 600 ? 3 : 2
 const Search = () => {
-    const { t } = useTranslation()
     const [search, setSearch] = useState('')
     const [data, setData] = useState<any[]>([])
     const [loading, setLoading] = useState(false)
     const theme = useAppSelector(themeUserSelector);
-    // useHideNavigation()
     const color = useTheme()
-    const formatName = useFormatName();
-    const formatCategory = useFormatCategory();
     const searchAnime = useAppSelector(searchAnimeSelector)
     const fetchSearch = useCallback(async (searchInput: string) => {
         setLoading(true)
@@ -59,7 +50,6 @@ const Search = () => {
     const checkSearch = () => {
         if (searchAnime.length === 0) {
             dispatch(searchAnimeAction())
-            console.log('searchAnime', searchAnime)
         }
     }
     useEffect(() => {
@@ -104,18 +94,21 @@ const Search = () => {
 
             ) : null}
             {data.length > 0 ? (
-                <FlatList
-                    contentContainerStyle={{ paddingBottom: hp('5%') }}
-                    data={data}
-                    renderItem={({ item }) => (
-                        <SearchItem
-                            item={item}
-                        />
-                    )}
-                    numColumns={numColumns}
-                    keyExtractor={(item, index) => index.toString()}
-                    showsHorizontalScrollIndicator={false}
-                />
+                <Box width={'100%'} height={'100%'} padding={10}>
+                    <FlashList
+                        contentContainerStyle={{ paddingBottom: height * 0.2 }}
+                        data={data}
+                        renderItem={({ item }) => (
+                            <SearchItem
+                                item={item}
+                            />
+                        )}
+                        numColumns={numColumns}
+                        keyExtractor={(item, index) => index.toString()}
+                        showsHorizontalScrollIndicator={false}
+                        estimatedItemSize={200}
+                    />
+                </Box>
             ) : (
                 <Box
                     justifyCenter

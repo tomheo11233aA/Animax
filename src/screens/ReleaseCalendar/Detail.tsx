@@ -66,20 +66,6 @@ const Detail = () => {
     avatar: 'https://play-lh.googleusercontent.com/_KdqU1n8c9f5Wts_vWj1ObIIrfhFs3VNLLMRf_dtUB5nJ_bjND2E1Cmyys4C078ZVA',
   })
 
-  const navigation = useNavigation();
-
-  useEffect(() => { // ẩn bottom tab bar khi vào màn hình detail (render component)
-    navigation.getParent()?.setOptions({
-      tabBarStyle: {
-        display: 'none',
-      }
-
-    });
-    return () => navigation.getParent()?.setOptions({ // hiện lại bottom tab bar trước khi unmount
-      tabBarStyle: undefined
-    });
-  }, [navigation]);
-
   const { t } = useTranslation()
   const theme = useAppSelector(themeUserSelector)
   const color = useTheme()

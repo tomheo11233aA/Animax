@@ -16,6 +16,8 @@ import NotificationSetting from "@screens/NotificationSetting";
 import Security from "@screens/Security";
 import HelpCenter from "@screens/HelpCenter";
 import PrivacyPolicy from "@screens/PrivacyPolicy";
+import DownloadSetting from "@screens/DownloadSetting";
+import Detail from "@screens/ReleaseCalendar/Detail";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -35,6 +37,8 @@ const Container = () => {
                 <Stack.Screen name={screens.SECURITY} component={Security}/>
                 <Stack.Screen name={screens.HELPCENTER} component={HelpCenter}/>
                 <Stack.Screen name={screens.PRIVACY_POLICY} component={PrivacyPolicy}/>
+                <Stack.Screen name={screens.DOWNLOAD_DETAIL} component={DownloadSetting}/>
+                <Stack.Screen name={screens.DETAIL} component={Detail} />
             </Stack.Navigator>
         </NavigationContainer>
     )

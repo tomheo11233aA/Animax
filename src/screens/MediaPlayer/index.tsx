@@ -222,7 +222,7 @@ const MediaPlayer = () => {
                 <Video
                     paused={paused}
                     source={{ uri: data[currentVideoIndex].link }}
-                    // source={{ uri: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8', type: 'm3u8' }}
+                    // source={{ uri: 'file:///data/user/0/com.animax/files/MyVideos/test0712.mp4' }}
                     ref={videoRef}
                     onProgress={onProgress}
                     onBuffer={handleBuffer}
@@ -246,6 +246,9 @@ const MediaPlayer = () => {
                     onSeek={({ currentTime }) => {
                         setProgress({ ...progress, currentTime });
                         setIsSeeking(false);
+                    }}
+                    onError={(error) => {
+                        console.error(error);
                     }}
                 />
                 {(isLoading || isSeeking) && (

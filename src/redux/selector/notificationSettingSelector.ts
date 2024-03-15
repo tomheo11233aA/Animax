@@ -5,3 +5,5 @@ export const isGenaralNotificationSelector = (state: RootState) => state.notific
 export const isSoundSelector = (state: RootState) => state.notificationSetting.isSound;
 
 export const isVibrationSelector = (state: RootState) => state.notificationSetting.isVibration;
+
+export const isWifiOnlySelector = (state: RootState) => state.notificationSetting.isWifiOnly;

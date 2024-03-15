@@ -5,7 +5,6 @@ import { setLanguage } from '@redux/slice/userSlice'
 import { useTranslation } from 'react-i18next'
 import { convertLanguage } from '@utils/convert'
 
-
 const Download = () => {
   const dispatch = useAppDispatch()
   const { i18n, t } = useTranslation()

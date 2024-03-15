@@ -8,6 +8,8 @@ import Box from '@common/Box';
 import Btn from '@common/Btn';
 import Icon from '@common/Icon';
 import Input from '@common/Input';
+import { ArrowLeft, SearchNormal, SearchNormal1 } from 'iconsax-react-native';
+import { SVG_ICON_SIZE } from '@themes/styled';
 
 interface Props {
     setSearch: (search: string) => void,
@@ -24,21 +26,21 @@ const Header: React.FC<Props> = ({
         <Box
             row={true}
             padding={10}
-            marginTop={hp('4%')}
             justifySpaceBetween={true}
             alignCenter
         >
             <Btn
                 onPress={() => goBack()}>
-                <Icon
+                {/* <Icon
                     source={require('@images/unAuth/back.png')}
                     tintColor={theme === 'light' ? color.black : 'white'}
                     size={20}
-                />
+                /> */}
+                <ArrowLeft color={color.white} size={20} />
             </Btn>
             <Input
                 onChangeText={setSearch}
-                backgroundColor={theme === 'light' ? color.black3 : color.black3}
+                backgroundColor={color.black3}
                 radius={wp('4%')}
                 height={hp(7)}
                 width={'70%'}
@@ -46,12 +48,12 @@ const Header: React.FC<Props> = ({
                 hint={'Eg. Naruto'}
                 font={fonts.MAIN}
                 hintColor={'#888888'}
-                color={theme === 'light' ? color.black : color.white}
-                iconOne={require('@images/home/search.png')}
-                sizeIcon={18}
+                color={color.white}
+                isSvg
+                iconOne={<SearchNormal1 color={color.mainColor} size={SVG_ICON_SIZE} />}
             />
             <Btn
-                backgroundColor={'#e6feef'}
+                backgroundColor={color.lMainColor}
                 radius={wp('5%')}
                 style={{
                     justifyContent: 'center',
