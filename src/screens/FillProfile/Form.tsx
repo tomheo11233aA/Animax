@@ -3,7 +3,6 @@ import Box from '@common/Box'
 import Input from '@common/Input'
 import Img from '@common/Img'
 import Btn from '@common/Btn'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen'
 import { fonts } from '@themes/fonts'
 import { fillProfileSchema } from './Validation/formValidation'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -13,13 +12,16 @@ import { themeUserSelector } from '@redux/selector/appSelector';
 import { useTranslation } from 'react-i18next';
 import Txt from '@common/Txt';
 import { colors } from '@themes/colors';
-import { navigate } from '@utils/navigationRef';
-import { screens } from '@contants/screens';
 import { useTheme } from '@hooks/redux'
 import PhoneInput from "react-native-phone-number-input";
 import { SelectList } from 'react-native-dropdown-select-list'
 import * as ImagePicker from 'react-native-image-picker';
 import { ActivityIndicator } from 'react-native'
+import { width, height } from '@utils/responsive'
+import Btn100 from '@components/button/Btn100'
+import { Edit } from 'iconsax-react-native'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
 
 const Form = () => {
     const { t } = useTranslation();
@@ -29,7 +31,8 @@ const Form = () => {
         resolver: yupResolver(fillProfileSchema)
     });
     const handleContinue = () => {
-        navigate(screens.MEDIA_PLAYER)
+        console.log('Continue')
+        navigate(screens.CHOOSE_INTEREST)
     }
     const [phone, setPhone] = React.useState('')
     const [loading, setLoading] = React.useState(false);
@@ -41,7 +44,6 @@ const Form = () => {
         { key: '2', value: t('Female') },
         { key: '3', value: t('Other') },
     ]
-
     const handleChoosePhoto = () => {
         setLoading(true);
         ImagePicker.launchImageLibrary(
@@ -69,49 +71,42 @@ const Form = () => {
     const phoneRef = useRef<any>(null);
 
     return (
-        <Box marginVertical={50}>
+        <Box marginVertical={height * 0.02}>
             <Box>
-                <Img
-                    source={selectedImage ? { uri: selectedImage } : require('@images/unAuth/user.png')}
-                    alignSelf={'center'}
-                    width={wp('30%')}
-                    height={hp('15%')}
-                    radius={wp('50%') / 2}
-                />
                 {loading ? (
                     <ActivityIndicator
                         size="small"
                         color={colors.mainColor}
-                        style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            right: 0,
-                            marginRight: wp('28%')
-                        }}
-                    />
-                ) : (
-                    <Btn onPress={handleChoosePhoto}>
-                        <Img
-                            source={require('@images/unAuth/edit.png')}
-                            absolute
-                            bottom={0}
-                            right={0}
-                            radius={wp('50%') / 2}
-                            width={32}
-                            height={32}
-                            style={{
-                                marginRight: wp('28%')
-                            }}
-                        />
-                    </Btn>
-                )}
 
+                    />
+                ) :
+                    <Box alignCenter marginVertical={height * 0.03}>
+                        <Box
+                            row
+                            alignCenter
+                        >
+                            <Img
+                                source={selectedImage ? { uri: selectedImage } : require('@images/unAuth/user.png')}
+                                width={width * 0.3}
+                                height={width * 0.3}
+                                radius={width}
+                            />
+                            <Btn onPress={handleChoosePhoto} absolute bottom={0} right={-width * 0.05}>
+                                <Edit
+                                    size={width * 0.1}
+                                    color={colors.mainColor}
+                                    variant='Bold'
+                                />
+                            </Btn>
+                        </Box>
+                    </Box>
+                }
             </Box>
-            <Box marginTop={hp(4)}>
+            <Box marginTop={height * 0.04}>
                 <Input
-                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
-                    radius={wp('4%')}
-                    height={hp(7)}
+                    backgroundColor={color.black3}
+                    radius={width * 0.04}
+                    height={height * 0.07}
                     width={'100%'}
                     borderWidth={1}
                     hint={'Full name'}
@@ -123,16 +118,16 @@ const Form = () => {
                     onSubmitEditing={() => nickNameRef.current?.focus()}
                     ref={fullNameRef}
                 />
-                {errors.fullName && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.fullName?.message}</Txt>}
+                {errors.fullName && <Txt color={'red'} size={14} marginTop={height * 0.01}>{errors.fullName?.message}</Txt>}
                 <Input
-                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
-                    radius={wp('5%')}
-                    height={hp(7)}
+                    backgroundColor={color.black3}
+                    radius={width * 0.05}
+                    height={height * 0.07}
                     width={'100%'}
                     borderWidth={1}
                     hint={'Nickname'}
                     hintColor={'#888888'}
-                    marginTop={hp(3)}
+                    marginTop={height * 0.03}
                     font={fonts.MAIN}
                     onChangeText={(text: string) => setValue('nickName', text)}
                     color={theme === 'light' ? color.black : color.white}
@@ -140,16 +135,16 @@ const Form = () => {
                     onSubmitEditing={() => emailRef.current?.focus()}
                     ref={nickNameRef}
                 />
-                {errors.nickName && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.nickName?.message}</Txt>}
+                {errors.nickName && <Txt color={'red'} size={14} marginTop={height * 0.01}>{errors.nickName?.message}</Txt>}
                 <Input
-                    backgroundColor={theme === 'light' ? color.black3 : color.black3}
-                    radius={wp('4%')}
-                    height={hp(7)}
+                    backgroundColor={color.black3}
+                    radius={width * 0.04}
+                    height={height * 0.07}
                     width={'100%'}
                     borderWidth={1}
                     hint={'Email'}
                     hintColor={'#888888'}
-                    marginTop={hp(3)}
+                    marginTop={height * 0.03}
                     font={fonts.MAIN}
                     iconTwo={require('@images/unAuth/mail.png')}
                     sizeIcon={18}
@@ -168,7 +163,7 @@ const Form = () => {
                     onSubmitEditing={() => phoneRef.current?.focus()}
                     ref={emailRef}
                 />
-                {errors.email && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.email?.message}</Txt>}
+                {errors.email && <Txt color={'red'} size={14} marginTop={height * 0.01}>{errors.email?.message}</Txt>}
                 <PhoneInput
                     defaultCode="VN"
                     layout="first"
@@ -179,12 +174,12 @@ const Form = () => {
                     value={phone}
                     containerStyle={{
                         backgroundColor: theme === 'light' ? color.black3 : color.black3,
-                        borderRadius: wp('4%'),
+                        borderRadius: width * 0.04,
                         width: '100%',
                         borderWidth: 1,
-                        marginTop: hp(3),
+                        marginTop: height * 0.03,
                         borderColor: theme === 'light' ? color.black3 : color.black3,
-                        height: hp(7),
+                        height: height * 0.07,
                     }}
                     textInputStyle={{
                         color: theme === 'light' ? color.black : color.black,
@@ -193,8 +188,8 @@ const Form = () => {
                     }}
                     textContainerStyle={{
                         backgroundColor: theme === 'light' ? color.black3 : color.black3,
-                        height: hp(7),
-                        borderRadius: wp('4%'),
+                        height: height * 0.07,
+                        borderRadius: width * 0.04,
                     }}
                     codeTextStyle={{
                         color: theme === 'light' ? color.black : color.black,
@@ -206,7 +201,7 @@ const Form = () => {
                     disableArrowIcon
                 />
 
-                {errors.phoneNumber && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.phoneNumber?.message}</Txt>}
+                {errors.phoneNumber && <Txt color={'red'} size={14} marginTop={height * 0.01}>{errors.phoneNumber?.message}</Txt>}
                 <SelectList
                     data={gender}
                     setSelected={(selectedItem: any) => {
@@ -216,9 +211,9 @@ const Form = () => {
                     placeholder='Choose gender'
                     fontFamily={fonts.MAIN}
                     boxStyles={{
-                        marginTop: hp(3), borderWidth: 0,
+                        marginTop: height * 0.03, borderWidth: 0,
                         backgroundColor: theme === 'light' ? color.black3 : color.black3,
-                        height: hp(7), borderRadius: wp('4%'), borderColor: theme === 'light' ? color.black3 : color.black3,
+                        height: height * 0.07, borderRadius: width * 0.04, borderColor: theme === 'light' ? color.black3 : color.black3,
                     }}
                     inputStyles={{
                         color: theme === 'light' ? color.black : color.white,
@@ -231,8 +226,8 @@ const Form = () => {
                     arrowicon={theme === 'light' ?
                         <Img
                             source={require('@images/unAuth/down_black.png')}
-                            width={wp('3%')}
-                            height={hp('1.5%')}
+                            width={width * 0.03}
+                            height={height * 0.015}
                             style={{
                                 alignSelf: 'center'
                             }}
@@ -240,53 +235,16 @@ const Form = () => {
                         :
                         <Img
                             source={require('@images/unAuth/down_white.png')}
-                            width={wp('3%')}
-                            height={hp('1.5%')}
+                            width={width * 0.03}
+                            height={height * 0.015}
                             style={{
                                 alignSelf: 'center'
                             }}
                         />}
                 />
-                {errors.gender && <Txt color={'red'} size={14} marginTop={hp(1)}>{errors.gender?.message}</Txt>}
+                {errors.gender && <Txt color={'red'} size={14} marginTop={height * 0.01}>{errors.gender?.message}</Txt>}
             </Box>
-            <Box marginTop={hp(10)}>
-                <Box row justifyCenter style={{ justifyContent: 'space-between' }}>
-                    <Btn
-                        width={'48%'}
-                        padding={wp('4%')}
-                        radius={wp('8%')}
-                        backgroundColor={theme === 'light' ? colors.lMainColor2 : colors.black3}
-                        onPress={() => navigate(screens.FILL_PROFILE)}
-                    >
-                        <Txt
-                            color={theme === 'light' ? colors.mainColor : colors.white}
-                            size={14}
-                            fontWeight={'bold'}
-                            fontFamily={fonts.MAIN}
-                        >
-                            {t('Skip')}
-                        </Txt>
-                    </Btn>
-                    <Btn
-                        width={'48%'}
-                        radius={wp('8%')}
-                        backgroundColor={colors.mainColor}
-                        shadow
-                        shadowColor={'#41ab67'}
-                        elevation={5}
-                        onPress={handleSubmit(handleContinue)}
-                    >
-                        <Txt
-                            color={colors.white}
-                            size={14}
-                            fontWeight={'bold'}
-                            fontFamily={fonts.MAIN}
-                        >
-                            {t('Continue')}
-                        </Txt>
-                    </Btn>
-                </Box>
-            </Box>
+            <Btn100 onPress={handleContinue} title='Continue' />
         </Box>
     )
 }

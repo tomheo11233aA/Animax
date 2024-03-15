@@ -12,6 +12,8 @@ import Txt from '@common/Txt';
 import { useTheme } from '@hooks/redux';
 import { colors } from '@themes/colors';
 import { TextInputFocusEventData, NativeSyntheticEvent } from 'react-native';
+import { Svg } from 'react-native-svg';
+import { fonts } from '@themes/fonts';
 
 const Input = forwardRef<TextInput, Props>(({
     readonly,
@@ -20,7 +22,7 @@ const Input = forwardRef<TextInput, Props>(({
     hint,
     hintColor = '#6666',
     security,
-    font,
+    font = fonts.MAIN,
     fontSize = 16,
     iconOne,
     iconTwo,
@@ -102,6 +104,7 @@ const Input = forwardRef<TextInput, Props>(({
     coin,
     returnKeyType,
     onSubmitEditing,
+    autoFocus,
     isSvg = false,
     ...rest
 }: Props, ref) => {
@@ -116,8 +119,8 @@ const Input = forwardRef<TextInput, Props>(({
         setIsFocused(false);
         if (onBlur) onBlur(e);
     };
-    const backgroundColors = isFocused ? '#EBFAF1' : (backgroundColor ? backgroundColor : myColor.black4)
-    const myBoderColor = isFocused ? colors.mainColor : (borderColor ? borderColor : myColor.black4);
+    const backgroundColors = isFocused ? myColor.focusInput : (backgroundColor ? backgroundColor : myColor.black4)
+    const myBoderColor = isFocused ?  myColor.mainColor : (borderColor ? borderColor : myColor.black4);
     const tintColors = isFocused ? colors.mainColor : (tintColor ? tintColor : myColor.black);
     const blockStyles = [
         isPaddingAdnroid && { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
@@ -206,7 +209,7 @@ const Input = forwardRef<TextInput, Props>(({
                     justifyCenter
                     height={isSvg ? 0 : '100%'}
                 >
-                    {isSvg ? iconOne : <Img
+                    {/* {isSvg ? iconOne : <Img
                         source={iconOne}
                         tintColor={tintColors}
                         style={{
@@ -214,7 +217,22 @@ const Input = forwardRef<TextInput, Props>(({
                             height: sizeIcon,
                             marginRight: getSize.m(10),
                         }}
-                    />}
+                    />} */}
+                    {isSvg ?
+                    <Box marginRight={getSize.m(10)}>
+                        {iconOne}
+                    </Box>
+                    :
+                    <Img
+                        source={iconOne}
+                        tintColor={tintColors}
+                        style={{
+                            width: sizeIcon,
+                            height: sizeIcon,
+                            marginRight: getSize.m(10),
+                        }}
+                    />
+                    }
                 </Box>
             }
             <TextInput
@@ -240,6 +258,7 @@ const Input = forwardRef<TextInput, Props>(({
                 returnKeyType={returnKeyType}
                 onSubmitEditing={onSubmitEditing}
                 ref={ref}
+                autoFocus={autoFocus}
                 maxLength={maxLength}
             />
             {/* {iconTwo &&
@@ -263,6 +282,7 @@ const Input = forwardRef<TextInput, Props>(({
                     alignCenter
                     justifyCenter
                     height={isSvg ? 0 : '100%'}
+                    paddingHorizontal={isSvg ? getSize.m(15) : 0}
                 >
                     {isSvg ? iconTwo : <Img
                         source={iconTwo}
@@ -275,20 +295,6 @@ const Input = forwardRef<TextInput, Props>(({
                     />}
                 </Btn>
             }
-            {coin &&
-                <Btn
-                    onPress={onPress}
-                    height={'100%'}
-                >
-                    <Txt
-                        center
-                        justify={'center'}
-                        alignSelf={'center'}
-                    >
-                        {coin}
-                    </Txt>
-                </Btn>
-            }
         </Box>
     );
 });
@@ -296,6 +302,7 @@ const Input = forwardRef<TextInput, Props>(({
 export default React.memo(Input);
 
 interface Props {
+    autoFocus?: boolean;
     isSvg?: boolean;
     maxLength?: number;
     returnKeyType?: 'done' | 'next' | 'go';

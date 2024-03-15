@@ -11,6 +11,11 @@ import SeeAll from "@screens/Home/SeeAll";
 import Premium from "@screens/Premium";
 import Payment from "@screens/Payment";
 import CreditInput from "@screens/CreditCard";
+import EditProfile from "@screens/EditProfile";
+import NotificationSetting from "@screens/NotificationSetting";
+import Security from "@screens/Security";
+import HelpCenter from "@screens/HelpCenter";
+import PrivacyPolicy from "@screens/PrivacyPolicy";
 
 const Stack = createNativeStackNavigator()
 const Container = () => {
@@ -25,6 +30,11 @@ const Container = () => {
                 <Stack.Screen name={screens.PREMIUM} component={Premium} />
                 <Stack.Screen name={screens.PAYMENT} component={Payment} />
                 <Stack.Screen name={screens.CREDITCARD_INPUT} component={CreditInput} />
+                <Stack.Screen name={screens.EDIT_PROFILE} component={EditProfile} />
+                <Stack.Screen name={screens.NOTIFICATION} component={NotificationSetting}/>
+                <Stack.Screen name={screens.SECURITY} component={Security}/>
+                <Stack.Screen name={screens.HELPCENTER} component={HelpCenter}/>
+                <Stack.Screen name={screens.PRIVACY_POLICY} component={PrivacyPolicy}/>
             </Stack.Navigator>
         </NavigationContainer>
     )

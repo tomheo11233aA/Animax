@@ -29,9 +29,6 @@ export const typeMovie = [
     }
 ]
 
-// fakeBanner bao gồm id, tên anime, ảnh anime, mô tả anime, thể loại anime, số tập anime, ngày công chiếu anime
-// thể loại anime sẽ được lấy từ typeMovie
-
 export const fakeBanner = [
     {
         id: 1,
@@ -59,5 +56,56 @@ export const fakeBanner = [
         typeMovie: [1, 2, 3, 4, 5, 6, 7],
         episode: 1000,
         date: '22/7/1997'
+    }
+]
+
+export const faqData = [
+    {
+        id: 1,
+        title: 'What is Potea?',
+        content: 'Eu ea culpa magna exercitation culpa magna mollit sint aute sit tempor minim cupidatat commodo. Sunt eiusmod proident irure consequat enim reprehenderit elit aliqua elit officia velit excepteur minim exercitation. Aliquip excepteur et exercitation laborum amet tempor eu adipisicing incididunt eu irure.'
+    },
+    {
+        id: 2,
+        title: 'How to buy plant?',
+        content: 'Eu ea culpa magna exercitation culpa magna mollit sint aute sit tempor minim cupidatat commodo. Sunt eiusmod proident irure consequat enim reprehenderit elit aliqua elit officia velit excepteur minim exercitation. Aliquip excepteur et exercitation laborum amet tempor eu adipisicing incididunt eu irure.'
+    },
+    {
+        id: 3,
+        title: 'How do I cancel my order?',
+        content: 'Eu ea culpa magna exercitation culpa magna mollit sint aute sit tempor minim cupidatat commodo. Sunt eiusmod proident irure consequat enim reprehenderit elit aliqua elit officia velit excepteur minim exercitation. Aliquip excepteur et exercitation laborum amet tempor eu adipisicing incididunt eu irure.'
+    },
+    {
+        id: 4,
+        title: 'Is Potea free to use?',
+        content: 'Eu ea culpa magna exercitation culpa magna mollit sint aute sit tempor minim cupidatat commodo. Sunt eiusmod proident irure consequat enim reprehenderit elit aliqua elit officia velit excepteur minim exercitation. Aliquip excepteur et exercitation laborum amet tempor eu adipisicing incididunt eu irure.'
+    },
+    {
+        id: 5,
+        title: 'How to add promo when checkout?',
+        content: 'Eu ea culpa magna exercitation culpa magna mollit sint aute sit tempor minim cupidatat commodo. Sunt eiusmod proident irure consequat enim reprehenderit elit aliqua elit officia velit excepteur minim exercitation. Aliquip excepteur et exercitation laborum amet tempor eu adipisicing incididunt eu irure.'
+    }
+]
+
+export const privacyPolicyData = [
+    {
+        id: 1,
+        title: "Types of Data collected",
+        content: "Ipsum nisi fugiat veniam ad nostrud dolore magna culpa minim pariatur quis sit id esse. Mollit non adipisicing anim aute id dolore. Sit nostrud esse velit ullamco laboris occaecat ipsum. Eu tempor aute culpa Lorem consequat labore fugiat laboris enim ad occaecat eiusmod. Culpa non labore id quis consectetur reprehenderit incididunt eiusmod nostrud quis aliqua cillum."
+    },
+    {
+        id: 2,
+        title: "Use of Your Personal Data",
+        content: "Ipsum nisi fugiat veniam ad nostrud dolore magna culpa minim pariatur quis sit id esse. Mollit non adipisicing anim aute id dolore. Sit nostrud esse velit ullamco laboris occaecat ipsum. Eu tempor aute culpa Lorem consequat labore fugiat laboris enim ad occaecat eiusmod. Culpa non labore id quis consectetur reprehenderit incididunt eiusmod nostrud quis aliqua cillum."
+    },
+    {
+        id: 3,
+        title: "Disclosure of Your Personal Data",
+        content: "Ipsum nisi fugiat veniam ad nostrud dolore magna culpa minim pariatur quis sit id esse. Mollit non adipisicing anim aute id dolore. Sit nostrud esse velit ullamco laboris occaecat ipsum. Eu tempor aute culpa Lorem consequat labore fugiat laboris enim ad occaecat eiusmod. Culpa non labore id quis consectetur reprehenderit incididunt eiusmod nostrud quis aliqua cillum."
+    },
+    {
+        id: 4,
+        title: "Security of Your Personal Data",
+        content: "Ipsum nisi fugiat veniam ad nostrud dolore magna culpa minim pariatur quis sit id esse. Mollit non adipisicing anim aute id dolore. Sit nostrud esse velit ullamco laboris occaecat ipsum. Eu tempor aute culpa Lorem consequat labore fugiat laboris enim ad occaecat eiusmod. Culpa non labore id quis consectetur reprehenderit incididunt eiusmod nostrud quis aliqua cillum."
     }
 ]

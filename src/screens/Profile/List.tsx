@@ -17,7 +17,8 @@ import { Modal, Portal } from 'react-native-paper'
 import { convertLanguage } from '@utils/convert'
 import ModalLoading from './ModalLoading'
 import ItemLanguage from './ItemLanguage'
-
+import { keys } from '@contants/keys'
+import { AppDispatch } from '@redux/store/store'
 
 export interface IOption {
     title: string;
@@ -31,7 +32,7 @@ interface Props {
 }
 
 const List = ({ t }: Props) => {
-    const dispatch = useAppDispatch()
+    const dispatch: AppDispatch = useAppDispatch()
     const themeColor = useTheme()
     const theme = useAppSelector(themeUserSelector)
     const language = useAppSelector(languageUserSelector)
@@ -40,7 +41,7 @@ const List = ({ t }: Props) => {
     const [isOpenChangeLanguage, setIsOpenChangeLanguage] = useState(false)
     const showModalChangeLanguage = () => setIsOpenChangeLanguage(true)
     const hideModalChangeLanguage = () => setIsOpenChangeLanguage(false)
-    const [_, setLanguageIcon] = useState<ImageSourcePropType>(convertLanguage(i18n.language).image)
+    const languageOptions = ['en', 'vn']
     const handleChangeTheme = async (value: string) => {
         setFakeLoading(true)
         setTimeout(() => {
@@ -51,6 +52,7 @@ const List = ({ t }: Props) => {
     }
     const handleChangeLanguage = (lng: string) => {
         i18n.changeLanguage(lng)
+        localStorage.set(keys.LANGUAGE, lng)
         const lngObject = convertLanguage(lng)
         dispatch(setLanguage(lngObject))
         hideModalChangeLanguage()
@@ -106,12 +108,6 @@ const List = ({ t }: Props) => {
             }
         }
     ]
-    const languageOptions = ['en', 'vn']
-    useEffect(() => {
-        setLanguageIcon(convertLanguage(i18n.language).image)
-    }, [i18n.language])
-
-
     return (
         <Animated.View
             style={{

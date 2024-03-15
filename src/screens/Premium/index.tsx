@@ -10,6 +10,7 @@ import Txt from '@common/Txt'
 import { goBack } from '@utils/navigationRef'
 import { fonts } from '@themes/fonts'
 import Item from './Item'
+import Header1 from '@components/header/Header1'
 
 const Premium = () => {
     const color = useTheme()
@@ -21,17 +22,7 @@ const Premium = () => {
                 paddingHorizontal={wp(5)}
                 alignCenter
             >
-                <Btn
-                    row
-                    padding={10}
-                    alignStart
-                    style={{
-                        alignSelf: 'flex-start'
-                    }}
-                    onPress={() => goBack()}
-                >
-                    <ArrowLeft size={wp(5)} color={color.white} />
-                </Btn>
+                <Header1 />
 
                 <Txt marginTop={hp(3)} size={32} fontFamily={fonts.MAINB}>
                     {t('Subrice to Premium!')}

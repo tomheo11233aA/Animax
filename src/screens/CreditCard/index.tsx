@@ -87,7 +87,7 @@ const CreditCard = () => {
         <Box height={1} width={'100%'} backgroundColor={color.line} marginTop={hp(2)} />
         <Box marginTop={hp(1)} width={'100%'}>
           <Dropdown onChange={handleBankChange} onLogoChange={handleLogoChange} />
-          {errors.bankName && <Txt size={12} color={color.mainColor2} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
+          {errors.bankName && <Txt size={12} color={color.mainColor} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
             {t(`${errors.bankName?.message}`)}
           </Txt>}
           <Txt size={18} color={color.black} marginVertical={hp(2)} fontFamily={fonts.MAINB}>
@@ -100,7 +100,7 @@ const CreditCard = () => {
             value={cardNumber}
             keyboardType={'numeric'}
           />
-          {errors.cardNumber && <Txt size={12} color={color.mainColor2} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
+          {errors.cardNumber && <Txt size={12} color={color.mainColor} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
             {t(`${errors.cardNumber?.message}`)}
           </Txt>}
 
@@ -113,7 +113,7 @@ const CreditCard = () => {
             maxLength={50}
             value={cardHolder}
           />
-          {errors.cardHolderName && <Txt size={12} color={color.mainColor2} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
+          {errors.cardHolderName && <Txt size={12} color={color.mainColor} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
             {t(`${errors.cardHolderName?.message}`)}
           </Txt>}
 
@@ -129,7 +129,7 @@ const CreditCard = () => {
                 value={expiryDate}
                 icon={<Calendar size={20} color={color.white} />}
               />
-              {errors.cardExpiryDate && <Txt size={12} color={color.mainColor2} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
+              {errors.cardExpiryDate && <Txt size={12} color={color.mainColor} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
                 {errors.cardExpiryDate?.message}
               </Txt>}
             </Box>
@@ -144,13 +144,13 @@ const CreditCard = () => {
                 maxLength={5}
                 value={expiryDate}
               />
-              {errors.cardExpiryDate && <Txt size={12} color={color.mainColor2} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
+              {errors.cardExpiryDate && <Txt size={12} color={color.mainColor} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }} marginTop={7} bold>
                 {errors.cardExpiryDate?.message}
               </Txt>}
             </Box>
           </Box>
 
-          <Txt size={12} color={color.mainColor2} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }}>
+          <Txt size={12} color={color.mainColor} paddingHorizontal={5} marginLeft={20} style={{ zIndex: -1 }}>
             {error}
           </Txt>
         </Box>

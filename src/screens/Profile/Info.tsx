@@ -7,7 +7,8 @@ import { fonts } from '@themes/fonts'
 import * as ImagePicker from 'react-native-image-picker';
 import { ActivityIndicator } from 'react-native';
 import { colors } from '@themes/colors';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { height, width } from '@utils/responsive'
+import { Edit } from 'iconsax-react-native'
 
 const Info = () => {
     const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
@@ -38,41 +39,41 @@ const Info = () => {
                 <ActivityIndicator
                     size="small"
                     color={colors.mainColor}
-                    
                 />
             ) :
-                <Box row alignCenter>
+                <Box alignCenter marginVertical={height * 0.02} row>
                     <Box
                         row
                         alignCenter
                     >
                         <Img
                             source={selectedImage ? { uri: selectedImage } : require('@images/unAuth/user.png')}
-                            width={80}
-                            height={80}
-                            radius={50}
+                            width={width * 0.25}
+                            height={width * 0.25}
+                            radius={width}
                         />
-                        <Btn onPress={handleChoosePhoto}>
-                            <Img
-                                source={require('@images/unAuth/edit.png')}
-                                absolute
-                                top={10}
+                        <Btn onPress={handleChoosePhoto} absolute bottom={0} right={-width * 0.03}>
+                            <Edit
+                                size={width * 0.08}
+                                color={colors.mainColor}
+                                variant='Bold'
                             />
                         </Btn>
                     </Box>
                     <Box
                         flex={1}
-                        marginLeft={20}
+                        marginLeft={width * 0.05}
                     >
                         <Txt
-                            size={16}
+                            size={24}
                             fontFamily={fonts.MAINB}
                         >
-                            Andrew Ainsley
+                            Văn Nam Phúc
                         </Txt>
                         <Txt
+                            size={16}
                         >
-                            andrew_ainsley@yourdomain.com
+                            phucnamvan@gmail.com
                         </Txt>
                     </Box>
                 </Box>}
@@ -80,4 +81,4 @@ const Info = () => {
     )
 }
 
-export default Info
+export default React.memo(Info)

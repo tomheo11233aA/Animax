@@ -8,6 +8,8 @@ import { FlatList } from 'react-native'
 import TopHitsItem from '../TopHit/TopHitsItem'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
+import { height } from '@utils/responsive'
+import { FlashList } from '@shopify/flash-list'
 
 interface Props {
     t: any
@@ -48,19 +50,25 @@ const MostFavorite: React.FC<Props> = ({ t, banner }) => {
                     </Txt>
                 </Btn>
             </Box>
-            <FlatList
-                style={{ marginLeft: 10 }}
-                data={banner}
-                renderItem={({ item }) => (
-                    <TopHitsItem
-                        item={item}
-                        onPress={() => navigate(screens.DETAIL, { item: item })}
-                    />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-            />
+            <Box
+                width={'100%'}
+                height={height * 0.27}
+            >
+                <FlashList
+                    data={banner}
+                    renderItem={({ item }) => (
+                        <TopHitsItem
+                            item={item}
+                            onPress={() => navigate(screens.DETAIL, { item: item })}
+                        />
+                    )}
+                    contentContainerStyle={{ paddingLeft: 20 }}
+                    keyExtractor={(item, index) => index.toString()}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    estimatedItemSize={200}
+                />
+            </Box>
         </>
     )
 }

@@ -41,7 +41,7 @@ const Item = ({ item, t, onClick }: Props) => {
                     {item.title === 'Logout' ? <Txt marginLeft={20} size={16} fontFamily={fonts.MAINB} color={'red'}>{t(item.title)}</Txt> : <Txt marginLeft={20} size={16} fontFamily={fonts.MAINB}>{t(item.title)}</Txt>}
                 </Box>
                 <Box row>
-                    {item.selectedLanguage && <Txt size={16} marginRight={10}>{item.selectedLanguage}</Txt>}
+                    {item.selectedLanguage && <Txt size={16} marginRight={10}>{t(item.selectedLanguage)}</Txt>}
                     {item.title === 'Dark Mode' ? <Switch
                         value={isSwitchOn}
                         onChange={() => {

@@ -1,4 +1,3 @@
-import { FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { RouteProp } from '@react-navigation/native'
 import { useAppDispatch, useAppSelector } from '@hooks/redux'
@@ -10,7 +9,6 @@ import {
 } from '@redux/selector/animeSelector'
 import { AppDispatch } from '@redux/store/store'
 import Box from '@common/Box'
-import Header from './Header'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from '@hooks/redux'
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen'
@@ -19,6 +17,12 @@ import AnimeItem from './AnimeItem'
 import useFormatName from '@utils/formatName'
 import useFormatCategory from '@utils/formatCategory'
 import { ActivityIndicator } from 'react-native'
+import { FlashList } from '@shopify/flash-list'
+import Header3 from '@components/header/Header3'
+import { navigate } from '@utils/navigationRef'
+import { screens } from '@contants/screens'
+import { colors } from '@themes/colors'
+
 type RootStackParamList = {
   SeeAll: { type: string }
 }
@@ -55,25 +59,28 @@ const SeeAll: React.FC<Props> = ({ route }) => {
   const myFormatRoute = formatRoute(route.params.type)
 
   const renderAnimeList = (animeType: string) => (
-    <FlatList
-      contentContainerStyle={{
-        paddingBottom: hp(15),
-      }}
-      data={animeSelectors[animeType]}
-      keyExtractor={(item, index) => index.toString()}
-      onEndReached={loadMoreData}
-      onEndReachedThreshold={0.3}
-      ListFooterComponent={() => loading && <ActivityIndicator size="large" />}
-      renderItem={({ item }) => (
-        <AnimeItem
-          item={item}
-          theme={theme}
-          t={t}
-          formatName={formatName}
-          formatCategory={formatCategory}
-        />
-      )}
-    />
+    <Box width={'100%'} height={'100%'}>
+      <FlashList
+        contentContainerStyle={{
+          paddingBottom: hp(15),
+        }}
+        data={animeSelectors[animeType]}
+        keyExtractor={(item, index) => index.toString()}
+        onEndReached={loadMoreData}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={() => loading && <ActivityIndicator size="large" color={colors.mainColor} />}
+        renderItem={({ item }) => (
+          <AnimeItem
+            item={item}
+            theme={theme}
+            t={t}
+            formatName={formatName}
+            formatCategory={formatCategory}
+          />
+        )}
+        estimatedItemSize={200}
+      />
+    </Box>
   )
 
   const loadMoreData = async () => {
@@ -113,7 +120,11 @@ const SeeAll: React.FC<Props> = ({ route }) => {
     <Box
       backgroundColor={theme.bg}
     >
-      <Header t={t} title={myFormatRoute} />
+      <Box paddingHorizontal={20}>
+        <Header3 title={myFormatRoute} type='search'
+          onPress={() => navigate(screens.SEARCH)}
+        />
+      </Box>
       {renderAnimeList(route.params.type)}
     </Box>
   )

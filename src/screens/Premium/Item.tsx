@@ -22,7 +22,7 @@ const Item = ({ color, t, type, price }: PremiumProps) => {
         <Btn
             marginTop={hp(5)}
             width={'100%'}
-            borderColor={color.mainColor2}
+            borderColor={color.mainColor}
             borderWidth={1}
             paddingVertical={hp(3)}
             paddingHorizontal={wp(5)}

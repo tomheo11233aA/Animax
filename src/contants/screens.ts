@@ -3,6 +3,8 @@ export const screens = {
     HELLO: 'HELLO',
     STARTED: 'STARTED',
     SIGNINSOCIAL: 'SIGNINSOCIAL',
+    SIGNIN: 'SignIn',
+    HOWTOLOGIN: 'HowToLogin',
     SIGNUP: 'SIGNUP',
     CHOOSE_INTEREST: 'CHOOSEINTEREST',
     FILL_PROFILE: 'FILLPROFILE',

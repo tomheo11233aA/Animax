@@ -13,11 +13,13 @@ import {
     REHYDRATE,
 } from "redux-persist";
 import reduxStorage from "@utils/localStorage";
+import notificationSettingSlice from "@redux/slice/notificationSettingSlice";
 
 const rootReducer = combineReducers({
     user: userSlice.reducer,
     anime: animeSlice.reducer,
     bank: bankSlice.reducer,
+    notificationSetting: notificationSettingSlice.reducer,
 });
 
 const persistConfig = {
@@ -26,7 +28,7 @@ const persistConfig = {
     storage: reduxStorage,
     timeout: 30000,
     blacklist: [],
-    whitelist: ["user","bank"],
+    whitelist: ["user","bank", "notificationSetting"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

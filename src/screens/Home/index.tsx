@@ -28,6 +28,8 @@ import { screens } from '@contants/screens';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Notification } from 'iconsax-react-native';
 import { Dimensions } from 'react-native';
+import { SearchNormal1 } from 'iconsax-react-native';
+import { SVG_ICON_SIZE } from '@themes/styled';
 
 const { width } = Dimensions.get('window');
 const Home = () => {
@@ -100,7 +102,6 @@ const Home = () => {
         />
         <Box
           row
-          marginTop={25}
           absolute
           justifySpaceBetween
           width={'100%'}
@@ -117,19 +118,17 @@ const Home = () => {
           >
             <Btn
               onPress={() => navigate(screens.SEARCH)}
-              width={40}
-              height={40}
+              padding={10}
             >
-              <AntDesign name="search1" size={20} color="white" />
+              <SearchNormal1 color={'white'} size={SVG_ICON_SIZE} />
             </Btn>
 
             <Btn
               onPress={() => navigate(screens.SEARCH)}
-              width={40}
-              height={40}
               marginLeft={20}
+              padding={10}
             >
-              <Notification color={'white'} size={20} />
+              <Notification color={'white'} size={SVG_ICON_SIZE} />
             </Btn>
           </Box>
         </Box>

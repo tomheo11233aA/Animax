@@ -69,7 +69,7 @@ const Started = () => {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigate(screens.SIGNINSOCIAL)}
+          onPress={() => navigate(screens.HOWTOLOGIN)}
         >
           <Text style={styles.text}>{t('Get Started')}</Text>
         </TouchableOpacity>

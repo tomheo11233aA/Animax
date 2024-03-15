@@ -23,6 +23,9 @@
       "@selector/*": ["./src/redux/selector/*"],
       "@navigations/*": ["./src/navigations/*"],
       "@common/*": ["./src/components/common/*"],
+      "@components/*": ["./src/components/*"],
+      // "@header/*": ["./src/components/header/*"],
+      // "@button/*": ["./src/components/button/*"],
       "@asyncThunk/*": ["./src/redux/asyncThunk/*"],
       "@helper/*": ["./src/helper/*"],
       "@fuction/*": ["./src/fuction/*"]

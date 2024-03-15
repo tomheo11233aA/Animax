@@ -8,6 +8,8 @@ import { FlatList } from 'react-native'
 import TopHitsItem from './TopHitsItem'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
+import { FlashList } from '@shopify/flash-list'
+import { height } from '@utils/responsive'
 
 interface Props {
     t: any
@@ -36,7 +38,7 @@ const TopHitsAnime: React.FC<Props> = ({ t, banner }) => {
                 <Btn
                     marginVertical={5}
                     marginHorizontal={10}
-                    onPress={() => navigate(screens.SEE_ALL, {type: 'topHits'})}
+                    onPress={() => navigate(screens.SEE_ALL, { type: 'topHits' })}
                 >
                     <Txt
                         size={12}
@@ -48,20 +50,25 @@ const TopHitsAnime: React.FC<Props> = ({ t, banner }) => {
                     </Txt>
                 </Btn>
             </Box>
-            <FlatList
-                style={{ marginLeft: 10 }}
-                data={banner}
-                renderItem={({ item }) => (
-                    <TopHitsItem
-                        item={item}
-                        onPress={() => navigate(screens.DETAIL, { item: item })}
-                    />
-                )}
-                // keyExtractor={(item, index) => item.mal_id.toString()}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-            />
+            <Box
+                width={'100%'}
+                height={height * 0.27}
+            >
+                <FlashList
+                    data={banner}
+                    renderItem={({ item }) => (
+                        <TopHitsItem
+                            item={item}
+                            onPress={() => navigate(screens.DETAIL, { item: item })}
+                        />
+                    )}
+                    contentContainerStyle={{paddingLeft: 20}}
+                    keyExtractor={(item, index) => index.toString()}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    estimatedItemSize={200}
+                />
+            </Box>
         </>
     )
 }
