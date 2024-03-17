@@ -221,8 +221,9 @@ const MediaPlayer = () => {
                 />
                 <Video
                     paused={paused}
-                    source={{ uri: data[currentVideoIndex].link }}
+                    // source={{ uri: data[currentVideoIndex].link }}
                     // source={{ uri: 'file:///data/user/0/com.animax/files/MyVideos/test0712.mp4' }}
+                    source={{uri : 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8', type: 'm3u8'}}
                     ref={videoRef}
                     onProgress={onProgress}
                     onBuffer={handleBuffer}

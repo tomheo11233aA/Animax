@@ -1,211 +1,115 @@
 import React from 'react';
 import {
-  StyleSheet, Text, ImageBackground,
-  TouchableOpacity, View
+    StyleSheet, ImageBackground,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import LinearGradient from 'react-native-linear-gradient';
 import Carousel from 'react-native-reanimated-carousel';
-import Animated, { Extrapolation, interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { useSharedValue, interpolateColor } from 'react-native-reanimated';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { fonts } from '@themes/fonts';
 import { colors } from '@themes/colors';
 import { navigate } from '@utils/navigationRef';
 import { screens } from '@contants/screens';
 import Box from '@common/Box';
+import { width, height } from '@utils/responsive';
+import Txt from '@common/Txt';
+import Btn100 from '@components/button/Btn100';
 
 const images = [
-  { id: 1, image: require('@images/background.png') },
-  { id: 2, image: require('@images/background2.png') },
-  { id: 3, image: require('@images/background3.png') }
+    { id: 1, image: require('@images/background.png') },
+    { id: 2, image: require('@images/background2.png') },
+    { id: 3, image: require('@images/background3.png') }
 ];
 
-const Started = () => {
-  const { t } = useTranslation()
-  const progressValue = useSharedValue<number>(0);
-  return (
-    // <View style={{ flex: 1 }}>
-    <Box flex={1} backgroundColor={'#000000'}>
-      <Carousel
-        data={images}
-        renderItem={({ item }) => (
-          <ImageBackground
-            source={item.image}
-            style={styles.backgroundImage}>
-            <LinearGradient
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
-              style={styles.backgroundGradient}
+const Onboarding = () => {
+    const { t } = useTranslation()
+    const progressValue = useSharedValue<number>(0);
+    return (
+        <Box flex={1}>
+            <Carousel
+                data={images}
+                renderItem={({ item }) => (
+                    <ImageBackground
+                        source={item.image}
+                        style={styles.backgroundImage}>
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}
+                            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
+                            style={styles.backgroundGradient}
+                        />
+                    </ImageBackground>
+                )}
+                width={width}
+                height={height}
+                autoPlay
+                onProgressChange={(_, absoluteProgress) =>
+                    (progressValue.value = absoluteProgress)
+                }
             />
-          </ImageBackground>
-        )}
-        width={wp('100%')}
-        height={hp('100%')}
-        autoPlay
-        onProgressChange={(_, absoluteProgress) =>
-          (progressValue.value = absoluteProgress)
-        }
-      />
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <Text
-            style={styles.title}
-          >{t('Welcome to Animax')}</Text>
-          <Text style={[styles.text, { fontWeight: 'normal' }]}
-          >{t('The best streaming anime app of the century to entertain you every day.')}</Text>
-        </View>
-        <View style={styles.paginationContainer}>
-          {images.map((_, index) => (
-            <PaginationItem
-              backgroundColor={'#06C149'}
-              animValue={progressValue}
-              index={index}
-              key={index}
-              length={images.length}
-            />
-          ))}
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigate(screens.HOWTOLOGIN)}
-        >
-          <Text style={styles.text}>{t('Get Started')}</Text>
-        </TouchableOpacity>
-      </View>
-    </Box>
-  )
+
+            <Box
+                absolute
+                bottom={0}
+                width={width}
+                height={height * 0.33}
+                paddingHorizontal={width * 0.05}
+            >
+                <Txt
+                    size={width * 0.13}
+                    color={'white'}
+                    fontFamily={fonts.MAINB}
+                    fontWeight={'600'}
+                >
+                    {t('Welcome to')} 👋
+                </Txt>
+                <Txt
+                    size={width * 0.13}
+                    color={colors.mainColor}
+                    fontFamily={fonts.MAINB}
+                    fontWeight={'600'}
+                    marginBottom={width * 0.03}
+                >
+                    {t('Animax')}
+                </Txt>
+
+                <Txt
+                    color={'white'}
+                    fontFamily={fonts.MAIN}
+                    fontWeight={'400'}
+                    size={width * 0.04}
+                >
+                    {t('The best streaming anime app of the century to entertain you every day.')}
+                </Txt>
+                <Btn100 title='Get Started' onPress={() => navigate(screens.HOWTOLOGIN)} marginTop={height * 0.02} />
+            </Box>
+        </Box>
+    )
 }
 
-const PaginationItem: React.FC<{
-  index: number
-  backgroundColor: string
-  length: number
-  animValue: Animated.SharedValue<number>
-  isRotate?: boolean
-}> = (props) => {
-  const { animValue, index, length, backgroundColor, isRotate } = props;
-  const width = 10;
-  const selectedWidth = 32;
-  const widthStyle = useAnimatedStyle(() => {
-    const inputRange = [index - 1, index, index + 1];
-    const outputRange = [width, selectedWidth, width];
-    const interpolatedWidth = interpolate(
-      animValue.value,
-      inputRange,
-      outputRange,
-      Extrapolation.CLAMP
-    );
-
-    const opacity = interpolate(
-      animValue.value,
-      inputRange,
-      [0.2, 1, 0.2],
-      Extrapolation.CLAMP
-    );
-
-    const myBackground = interpolateColor(
-      animValue.value,
-      inputRange,
-      ["white", backgroundColor, "white"]
-    );
-
-    return {
-      width: interpolatedWidth,
-      opacity: opacity,
-      backgroundColor: myBackground,
-    };
-  }, [animValue, index]);
-
-
-
-  return (
-    <Animated.View
-      style={[
-        {
-          width: width,
-          height: width,
-          borderRadius: 50,
-          marginHorizontal: 5,
-          overflow: "hidden",
-          transform: [
-            {
-              rotateZ: isRotate ? "90deg" : "0deg",
-            },
-          ],
-        },
-        widthStyle
-      ]}
-    >
-      <View
-        style={{
-          borderRadius: 50,
-          flex: 1,
-        }}
-      />
-    </Animated.View>
-  );
-};
-
-export default Started
+export default Onboarding
 
 const styles = StyleSheet.create({
-  paginationContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: hp('2%'),
-  },
-  imageBackground: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-  },
+    paginationContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+    imageBackground: {
+        flex: 1,
+        resizeMode: 'cover',
+        justifyContent: 'center',
+    },
 
-  backgroundGradient: {
-    flex: 1,
-    ...StyleSheet.absoluteFillObject,
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'contain',
-    justifyContent: 'center',
-    backgroundColor: '#000000',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: wp('5%'),
-  },
-  content: {
-    alignItems: 'center',
-    position: 'absolute',
-    height: hp('30%'),
-  },
-  title: {
-    fontSize: hp('4.1%'),
-    color: '#FFFFFF',
-    marginBottom: hp('2%'),
-    fontFamily: fonts.MAIN,
-    textAlign: 'center',
-    fontWeight: '700',
-  },
-  text: {
-    fontSize: hp('2.1%'),
-    textAlign: 'center',
-    fontWeight: '700',
-    color: '#FFFFFF',
-    fontFamily: fonts.MAIN,
-  },
-  button: {
-    width: '90%',
-    height: hp('7%'),
-    backgroundColor: colors.mainColor,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: hp('3.5%'),
-    marginBottom: hp('5%'),
-  },
+    backgroundGradient: {
+        flex: 1,
+        ...StyleSheet.absoluteFillObject,
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'contain',
+        justifyContent: 'center',
+        backgroundColor: 'black'
+    },
 })

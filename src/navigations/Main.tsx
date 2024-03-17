@@ -12,8 +12,7 @@ import { themeUserSelector } from "@redux/selector/appSelector";
 import BiometricStack from "./Biomatric";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
-
-const Stack = createNativeStackNavigator()
+import changeNavigationBarColor from "react-native-navigation-bar-color";
 
 const Main = () => {
     const dispatch: AppDispatch = useAppDispatch()
@@ -27,6 +26,7 @@ const Main = () => {
             setIsUseBiometric(true);
         }
     }, []);
+    changeNavigationBarColor(theme === 'dark' ? '#1F222A' : '#fff', theme === 'dark' ? true : false);
     return (
         <>
             <StatusBar

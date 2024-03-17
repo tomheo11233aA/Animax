@@ -67,13 +67,6 @@ const Hello = () => {
     }
   }, [])
 
-  useEffect(() => {
-    const lng = localStorage.getString(keys.LANGUAGE) || 'en'
-    i18n.changeLanguage(lng)
-    const lngObj = convertLanguage(lng)
-    dispatch(setLanguage(lngObj))
-  }, [])
-
   return (
     <Box
       flex={1}

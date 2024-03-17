@@ -37,4 +37,5 @@ export const screens = {
     PREMIUM: 'PREMIUM',
     PAYMENT: 'PAYMENT',
     CREDITCARD_INPUT: 'CREDITCARDINPUT',
+    POINT: 'Point'
 }

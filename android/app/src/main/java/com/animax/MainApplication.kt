@@ -21,6 +21,7 @@ class MainApplication : Application(), ReactApplication {
                 packages.add(PipPackage())
                 packages.add(AudioFocusPackage())
                 packages.add(VideoNotificationPackage())
+                packages.add(VideoSaverPackage())
                 return packages
             }
 

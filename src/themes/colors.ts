@@ -1,6 +1,6 @@
 export const colors = {
     light: {
-        mainColor: '#01B763',
+        mainColor: '#1ADF61',
         black: 'black',
         black2: 'white',
         black3: '#f5f5f5',
@@ -49,7 +49,7 @@ export const colors = {
     },
     dark: {
         borderColor: '#059437',
-        mainColor: '#01B763',
+        mainColor: '#1ADF61',
         black: 'white',
         black2: 'black',
         black3: '#1e272f', // #171e24
@@ -95,10 +95,10 @@ export const colors = {
         input: '#171e24',
         lMainColor: '#135329'
     },
-    mainColor: '#01B763',
+    mainColor: '#1ADF61',
     lMainColor: '#10cc54',
     lMainColor2: '#e5f9ec',
-    shadowColor: '#06c14940',
+    shadowColor: '#1ADF6140',
     black: '#212121',
     black2: '#424242',
     black3: '#35383f',

@@ -14,6 +14,7 @@ const Header1 = () => {
                 goBack()
             }}
             alignSelf={'flex-start'}
+            marginTop={20}
         >
             <ArrowLeft
                 color={color.black}

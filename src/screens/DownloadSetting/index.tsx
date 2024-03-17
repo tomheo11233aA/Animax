@@ -21,7 +21,6 @@ import { setWifiOnly } from '@redux/slice/notificationSettingSlice'
 import { AppDispatch } from '@redux/store/store'
 import { navigate } from '@utils/navigationRef'
 import { screens } from '@contants/screens'
-import { downloadVideo } from '@utils/downloadVideo'
 
 const DownloadSetting = () => {
     const color = useTheme()
@@ -39,8 +38,7 @@ const DownloadSetting = () => {
             id: 2,
             name: 'Download Location',
             icon: <DocumentDownload size={SVG_ICON_SIZE} color={color.white} />,
-            // onPress: () => navigate(screens.DOWNLOAD_DETAIL)
-            onPress: () => downloadVideo('https://www.youtube.com/watch?v=7N0RsIHqZQU', 'test0712')
+            onPress: () => navigate(screens.DOWNLOAD_DETAIL)
         },
         {
             id: 3,

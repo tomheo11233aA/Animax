@@ -7,7 +7,7 @@ import { colors } from '@themes/colors'
 import Txt from '@common/Txt'
 import { useTranslation } from 'react-i18next'
 import changeNavigationBarColor from 'react-native-navigation-bar-color'
-import { BOTTOM_TAB_HEIGHT } from '@utils/responsive'
+import { BOTTOM_TAB_HEIGHT, width } from '@utils/responsive'
 //screens
 import HomeStack from './HomeStack'
 import DownloadStack from './DownloadStack'
@@ -16,20 +16,16 @@ import ProfileStack from './ProfileStack'
 import ReleaseCalendarStack from './ReleaseCalendarStack'
 import ForgotPassword from '@screens/AccountSetup/FogotPassword'
 import { useTheme } from '@hooks/redux'
-import { Home2, Calendar, Profile, Archive, DirectboxReceive } from 'iconsax-react-native'
+import { Home2, Calendar, Profile, Archive, DirectboxReceive, EmojiNormal } from 'iconsax-react-native'
 import { SVG_ICON_SIZE } from '@themes/styled'
 import MediaPlayer from '@screens/MediaPlayer'
+import Point from '@screens/Point'
 
 const Tab = createBottomTabNavigator()
 const AuthNavigation = () => {
     const color = useTheme()
     const { t } = useTranslation()
-    const formatTitle = (name: string): string => {
-        if (name.length > 15) {
-            return name.slice(0, 15) + '...'
-        }
-        return name
-    }
+    
     const tabs = [
         {
             title: 'Home',
@@ -46,19 +42,18 @@ const AuthNavigation = () => {
             iconFocused: <Calendar variant='Bold' color={colors.mainColor} />
         },
         {
+            title: 'Point',
+            component: Point,
+            name: screens.DOWNLOAD_STACK,
+            iconNotFocused: <EmojiNormal color={color.white} />,
+            iconFocused: <EmojiNormal variant='Bold' color={colors.mainColor} />
+        },
+        {
             title: 'My List',
             component: MyListStack,
             name: screens.MY_LIST_STACK,
             iconNotFocused: <Archive color={color.white} />,
             iconFocused: <Archive variant='Bold' color={colors.mainColor} />
-        },
-        {
-            title: 'Download',
-            component: DownloadStack,
-            // component: MediaPlayer,
-            name: screens.DOWNLOAD_STACK,
-            iconNotFocused: <DirectboxReceive color={color.white} />,
-            iconFocused: <DirectboxReceive variant='Bold' color={colors.mainColor} />
         },
         {
             title: 'Profile',
@@ -68,7 +63,6 @@ const AuthNavigation = () => {
             iconFocused: <Profile variant='Bold' color={colors.mainColor} />
         },
     ]
-    // log focused tab
     return (
         <Tab.Navigator
             screenOptions={{
@@ -82,7 +76,7 @@ const AuthNavigation = () => {
                     borderTopLeftRadius: 25,
                     borderTopRightRadius: 25,
                     borderTopWidth: 0,
-
+                    opacity: 0.9,
                 }
             }}
         >

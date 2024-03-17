@@ -19,10 +19,14 @@ const Header2 = ({ title }: Props) => {
     const { t } = useTranslation()
     return (
         <>
-            <Box row alignCenter
+            <Box
+                row
                 marginTop={
                     Platform.OS === 'ios' ? 0 : 10
                 }
+                alignStart
+                width={'100%'}
+                alignCenter
             >
                 <Btn
                     onPress={() => goBack()}>

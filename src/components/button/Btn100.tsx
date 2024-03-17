@@ -5,16 +5,17 @@ import { fonts } from '@themes/fonts'
 import Txt from '@common/Txt'
 import Btn from '@common/Btn'
 import { useTranslation } from 'react-i18next'
-
+import { ActivityIndicator } from 'react-native-paper'
 interface Btn100Props {
     onPress: () => void
     title: string
     marginTop?: number
     marginBottom?: number
     backgroundColor?: string
+    isLoading?: boolean
 }
 
-const Btn100 = ({ onPress, title, marginTop = height * 0.05, marginBottom = 0, backgroundColor = colors.mainColor }: Btn100Props) => {
+const Btn100 = ({ onPress, title, marginTop = height * 0.05, marginBottom = 0, backgroundColor = colors.mainColor, isLoading }: Btn100Props) => {
     const { t } = useTranslation()
     return (
         <Btn
@@ -30,7 +31,9 @@ const Btn100 = ({ onPress, title, marginTop = height * 0.05, marginBottom = 0, b
             marginTop={marginTop}
             marginBottom={marginBottom}
             height={height * 0.07}
+            row
         >
+            {isLoading ? <ActivityIndicator color={colors.white} style={{marginRight: width * 0.02}} /> : null}
             <Txt
                 color={colors.white}
                 size={16}

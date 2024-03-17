@@ -18,13 +18,12 @@ const Premium = () => {
     return (
         <KeyBoardSafe>
             <Scroll
-                paddingVertical={hp(5)}
                 paddingHorizontal={wp(5)}
                 alignCenter
             >
                 <Header1 />
 
-                <Txt marginTop={hp(3)} size={32} fontFamily={fonts.MAINB}>
+                <Txt size={32} fontFamily={fonts.MAINB}>
                     {t('Subrice to Premium!')}
                 </Txt>
 
@@ -34,14 +33,14 @@ const Premium = () => {
 
                 <Item
                     color={color}
-                    price={25000}
+                    price={2500}
                     t={t}
                     type='monthly'
                 />
 
                 <Item
                     color={color}
-                    price={200000}
+                    price={20000}
                     t={t}
                     type='yearly'
                 />
